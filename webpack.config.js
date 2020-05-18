@@ -1,7 +1,7 @@
 const path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const { CleanWebpackPlugin, } = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
@@ -13,13 +13,13 @@ const filename = extension =>
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 	mode: "development",
-	entry: ["@babel/polyfill", "./index.js",],
+	entry: ["@babel/polyfill", "./index.js"],
 	output: {
 		filename: filename("js"),
 		path: path.resolve(__dirname, "dist"),
 	},
 	resolve: {
-		extensions: [".tsx", ".ts", ".js",],
+		extensions: [".tsx", ".ts", ".js"],
 		alias: {
 			"@": path.resolve(__dirname, "src"),
 		},
@@ -72,6 +72,30 @@ module.exports = {
 					},
 				],
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: "file-loader",
+					},
+				],
+			},
+			{
+				test: /\.(eot|svg|ttf|woff|woff2)$/,
+				use: [
+					{
+						loader: "file-loader",
+					},
+				],
+			},
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: "file-loader",
+					},
+				],
 			},
 		],
 	},
