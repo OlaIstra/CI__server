@@ -1,7 +1,18 @@
+@import "../../styles/variables";
+
 .bottom {
 	position: fixed;
 	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	bottom: 0;
 	width: 100%;
 	padding: 0 100px;
-	background: #f0f2f3;
+	background: $bcgColor;
+
+	&__btns {
+		display: inline-flex;
+		justify-content: space-between;
+	}
 }

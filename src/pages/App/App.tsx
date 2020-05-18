@@ -1,19 +1,24 @@
 import React from "react";
+import { Switch, Route } from "react-router-dom";
 
 import { ConfigurationPage } from "../ConfigurationPage/ConfigurationPage";
-import { Header } from "../../core/components/Header/Header";
+import { SettingsPage } from "../SettingsPage/SettingsPage";
+import { HistoryPage } from "../HistoryPage/HistoryPage";
 import { Bottom } from "../../core/components/Bottom/Bottom";
 
 import "./App.scss";
 
-export const App = props => {
+const App = () => {
 	return (
-		<div className='app'>
-			<Header />
-			<div className='main'>
-				<ConfigurationPage />
-			</div>
+		<>
+			<Switch>
+				<Route path='/' exact component={ConfigurationPage} />
+				<Route path='/settings' component={SettingsPage} />
+				<Route path='/history' component={HistoryPage} />
+			</Switch>
 			<Bottom />
-		</div>
+		</>
 	);
 };
+
+export default App;

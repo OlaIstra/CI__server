@@ -1,9 +1,13 @@
 import React from "react";
+import classNames from "classnames";
+import "./Title.scss";
 
-type Props = {
+interface IProps {
 	text: string;
-};
+	classes?: string;
+}
 
-export const Title: React.FC<Props> = props => {
-	return <div className='title'>{props.text}</div>;
+export const Title: React.FC<IProps> = ({ text, classes }) => {
+	let titleClass = classNames("title", classes);
+	return <div className={titleClass}>{text}</div>;
 };

@@ -21,6 +21,7 @@ module.exports = {
 		extensions: [".tsx", ".ts", ".js"],
 		alias: {
 			"@": path.resolve(__dirname, "src"),
+			"@core": path.resolve(__dirname, "src/core"),
 		},
 	},
 	devtool: isDev ? "inline-source-map" : false,
