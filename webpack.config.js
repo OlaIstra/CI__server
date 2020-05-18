@@ -1,6 +1,5 @@
 const path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -32,18 +31,13 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
+			favicon: path.resolve(__dirname, "src/favicon.ico"),
 			template: "index.html",
 			minify: {
 				removeComments: isProd,
 				collapseWhitespace: isProd,
 			},
 		}),
-		new CopyPlugin([
-			{
-				from: path.resolve(__dirname, "src/favicon.ico"),
-				to: path.resolve(__dirname, "dist"),
-			},
-		]),
 		new MiniCssExtractPlugin({
 			filename: filename("css"),
 		}),
@@ -51,15 +45,24 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.(css)$/,
+				use: [
+					isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+					"css-loader",
+				],
+			},
+			{
 				test: /\.s[ac]ss$/i,
 				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							hmr: isDev,
-							reloadAll: true,
-						},
-					},
+					isDev
+						? "style-loader"
+						: {
+								loader: MiniCssExtractPlugin.loader,
+								options: {
+									hmr: isDev,
+									reloadAll: true,
+								},
+						  },
 					"css-loader",
 					"sass-loader",
 				],
@@ -74,23 +77,7 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|jpe?g|gif)$/i,
-				use: [
-					{
-						loader: "file-loader",
-					},
-				],
-			},
-			{
-				test: /\.(eot|svg|ttf|woff|woff2)$/,
-				use: [
-					{
-						loader: "file-loader",
-					},
-				],
-			},
-			{
-				test: /\.(png|jpe?g|gif)$/i,
+				test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/,
 				use: [
 					{
 						loader: "file-loader",
