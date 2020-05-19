@@ -1,7 +1,8 @@
 import React from "react";
-import { Title } from "../UI/Title/Title";
-import { Input } from "../UI/Input/Input";
-import { Button } from "../UI/Button/Button";
+
+import { Title } from "@atoms/Title/Title";
+import { Input } from "@atoms/Input/Input";
+import { Button } from "@atoms/Button/Button";
 import "./Modal.scss";
 
 interface IProps {

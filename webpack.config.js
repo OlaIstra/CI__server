@@ -1,31 +1,31 @@
-const path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin, } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
 const filename = extension =>
 	isDev ? `bundle.${extension}` : `bundle.[hash].${extension}`;
 
 module.exports = {
-	context: path.resolve(__dirname, "src"),
-	mode: "development",
-	entry: ["@babel/polyfill", "./index.js"],
+	context: path.resolve(__dirname, 'src'),
+	mode: 'development',
+	entry: ['./index.tsx',],
 	output: {
-		filename: filename("js"),
-		path: path.resolve(__dirname, "dist"),
+		filename: filename('js'),
+		path: path.resolve(__dirname, 'dist'),
 	},
 	resolve: {
-		extensions: [".tsx", ".ts", ".js"],
+		extensions: ['.tsx', '.ts', '.js',],
 		alias: {
-			"@": path.resolve(__dirname, "src"),
-			"@core": path.resolve(__dirname, "src/core"),
+			'@core': path.resolve(__dirname, 'src/core'),
+			'@pages': path.resolve(__dirname, 'src/pages'),
+			'@atoms': path.resolve(__dirname, 'src/core/atoms'),
 		},
 	},
-	devtool: isDev ? "inline-source-map" : false,
+	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
 		port: 3020,
 		hot: isDev,
@@ -33,15 +33,15 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			favicon: path.resolve(__dirname, "src/favicon.ico"),
-			template: "index.html",
+			favicon: path.resolve(__dirname, 'src/favicon.ico'),
+			template: 'index.html',
 			minify: {
 				removeComments: isProd,
 				collapseWhitespace: isProd,
 			},
 		}),
 		new MiniCssExtractPlugin({
-			filename: filename("css"),
+			filename: filename('css'),
 		}),
 	],
 	module: {
@@ -49,40 +49,47 @@ module.exports = {
 			{
 				test: /\.(css)$/,
 				use: [
-					isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-					"css-loader",
+					isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+					'css-loader',
 				],
 			},
 			{
 				test: /\.s[ac]ss$/i,
 				use: [
 					isDev
-						? "style-loader"
+						? 'style-loader'
 						: {
-								loader: MiniCssExtractPlugin.loader,
-								options: {
-									hmr: isDev,
-									reloadAll: true,
-								},
+							loader: MiniCssExtractPlugin.loader,
+							options: {
+								hmr: isDev,
+								reloadAll: true,
+							},
 						  },
-					"css-loader",
-					"sass-loader",
+					'css-loader',
+					'sass-loader',
 				],
 			},
 			{
 				test: /\.tsx?$/,
-				use: [
-					{
-						loader: "ts-loader",
-					},
-				],
+				use: 'babel-loader',
 				exclude: /node_modules/,
 			},
 			{
 				test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/,
 				use: [
 					{
-						loader: "file-loader",
+						loader: 'file-loader',
+					},
+				],
+			},
+			{
+				test: /\.(png|jpg|gif)$/i,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8192,
+						},
 					},
 				],
 			},

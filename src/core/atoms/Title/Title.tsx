@@ -1,6 +1,7 @@
-import React from "react";
-import classNames from "classnames";
-import "./Title.scss";
+import React from 'react';
+
+import classNames from 'classnames';
+import './Title.scss';
 
 interface IProps {
 	text: string;
@@ -8,6 +9,7 @@ interface IProps {
 }
 
 export const Title: React.FC<IProps> = ({ text, classes }) => {
-	let titleClass = classNames("title", classes);
+	const titleClass = classNames('title', classes);
+
 	return <div className={titleClass}>{text}</div>;
 };

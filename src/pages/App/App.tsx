@@ -1,24 +1,15 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
 
-import { ConfigurationPage } from "../ConfigurationPage/ConfigurationPage";
-import { SettingsPage } from "../SettingsPage/SettingsPage";
-import { HistoryPage } from "../HistoryPage/HistoryPage";
-import { Bottom } from "../../core/components/Bottom/Bottom";
+import { Routes } from './Routes';
+import { Footer } from '@core/components/Footer/Footer';
 
-import "./App.scss";
+import './App.scss';
 
-const App = () => {
-	return (
-		<>
-			<Switch>
-				<Route path='/' exact component={ConfigurationPage} />
-				<Route path='/settings' component={SettingsPage} />
-				<Route path='/history' component={HistoryPage} />
-			</Switch>
-			<Bottom />
-		</>
-	);
-};
+const App = () => (
+	<>
+		<Routes />
+		<Footer />
+	</>
+);
 
 export default App;

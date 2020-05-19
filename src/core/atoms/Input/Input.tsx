@@ -1,6 +1,7 @@
-import React from "react";
-import classNames from "classnames";
-import "./Input.scss";
+import React from 'react';
+
+import classNames from 'classnames';
+import './Input.scss';
 
 interface IProps {
 	placeholder: string;
@@ -9,7 +10,8 @@ interface IProps {
 }
 
 export const Input: React.FC<IProps> = ({ placeholder, classes, icon }) => {
-	let inputClass = classNames("input", classes);
+	const inputClass = classNames('input', classes);
+
 	return (
 		<div className='inputWrapper'>
 			<input placeholder={placeholder} className={inputClass} />

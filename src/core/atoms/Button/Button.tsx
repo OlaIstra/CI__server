@@ -1,6 +1,7 @@
-import React from "react";
-import classNames from "classnames";
-import "./Button.scss";
+import React from 'react';
+
+import classNames from 'classnames';
+import './Button.scss';
 
 interface IProps {
 	title: string;
@@ -9,10 +10,11 @@ interface IProps {
 }
 
 export const Button: React.FC<IProps> = ({ title, classes, icon }) => {
-	let btnClass = classNames("btn", classes);
+	const btnClass = classNames('btn', classes);
+
 	return (
 		<button className={btnClass}>
-			{icon ? <span className={icon}></span> : null}
+			{icon && <span className={icon} />}
 			{title}
 		</button>
 	);

@@ -1,10 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import "./index.scss";
-
-import App from "./pages/App/App";
+import App from '@pages/App/App';
+import './index.scss';
 
 const app = (
 	<BrowserRouter>
@@ -12,4 +11,4 @@ const app = (
 	</BrowserRouter>
 );
 
-ReactDOM.render(app, document.getElementById("root"));
+ReactDOM.render(app, document.getElementById('root'));
