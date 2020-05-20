@@ -1,25 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import { Title } from "@atoms/Title/Title";
-import { Input } from "@atoms/Input/Input";
-import { Button } from "@atoms/Button/Button";
-import "./Modal.scss";
+import { Title } from '@atoms/Title/Title';
+import { Input } from '@atoms/Input/Input';
+import { Button } from '@atoms/Button/Button';
+import './Modal.scss';
 
-interface IProps {
-	title?: string;
-	children?: any;
-}
-
-export const Modal: React.FC<IProps> = ({ title, children }) => {
+export const Modal: React.FC = () => {
 	return (
 		<div className='modal'>
-			<Title text='New build' classes='title--huge' />
-			<Title text='Enter the commit hash that you want to build' />
+			<Title classes='title--huge'>New build</Title>
+			<Title>Enter the commit hash that you want to build</Title>
 			<form action='' className='form'>
 				<Input placeholder='Commit hash' icon='icon-cross' />
 				<div className='form__btns'>
-					<Button title='Run build' classes='btn--primary' />
-					<Button title='Cancel' />
+					<Button classes='btn--primary'>Run build</Button>
+					<Button>Cancel</Button>
 				</div>
 			</form>
 		</div>

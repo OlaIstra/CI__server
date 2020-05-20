@@ -10,14 +10,16 @@ export const ConfigurationPage = () => (
 	<>
 		<Header title='School CI server'>
 			<Link to='/settings'>
-				<Button title='Settings' icon='icon-settings' />
+				<Button icon='icon-settings'>Settings</Button>
 			</Link>
 		</Header>
 		<div className='configPage'>
 			<div className='configPage_logo' />
-			<Title text='Configure repository connection and synchronization settings' />
+			<Title>
+				Configure repository connection and synchronization settings
+			</Title>
 			<Link to='/settings'>
-				<Button title='Open settings' classes='btn--primary' />
+				<Button classes='btn--primary'>Open settings</Button>
 			</Link>
 		</div>
 	</>

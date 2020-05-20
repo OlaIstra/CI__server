@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { Children } from 'react';
 
 import classNames from 'classnames';
 import './Button.scss';
 
 interface IProps {
-	title: string;
 	classes?: string;
 	icon?: string;
 }
 
-export const Button: React.FC<IProps> = ({ title, classes, icon }) => {
+export const Button: React.FC<IProps> = ({ classes, icon, children }) => {
 	const btnClass = classNames('btn', classes);
 
 	return (
 		<button className={btnClass}>
 			{icon && <span className={icon} />}
-			{title}
+			{children}
 		</button>
 	);
 };

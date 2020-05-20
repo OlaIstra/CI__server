@@ -11,25 +11,24 @@ export const SettingsPage = () => (
 	<>
 		<Header title='School CI server' />
 		<div className='settingsPage'>
-			<Title text='Settings' classes='title--bold' />
-			<Title
-				text='Configure repository connection and synchronization settings.'
-				classes='title--light'
-			/>
+			<Title classes='title--bold'>Settings</Title>
+			<Title classes='title--light'>
+				Configure repository connection and synchronization settings.
+			</Title>
 			<form action='' className='form'>
 				<div className='form__block'>
-					<Title text='GitHub repository' />
+					<Title>GitHub repository</Title>
 					<Input placeholder='user-name/repo-name' />
 				</div>
 				<div className='form__block'>
-					<Title text='Build command' />
+					<Title>Build command</Title>
 					<Input
 						placeholder='user-name/repo-name'
 						icon='icon-cross'
 					/>
 				</div>
 				<div className='form__block'>
-					<Title text='Build command' />
+					<Title>Build command</Title>
 					<Input placeholder='master' icon='icon-cross' />
 				</div>
 				<div className='form__info'>
@@ -38,19 +37,17 @@ export const SettingsPage = () => (
 					minutes
 				</div>
 				<div className='form__btns'>
-					<Button title='Save' classes='btn--primary' />
-					<Button title='Cancel' />
+					<Button classes='btn--primary'>Save</Button>
+					<Button>Cancel</Button>
 				</div>
 			</form>
 			<br />
 			temporary to show history page
 			<br />
 			<Link to='/history'>
-				<Button
-					title='to history page'
-					icon='icon-play'
-					classes='btn--primary'
-				/>
+				<Button icon='icon-play' classes='btn--primary'>
+					to history page
+				</Button>
 			</Link>
 		</div>
 	</>

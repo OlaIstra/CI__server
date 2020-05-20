@@ -9,8 +9,8 @@ export const HistoryPage = () => (
 	<>
 		<Header title='philip1967/my-awesome-repo'>
 			<div className='btn__block'>
-				<Button title='Run build' icon='icon-play' />
-				<Button title='' icon='icon-settings' />
+				<Button icon='icon-play'>Run build</Button>
+				<Button icon='icon-settings' />
 			</div>
 		</Header>
 		<div className='historyPage'>
@@ -47,7 +47,7 @@ export const HistoryPage = () => (
 					</div>
 				</div>
 			</div>
-			<Button title='Show more' />
+			<Button>Show more</Button>
 			<br />
 			temporary solution to show modal
 			<br />
