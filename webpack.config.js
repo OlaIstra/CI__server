@@ -1,6 +1,6 @@
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin, } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -12,13 +12,13 @@ const filename = extension =>
 module.exports = {
 	context: path.resolve(__dirname, 'src'),
 	mode: isDev ? 'development' : 'production',
-	entry: ['./index.tsx',],
+	entry: ['./index.tsx'],
 	output: {
 		filename: filename('js'),
 		path: path.resolve(__dirname, 'dist'),
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js',],
+		extensions: ['.tsx', '.ts', '.js'],
 		alias: {
 			'@core': path.resolve(__dirname, 'src/core'),
 			'@pages': path.resolve(__dirname, 'src/pages'),
@@ -64,11 +64,11 @@ module.exports = {
 					isDev
 						? 'style-loader'
 						: {
-							loader: MiniCssExtractPlugin.loader,
-							options: {
-								hmr: isDev,
-								reloadAll: true,
-							},
+								loader: MiniCssExtractPlugin.loader,
+								options: {
+									hmr: isDev,
+									reloadAll: true,
+								},
 						  },
 					'css-loader',
 					'sass-loader',
