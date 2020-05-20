@@ -11,7 +11,7 @@ const filename = extension =>
 
 module.exports = {
 	context: path.resolve(__dirname, 'src'),
-	mode: 'development',
+	mode: isDev ? 'development' : 'production',
 	entry: ['./index.tsx',],
 	output: {
 		filename: filename('js'),
@@ -29,6 +29,11 @@ module.exports = {
 	devServer: {
 		port: 3020,
 		hot: isDev,
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
@@ -75,15 +80,7 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/,
-				use: [
-					{
-						loader: 'file-loader',
-					},
-				],
-			},
-			{
-				test: /\.(png|jpg|gif)$/i,
+				test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/i,
 				use: [
 					{
 						loader: 'url-loader',
