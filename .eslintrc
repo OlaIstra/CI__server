@@ -2,7 +2,6 @@
 	"extends": ["react-app", "prettier"],
 	"rules": {
 		"jsx-quotes": [1, "prefer-double"],
-		"comma-dangle": ["error", "always"],
 		"indent": ["error", "tab"],
 		"no-cond-assign": ["error", "always"],
 
