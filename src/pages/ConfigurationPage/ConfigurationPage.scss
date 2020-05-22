@@ -1,20 +1,20 @@
 .configPage {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 265px;
-	height: 100vh;
-	margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 265px;
+    height: 100vh;
+    margin: auto;
 
-	.title {
-		margin-bottom: 24px;
-	}
+    .title {
+        margin-bottom: 24px;
+    }
 }
 
 .configPage_logo {
-	width: 124px;
-	height: 124px;
-	margin-bottom: 32px;
-	background: url(../../core/assets/img/main.png) center center;
+    width: 124px;
+    height: 124px;
+    margin-bottom: 32px;
+    background: url(../../core/assets/img/main.png) center center;
 }

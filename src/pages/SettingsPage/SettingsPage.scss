@@ -1,54 +1,54 @@
-@import "../../core/styles/variables";
+@import '../../core/styles/variables';
 
 .settingsPage {
-	display: flex;
-	flex-direction: column;
-	max-width: 824px;
-	padding-top: 60px;
-	margin: 0px auto;
-	height: 100vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 824px;
+    padding-top: 60px;
+    margin: 0px auto;
+    height: 100vh;
 
-	& .title {
-		text-align: left;
-	}
+    & .title {
+        text-align: left;
+    }
 
-	& .form {
-		width: 474px;
-		margin-top: 22px;
+    & .form {
+        width: 474px;
+        margin-top: 22px;
 
-		&__info {
-			display: flex;
-			align-items: center;
-		}
+        &__info {
+            display: flex;
+            align-items: center;
+        }
 
-		&__btns {
-			display: inline-flex;
-			justify-content: space-between;
-			margin-top: 24px;
-			& .btn:nth-child(1) {
-				margin-right: 8px;
-			}
-		}
-	}
+        &__btns {
+            display: inline-flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            & .btn:nth-child(1) {
+                margin-right: 8px;
+            }
+        }
+    }
 }
 
 .form__block {
-	margin-bottom: 18px;
+    margin-bottom: 18px;
 
-	& .title {
-		margin-bottom: 6px;
-		font-size: 13px;
-		line-height: 18px;
-		letter-spacing: 0.06px;
-	}
+    & .title {
+        margin-bottom: 6px;
+        font-size: 13px;
+        line-height: 18px;
+        letter-spacing: 0.06px;
+    }
 }
 
 @media only screen and (max-width: $breakpoint-tablet) {
-	.settingsPage {
-		max-width: 288px;
+    .settingsPage {
+        max-width: 288px;
 
-		& .form {
-			width: 288px;
-		}
-	}
+        & .form {
+            width: 288px;
+        }
+    }
 }

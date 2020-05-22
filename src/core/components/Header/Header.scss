@@ -1,25 +1,25 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 .header {
-	position: fixed;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	padding: 0 100px;
-	z-index: 1;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 100px;
+    z-index: 1;
 
-	@media (min-width: 768px) {
-		padding: 0 16px;
-	}
+    @media (min-width: 768px) {
+        padding: 0 16px;
+    }
 }
 
 @media only screen and (max-width: $breakpoint-tablet) {
-	.header {
-		padding: 0 16px;
-	}
+    .header {
+        padding: 0 16px;
+    }
 
-	.header h1 {
-		font-size: 18px;
-	}
+    .header h1 {
+        font-size: 18px;
+    }
 }

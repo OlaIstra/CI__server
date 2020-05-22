@@ -1,13 +1,10 @@
 {
-	"extends": ["react-app", "prettier"],
-	"rules": {
-		"jsx-quotes": [1, "prefer-single"],
-		"indent": ["error", "tab"],
-		"no-cond-assign": ["error", "always"],
-
-		"init-declarations": ["error", "always"],
-		"no-console": "off",
-		"no-inline-comments": "off"
-	},
-	"plugins": ["prettier"]
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "react-app",
+        "prettier"
+    ],
+    "rules": { "no-console": "off", "no-inline-comments": "off" },
+    "plugins": ["prettier"]
 }

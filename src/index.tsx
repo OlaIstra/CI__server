@@ -6,9 +6,9 @@ import App from '@pages/App/App';
 import './index.scss';
 
 const app = (
-	<BrowserRouter>
-		<App />
-	</BrowserRouter>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

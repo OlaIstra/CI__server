@@ -1,21 +1,21 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 .title {
-	text-align: center;
+    text-align: center;
 
-	&--light {
-		color: $fontColor;
-	}
+    &--light {
+        color: $fontColor;
+    }
 
-	&--bold {
-		margin-bottom: 8px;
-		font-weight: bold;
-		font-size: 15px;
-	}
+    &--bold {
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 15px;
+    }
 
-	&--huge {
-		font-weight: 500;
-		font-size: 18px;
-		line-height: 22px;
-	}
+    &--huge {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+    }
 }
