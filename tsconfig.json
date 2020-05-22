@@ -1,6 +1,9 @@
 {
 	"compilerOptions": {
-		"esModuleInterop": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false,
+        "outDir": "./dist",
 		"module": "commonjs",
 		"jsx": "react",
 		"baseUrl": "./src",
@@ -11,5 +14,5 @@
 		}
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules", "**/*.spec.ts"]
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js"]
 }
