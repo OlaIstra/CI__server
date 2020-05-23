@@ -5,6 +5,10 @@
         "react-app",
         "prettier"
     ],
-    "rules": { "no-console": "off", "no-inline-comments": "off" },
+    "rules": {
+        "no-console": "off",
+        "no-inline-comments": "off",
+        "@typescript-eslint/no-var-requires": 0
+    },
     "plugins": ["prettier"]
 }
