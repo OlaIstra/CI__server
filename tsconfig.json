@@ -1,22 +1,18 @@
 {
 	"compilerOptions": {
-		// "target": "es5",
-		// "lib": ["dom", "dom.iterable", "esnext"],
-		// "allowJs": true,
-		// "skipLibCheck": true,
-		"esModuleInterop": true,
-		// "allowSyntheticDefaultImports": true,
-		// "strict": true,
-		// "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false,
+        "outDir": "./dist",
 		"module": "commonjs",
-		// "moduleResolution": "node",
-		// "removeComments": true,
-		// "resolveJsonModule": true,
-		// "isolatedModules": false,
-		// "noEmit": true,
-		"jsx": "react"
-		// "sourceMap": true
+		"jsx": "react",
+		"baseUrl": "./src",
+		"paths": {
+			"@core/*": ["core/*"],
+			"@pages/*": ["pages/*"],
+			"@atoms/*": ["core/atoms/*"]
+		}
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules", "**/*.spec.ts"]
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js"]
 }

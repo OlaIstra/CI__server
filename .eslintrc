@@ -1,17 +1,19 @@
 {
-	"parser": "babel-eslint",
-	"env": {
-		"es6": true,
-		"browser": true,
-		"node": true
-	},
-	"rules": {
-		"comma-dangle": ["error", "always"],
-		"indent": ["error", "tab"],
-		"no-cond-assign": ["error", "always"],
-
-		"init-declarations": ["error", "always"],
-		"no-console": "off",
-		"no-inline-comments": "off"
-	}
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "react-app",
+        "prettier"
+    ],
+    "rules": {
+        "no-console": "off",
+        "no-inline-comments": "off"
+    },
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "rules": { "@typescript-eslint/no-var-requires": 0 }
+        }
+    ],
+    "plugins": ["prettier"]
 }

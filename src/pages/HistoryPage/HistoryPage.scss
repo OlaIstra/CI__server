@@ -1,0 +1,123 @@
+@import '../../core/styles/variables';
+
+.historyPage {
+    max-width: 824px;
+    padding-top: 60px;
+    margin: 0px auto;
+    height: 100vh;
+
+    & .repo {
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0px 1px 1px rgba(67, 68, 69, 0.3),
+            0px 0px 1px rgba(67, 68, 69, 0.3);
+        border-radius: 6px;
+        margin-bottom: 8;
+        margin-bottom: 8px;
+        padding: 12px 24px 12px 56px;
+    }
+
+    & .repo__info {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    & .repo__flex {
+        display: flex;
+
+        &:nth-child(1) {
+            margin-bottom: 10px;
+        }
+    }
+
+    & .repo__id {
+        position: relative;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+        color: $acceptColor;
+
+        & span {
+            position: absolute;
+            left: -25px;
+        }
+    }
+
+    & .repo__title {
+        margin-left: 5px;
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    & .repo__commit {
+        margin: 0 10px 0 4px;
+        color: $fontColor;
+    }
+
+    & .repo__data {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 13px;
+    }
+}
+
+.btn__block {
+    display: inline-flex;
+    justify-content: space-between;
+    & .btn:nth-child(1) {
+        margin-right: 8px;
+    }
+}
+
+@media only screen and (max-width: $breakpoint-mobileL) {
+    .historyPage {
+        padding-top: 100px;
+        & .repo {
+            flex-direction: column;
+            padding: 12px 12px 12px 36px;
+        }
+
+        & .repo__flex {
+            flex-direction: column;
+        }
+
+        & .repo__data {
+            flex-direction: row;
+        }
+
+        & .repo__branch {
+            margin-bottom: 8px;
+        }
+
+        & .repo__data {
+            position: relative;
+            margin-top: 16px;
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: -8px;
+                width: 100%;
+                height: 2px;
+                background-color: $bcgColor;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $breakpoint-tabletL) {
+    .historyPage {
+        & .repo {
+            width: 90%;
+            margin: 0 auto 8px;
+        }
+
+        & .btn {
+            width: 90%;
+            margin: 0 auto 8px;
+            justify-content: center;
+        }
+    }
+}
