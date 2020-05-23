@@ -7,8 +7,13 @@
     ],
     "rules": {
         "no-console": "off",
-        "no-inline-comments": "off",
-        "@typescript-eslint/no-var-requires": 0
+        "no-inline-comments": "off"
     },
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "rules": { "@typescript-eslint/no-var-requires": 0 }
+        }
+    ],
     "plugins": ["prettier"]
 }
