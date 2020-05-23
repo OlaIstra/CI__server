@@ -8,9 +8,8 @@
         "start": "cross-env NODE_ENV=development webpack-dev-server --open",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
-        "eslint": "eslint src/**/*.{ts,tsx}",
-        "prettier": "prettier -c src/**/*",
-        "lint": "npm run eslint && npm run ts-check && npm run prettier"
+        "eslint": "node_modules/.bin/eslint --max-warnings=0",
+        "prettier": "prettier -c src/**/*"
     },
     "repository": {
         "type": "git",
@@ -102,9 +101,9 @@
     },
     "lint-staged": {
         "*.{js, jsx, ts, tsx}": [
-            "tsc --noEmit ./tsconfig.json",
-            "node_modules/.bin/eslint --max-warnings=0",
-            "prettier --write"
+            "npm run ts-check",
+            "npm run eslint",
+            "npm run prettier"
         ]
     }
 }
