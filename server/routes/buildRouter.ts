@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('', async (req: Request, res: Response) => {
     try {
         const response = await axiosInstance.get(`${baseURL}api/build/list`);
-        state.builds = response.data;
+        state.builds = response.data.data;
         return res.send(response.data);
     } catch (err) {
         console.log(err);
