@@ -1,15 +1,15 @@
 import express from 'express';
 
-import buildRouter from './routes/buildRouter';
-import settingsRouter from './routes/settingsRouter';
+import router from './routes';
 
-const app = express();
+require('dotenv').config();
 
-const port = 3050;
+export const app = express();
 
-app.use('/api/settings', settingsRouter);
-app.use('/api/builds', buildRouter);
+const port = process.env.PORT;
+
+app.use('/api', router);
 
 app.listen(port, function() {
-    console.log(`Server is on the port ${port}`);
+    console.log(`Server is on the port ${process.env.PORT}`);
 });
