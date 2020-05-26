@@ -16,14 +16,16 @@ router.get('', async (req: Request, res: Response) => {
 });
 
 router.post('/:commitHash', async (req: Request, res: Response) => {
+    const { commitHash } = req.params;
+    const { commitMessage, branchName, authorName } = req.body;
     try {
         const response = await axiosInstance.post(
             `${baseURL}api/build/request`,
             {
-                commitMessage: 'string',
-                commitHash: 'string',
-                branchName: 'string',
-                authorName: 'string',
+                commitMessage,
+                commitHash,
+                branchName,
+                authorName,
             }
         );
         return res.send(`Added build: ${response.config.data}`);
