@@ -42,4 +42,16 @@ router.get('/:buildId', async (req: Request, res: Response) => {
     }
 });
 
+router.get('/:buildId/logs', async (req: Request, res: Response) => {
+    const { buildId } = req.params;
+    try {
+        const response = await axiosInstance.get(
+            `${baseURL}api/build/log?buildId=${buildId}`
+        );
+        return res.send(response.data);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 export default router;
