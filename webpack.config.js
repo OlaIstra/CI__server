@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -20,6 +20,7 @@ module.exports = {
             '@core': path.resolve(__dirname, 'src/core'),
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@atoms': path.resolve(__dirname, 'src/core/atoms'),
+            '@server': path.resolve(__dirname, 'server/'),
         },
     },
     devtool: isDev ? 'inline-source-map' : false,

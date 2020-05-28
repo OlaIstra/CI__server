@@ -14,14 +14,12 @@ export interface IState {
 }
 
 export interface IBuilds {
-    data: {
-        data: Array<IBuild>;
-    };
+    data: Array<IBuild>;
 }
 
 export interface ISettings {
     data: {
-        id: string;
+        id?: string;
         repoName: string;
         buildCommand: string;
         mainBranch: string;
@@ -32,5 +30,18 @@ export interface ISettings {
 export interface ICommit {
     data: {
         data: Array<IBuild>;
+    };
+}
+
+export interface IBuildDetails extends IBuild {
+    start: string;
+    duration: number;
+}
+
+export interface IBuildPost {
+    data: {
+        id: string;
+        buildNumber: number;
+        status: string;
     };
 }

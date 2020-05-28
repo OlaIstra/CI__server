@@ -2,15 +2,14 @@
     "name": "ci-server",
     "version": "1.0.0",
     "description": "CI-server",
-    "main": "webpack.config.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "cross-env NODE_ENV=development webpack-dev-server --open",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit ./tsconfig.json",
-        "eslint": "node_modules/.bin/eslint --max-warnings=0",
-        "prettier": "prettier -c src/**/*",
-        "server": "ts-node -r tsconfig-paths/register server/index.ts"
+        "eslint": "node_modules/.bin/eslint --max-warnings=0 src/**/* server/**/*",
+        "prettier": "prettier -c src/**/* server/**/*",
+        "server": "nodemon -r tsconfig-paths/register server/index.ts"
     },
     "repository": {
         "type": "git",
@@ -53,7 +52,6 @@
         "babel-eslint": "^8.2.6",
         "babel-loader": "^8.1.0",
         "clean-webpack-plugin": "^3.0.0",
-        "copy-webpack-plugin": "^5.1.1",
         "cross-env": "^7.0.2",
         "css-loader": "^3.5.3",
         "eslint": "^6.0.1",
@@ -65,6 +63,7 @@
         "husky": "^4.2.5",
         "lint-staged": "^8.1.7",
         "mini-css-extract-plugin": "^0.9.0",
+        "nodemon": "^2.0.4",
         "prettier": "^1.19.1",
         "react-scripts": "3.4.1",
         "sass": "^1.26.5",
@@ -73,6 +72,7 @@
         "ts-node": "^8.10.1",
         "tsconfig-paths": "^3.9.0",
         "typescript": "^3.7.0",
+        "typescript-transform-paths": "^1.1.14",
         "url-loader": "^4.1.0",
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.11",
@@ -81,8 +81,8 @@
     "dependencies": {
         "axios": "^0.19.2",
         "classnames": "^2.2.6",
-        "compose-middleware": "^5.0.1",
         "dotenv": "^8.2.0",
+        "morgan": "^1.10.0",
         "normalize.css": "^8.0.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
@@ -108,7 +108,6 @@
     },
     "lint-staged": {
         "*.{js, jsx, ts, tsx}": [
-            "npm run ts-check",
             "npm run eslint",
             "npm run prettier"
         ]

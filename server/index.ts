@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 
 import router from './routes';
 
@@ -6,10 +7,15 @@ require('dotenv').config();
 
 export const app = express();
 
-const port = process.env.PORT;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(morgan('combined'));
 
 app.use('/api', router);
 
+const port = process.env.PORT;
+
 app.listen(port, function() {
-    console.log(`Server is on the port ${process.env.PORT}`);
+    console.log(`Server is on the port ${port}`);
 });

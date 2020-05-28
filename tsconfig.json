@@ -1,23 +1,25 @@
 {
-    "ts-node": {
-        "transpileOnly": true
-    },
     "compilerOptions": {
         "esModuleInterop": true,
-        "moduleResolution": "node",
-        "target": "es6",
         "allowJs": true,
         "checkJs": false,
         "outDir": "./dist",
         "module": "commonjs",
         "jsx": "react",
-        "baseUrl": "./src",
+        "baseUrl": "./",
         "paths": {
-            "@core/*": ["core/*"],
-            "@pages/*": ["pages/*"],
-            "@atoms/*": ["core/atoms/*"]
-        }
+            "@core/*": ["src/core/*"],
+            "@pages/*": ["src/pages/*"],
+            "@atoms/*": ["src/core/atoms/*"],
+            "@server/*": ["server/*"]
+        },
+        "plugins": [{ "transform": "typescript-transform-paths" }]
     },
-    "include": ["src/**/*", "server/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js"]
+    "include": ["src/**/*"],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "**/*.test.js",
+        "./webpack.config.js"
+    ]
 }

@@ -1,15 +1,15 @@
-import express, { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { execSync } from 'child_process';
 import path from 'path';
 
 import { axiosInstance } from '../settings';
 import { ISettings } from './../interfaces';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
     try {
-        const response = (await axiosInstance.get(`/api/conf`)) as ISettings;
+        const response = await axiosInstance.get<ISettings>(`/api/conf`);
 
         return res.send(response.data);
     } catch (err) {
@@ -21,7 +21,7 @@ router.post('/', async (req: Request, res: Response) => {
     const { repoName, buildCommand, mainBranch, period } = req.body;
 
     try {
-        const response = await axiosInstance.post(`/api/conf`, {
+        const response = await axiosInstance.post<ISettings>(`/api/conf`, {
             repoName: repoName,
             buildCommand: buildCommand,
             mainBranch: mainBranch,
