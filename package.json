@@ -108,6 +108,7 @@
     },
     "lint-staged": {
         "*.{js, jsx, ts, tsx}": [
+            "npm run ts-check",
             "npm run eslint",
             "npm run prettier"
         ]
