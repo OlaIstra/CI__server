@@ -6,6 +6,7 @@
         "outDir": "./dist",
         "module": "commonjs",
         "jsx": "react",
+        "resolveJsonModule": true,
         "baseUrl": "./",
         "paths": {
             "@core/*": ["src/core/*"],
