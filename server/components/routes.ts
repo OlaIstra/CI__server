@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import buildRouter from './buildRouter';
-import settingsRouter from './settingsRouter';
+import buildRouter from './builds/buildRouter';
+import settingsRouter from './settings/settingsRouter';
 
 const router = Router();
 

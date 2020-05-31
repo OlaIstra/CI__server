@@ -5,7 +5,7 @@ import {
     postBuild,
     getBuildDetails,
     getBuildLogs,
-} from '../controllers/buildControllers';
+} from './buildControllers';
 
 const router = Router();
 

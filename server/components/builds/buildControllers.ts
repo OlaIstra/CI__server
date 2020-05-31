@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { axiosInstance } from '../settings';
-import { state } from '../state';
-import { IBuilds, IBuildDetails, IBuildPost } from './../interfaces';
+import { axiosInstance } from '../../settings';
+import { state } from '../../state';
+import { IBuilds, IBuildDetails, IBuildPost } from '../../interfaces';
 
 export const getBuilds = async (
     req: Request,
