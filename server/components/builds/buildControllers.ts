@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 
 import { axiosInstance } from '../../settings';
 import { state } from '../../state';
-import { IBuilds, IBuildDetails, IBuildPost } from '../../interfaces';
+import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
+import { AppError } from '../error/error';
 
 export const getBuilds = async (
     req: Request,
@@ -14,7 +15,12 @@ export const getBuilds = async (
         state.builds = response.data.data;
         return res.send(response.data);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'Some problem to get list of builds',
+            true
+        );
     }
 };
 
@@ -38,7 +44,12 @@ export const postBuild = async (
 
         return res.send(response.data);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'There is no posibility to post new build',
+            true
+        );
     }
 };
 
@@ -60,7 +71,12 @@ export const getBuildDetails = async (
 
         return res.send(response.data);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'There is no such build',
+            true
+        );
     }
 };
 
@@ -79,6 +95,11 @@ export const getBuildLogs = async (
 
         return res.send(response.data);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'There is no logs',
+            true
+        );
     }
 };

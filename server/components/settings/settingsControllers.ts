@@ -3,7 +3,8 @@ import { execSync } from 'child_process';
 import path from 'path';
 
 import { axiosInstance } from '../../settings';
-import { ISettings } from '../../interfaces';
+import { ISettings } from './interfaces';
+import { AppError } from '../error/error';
 
 export const getSettings = async (
     req: Request,
@@ -14,7 +15,12 @@ export const getSettings = async (
 
         return res.send(response.data);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'Some problem to get settings',
+            true
+        );
     }
 };
 
@@ -36,11 +42,21 @@ export const postSettings = async (
                 stdio: [0, 1, 2],
                 cwd: path.resolve(__dirname, '../'),
             });
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            throw new AppError(
+                err.response.statusText,
+                err.response.status,
+                'Some problem to clone repo',
+                true
+            );
         }
         return res.send(`New settings: ${response.config.data}`);
     } catch (err) {
-        console.log(err);
+        throw new AppError(
+            err.response.statusText,
+            err.response.status,
+            'Some problem to post new settings',
+            true
+        );
     }
 };
