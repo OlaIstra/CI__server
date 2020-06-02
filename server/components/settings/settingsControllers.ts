@@ -1,15 +1,12 @@
-import { Request, Response } from 'express';
 import { execSync } from 'child_process';
 import path from 'path';
 
 import { axiosInstance } from '../../settings';
 import { ISettings } from './interfaces';
+import { AsyncRequestHandler } from './../../interfaces';
 import { AppError } from '../error/error';
 
-export const getSettings = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const getSettings: AsyncRequestHandler = async (req, res) => {
     try {
         const response = await axiosInstance.get<ISettings>(`/api/conf`);
 
@@ -24,10 +21,7 @@ export const getSettings = async (
     }
 };
 
-export const postSettings = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const postSettings: AsyncRequestHandler = async (req, res) => {
     const { repoName, buildCommand, mainBranch, period } = req.body;
 
     try {

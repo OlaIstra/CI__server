@@ -7,7 +7,7 @@
         "start": "cross-env NODE_ENV=development webpack-dev-server --open",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit ./tsconfig.json",
-        "eslint": "node_modules/.bin/eslint --max-warnings=0 src/**/* server/**/*",
+        "eslint": "eslint --max-warnings=0 src/**/* server/**/*",
         "prettier": "prettier -c src/**/* server/**/*",
         "server": "nodemon -r tsconfig-paths/register server/index.ts"
     },

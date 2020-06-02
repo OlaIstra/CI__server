@@ -1,14 +1,10 @@
-import { Request, Response } from 'express';
-
 import { axiosInstance } from '../../settings';
 import { state } from '../../state';
 import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
+import { AsyncRequestHandler } from './../../interfaces';
 import { AppError } from '../error/error';
 
-export const getBuilds = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const getBuilds: AsyncRequestHandler = async (req, res) => {
     try {
         const response = await axiosInstance.get<IBuilds>(`/api/build/list`);
 
@@ -24,10 +20,7 @@ export const getBuilds = async (
     }
 };
 
-export const postBuild = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const postBuild: AsyncRequestHandler = async (req, res) => {
     const { commitHash } = req.params;
     const { commitMessage, branchName, authorName } = req.body;
 
@@ -53,10 +46,7 @@ export const postBuild = async (
     }
 };
 
-export const getBuildDetails = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const getBuildDetails: AsyncRequestHandler = async (req, res) => {
     const { buildId } = req.params;
 
     try {
@@ -80,10 +70,7 @@ export const getBuildDetails = async (
     }
 };
 
-export const getBuildLogs = async (
-    req: Request,
-    res: Response
-): Promise<Response> => {
+export const getBuildLogs: AsyncRequestHandler = async (req, res) => {
     const { buildId } = req.params;
 
     try {

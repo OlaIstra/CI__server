@@ -16,7 +16,7 @@
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "server/**/*"],
     "exclude": [
         "node_modules",
         "**/*.spec.ts",
