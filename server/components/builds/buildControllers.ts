@@ -1,15 +1,19 @@
-import { axiosInstance } from '../../settings';
 import { state } from '../../state';
-import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
 import { AsyncRequestHandler } from './../../interfaces';
 import { AppError } from '../error/error';
+import {
+    getBuildsService,
+    postBuildService,
+    getBuildDetailsService,
+    getBuildLogsService,
+} from './buildServices';
 
 export const getBuilds: AsyncRequestHandler = async (req, res) => {
     try {
-        const response = await axiosInstance.get<IBuilds>(`/api/build/list`);
+        const result = await getBuildsService();
 
-        state.builds = response.data.data;
-        return res.send(response.data);
+        state.builds = result.data;
+        return res.send(result.data);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -21,21 +25,10 @@ export const getBuilds: AsyncRequestHandler = async (req, res) => {
 };
 
 export const postBuild: AsyncRequestHandler = async (req, res) => {
-    const { commitHash } = req.params;
-    const { commitMessage, branchName, authorName } = req.body;
-
     try {
-        const response = await axiosInstance.post<IBuildPost>(
-            `/api/build/request`,
-            {
-                commitMessage: commitMessage,
-                commitHash: commitHash,
-                branchName: branchName,
-                authorName: authorName,
-            }
-        );
+        const result = await postBuildService(req, res);
 
-        return res.send(response.data);
+        return res.send(result);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -47,19 +40,10 @@ export const postBuild: AsyncRequestHandler = async (req, res) => {
 };
 
 export const getBuildDetails: AsyncRequestHandler = async (req, res) => {
-    const { buildId } = req.params;
-
     try {
-        const response = await axiosInstance.get<IBuildDetails>(
-            `/api/build/details`,
-            {
-                params: {
-                    buildId,
-                },
-            }
-        );
+        const response = await getBuildDetailsService(req, res);
 
-        return res.send(response.data);
+        return res.send(response);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -71,16 +55,10 @@ export const getBuildDetails: AsyncRequestHandler = async (req, res) => {
 };
 
 export const getBuildLogs: AsyncRequestHandler = async (req, res) => {
-    const { buildId } = req.params;
-
     try {
-        const response = await axiosInstance.get<string>(`/api/build/log`, {
-            params: {
-                buildId,
-            },
-        });
+        const result = await getBuildLogsService(req, res);
 
-        return res.send(response.data);
+        return res.send(result);
     } catch (err) {
         throw new AppError(
             err.response.statusText,

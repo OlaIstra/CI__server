@@ -1,16 +1,15 @@
 import { execSync } from 'child_process';
 import path from 'path';
 
-import { axiosInstance } from '../../settings';
-import { ISettings } from './interfaces';
 import { AsyncRequestHandler } from './../../interfaces';
 import { AppError } from '../error/error';
+import { getSettingsService, postSettingsService } from './settingsServices';
 
 export const getSettings: AsyncRequestHandler = async (req, res) => {
     try {
-        const response = await axiosInstance.get<ISettings>(`/api/conf`);
+        const result = await getSettingsService();
 
-        return res.send(response.data);
+        return res.send(result);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -22,17 +21,11 @@ export const getSettings: AsyncRequestHandler = async (req, res) => {
 };
 
 export const postSettings: AsyncRequestHandler = async (req, res) => {
-    const { repoName, buildCommand, mainBranch, period } = req.body;
-
     try {
-        const response = await axiosInstance.post<ISettings>(`/api/conf`, {
-            repoName: repoName,
-            buildCommand: buildCommand,
-            mainBranch: mainBranch,
-            period: Number(period),
-        });
+        const result = await postSettingsService(req, res);
+
         try {
-            execSync(`git clone ${repoName}`, {
+            execSync(`git clone ${result.repoName}`, {
                 stdio: [0, 1, 2],
                 cwd: path.resolve(__dirname, '../'),
             });
@@ -44,7 +37,7 @@ export const postSettings: AsyncRequestHandler = async (req, res) => {
                 true
             );
         }
-        return res.send(`New settings: ${response.config.data}`);
+        return res.send(`New settings: ${result}`);
     } catch (err) {
         throw new AppError(
             err.response.statusText,

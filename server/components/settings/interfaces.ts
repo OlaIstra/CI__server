@@ -1,9 +1,11 @@
 export interface ISettings {
-    data: {
-        id?: string;
-        repoName: string;
-        buildCommand: string;
-        mainBranch: string;
-        period: number;
-    };
+    id?: string;
+    repoName: string;
+    buildCommand: string;
+    mainBranch: string;
+    period: number;
+}
+
+export interface ISettingsData {
+    data: ISettings;
 }
