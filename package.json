@@ -6,8 +6,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "cross-env NODE_ENV=development webpack-dev-server --open",
         "build": "cross-env NODE_ENV=production webpack",
-        "ts-check": "tsc --noEmit ./tsconfig.json",
-        "eslint": "eslint --max-warnings=0 src/**/* server/**/*",
+        "ts-check": "tsc --noEmit --project ./tsconfig.json",
+        "eslint": "eslint server/**/* src/**/* --ext .js,.ts,.tsx --max-warnings=0 --no-error-on-unmatched-pattern",
         "prettier": "prettier -c src/**/* server/**/*",
         "server": "nodemon -r tsconfig-paths/register server/index.ts"
     },
@@ -47,7 +47,7 @@
         "@types/react-dom": "^16.9.6",
         "@types/react-redux": "^7.1.7",
         "@types/react-router-dom": "^5.1.4",
-        "@typescript-eslint/eslint-plugin": "^3.0.0",
+        "@typescript-eslint/eslint-plugin": "^2.27.0",
         "@typescript-eslint/parser": "^3.0.0",
         "babel-eslint": "^8.2.6",
         "babel-loader": "^8.1.0",
@@ -61,7 +61,7 @@
         "file-loader": "^6.0.0",
         "html-webpack-plugin": "^4.3.0",
         "husky": "^4.2.5",
-        "lint-staged": "^8.1.7",
+        "lint-staged": "^10.2.7",
         "mini-css-extract-plugin": "^0.9.0",
         "nodemon": "^2.0.4",
         "prettier": "^1.19.1",
@@ -106,12 +106,5 @@
         "hooks": {
             "pre-commit": "lint-staged"
         }
-    },
-    "lint-staged": {
-        "*.{js, jsx, ts, tsx}": [
-            "npm run ts-check",
-            "npm run eslint",
-            "npm run prettier"
-        ]
     }
 }

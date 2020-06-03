@@ -7,7 +7,11 @@
     ],
     "rules": {
         "no-console": "off",
-        "no-inline-comments": "off"
+        "no-inline-comments": "off",
+        "@typescript-eslint/interface-name-prefix": [
+            2,
+            { "prefixWithI": "always", "allowUnderscorePrefix": true }
+        ]
     },
     "overrides": [
         {

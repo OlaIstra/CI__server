@@ -1,6 +1,6 @@
-import { state } from '../../state';
-import { AsyncRequestHandler } from './../../interfaces';
-import { AppError } from '../error/error';
+import { state } from '@server/state';
+import { AsyncRequestHandler } from '@server/interfaces';
+import { AppError } from '@server/components/error/error';
 import {
     getBuildsService,
     postBuildService,

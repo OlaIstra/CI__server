@@ -1,12 +1,12 @@
 import { HttpCode } from './httpStatusCodes';
 
-export interface AppErrorOptionals {
+export interface IAppErrorOptionals {
     isOperational?: boolean;
     code?: HttpCode;
     logger?: string;
 }
 
-export interface ErrorResponse {
+export interface IErrorResponse {
     status: {
         code: number;
         message: string;
