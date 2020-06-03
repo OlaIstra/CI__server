@@ -1,28 +1,27 @@
 import { execSync } from 'child_process';
 import path from 'path';
 
-import { AsyncRequestHandler } from './../../interfaces';
+import { AsyncRequestHandler } from '@server/interfaces';
 import { AppError } from '../error/error';
-import { getSettingsService, postSettingsService } from './settingsServices';
+import { settingsService } from './settingsServices';
 
 export const getSettings: AsyncRequestHandler = async (req, res) => {
     try {
-        const result = await getSettingsService();
+        const result = await settingsService.getSettings();
 
         return res.send(result);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
             err.response.status,
-            'Some problem to get settings',
-            true
+            'Some problem to get settings'
         );
     }
 };
 
 export const postSettings: AsyncRequestHandler = async (req, res) => {
     try {
-        const result = await postSettingsService(req, res);
+        const result = await settingsService.settingsRequest(req, res);
 
         try {
             execSync(`git clone ${result.repoName}`, {
@@ -33,8 +32,7 @@ export const postSettings: AsyncRequestHandler = async (req, res) => {
             throw new AppError(
                 err.response.statusText,
                 err.response.status,
-                'Some problem to clone repo',
-                true
+                'Some problem to clone repo'
             );
         }
         return res.send(`New settings: ${result}`);
@@ -42,8 +40,7 @@ export const postSettings: AsyncRequestHandler = async (req, res) => {
         throw new AppError(
             err.response.statusText,
             err.response.status,
-            'Some problem to post new settings',
-            true
+            'Some problem to post new settings'
         );
     }
 };

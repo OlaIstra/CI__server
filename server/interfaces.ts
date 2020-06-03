@@ -10,8 +10,3 @@ export type AsyncRequestHandler = (
     req: Request,
     res: Response
 ) => Promise<Response>;
-
-export type AsyncRequestHandlerApi<T> = (
-    req?: Request,
-    res?: Response
-) => Promise<T>;

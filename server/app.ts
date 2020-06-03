@@ -3,16 +3,25 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
 import swaggerDocs from './swagger.json';
-
 import router from './components/routes';
 
-export const app = express();
+require('dotenv').config();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const port = process.env.PORT;
 
-app.use(morgan('combined'));
+export async function bootstrap(): Promise<void> {
+    const app = await express();
 
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', router);
+    app.use(morgan('combined'));
+
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+    app.use('/api', router);
+
+    await app.listen(port, function() {
+        console.log(`Server is on the port ${port}`);
+    });
+}

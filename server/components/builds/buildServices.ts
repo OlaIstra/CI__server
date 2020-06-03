@@ -1,99 +1,89 @@
-import { axiosInstance } from '../../settings';
+import { axiosInstance } from '@server/settings';
 import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
 import { AppError } from '../error/error';
-import { AsyncRequestHandlerApi } from '../../interfaces';
 
-export const getBuildsService: AsyncRequestHandlerApi<IBuilds> = async () => {
-    try {
-        const response = await axiosInstance.get<IBuilds>(`/api/build/list`);
+export const buildService = {
+    getBuilds: async (): Promise<IBuilds> => {
+        try {
+            const response = await axiosInstance.get<IBuilds>(
+                `/api/build/list`
+            );
 
-        return response.data;
-    } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'Some problem to get list of builds from API',
-            true
-        );
-    }
-};
+            return response.data;
+        } catch (err) {
+            throw new AppError(
+                err.response.statusText,
+                err.response.status,
+                'Some problem to get list of builds from API'
+            );
+        }
+    },
 
-export const postBuildService: AsyncRequestHandlerApi<IBuildPost> = async (
-    req,
-    res
-) => {
-    const { commitHash } = req.params;
-    const { commitMessage, branchName, authorName } = req.body;
+    buildRequest: async (req, res): Promise<IBuildPost> => {
+        const { commitHash } = req.params;
+        const { commitMessage, branchName, authorName } = req.body;
 
-    try {
-        const response = await axiosInstance.post<IBuildPost>(
-            `/api/build/request`,
-            {
-                commitMessage: commitMessage,
-                commitHash: commitHash,
-                branchName: branchName,
-                authorName: authorName,
-            }
-        );
+        try {
+            const response = await axiosInstance.post<IBuildPost>(
+                `/api/build/request`,
+                {
+                    commitMessage: commitMessage,
+                    commitHash: commitHash,
+                    branchName: branchName,
+                    authorName: authorName,
+                }
+            );
 
-        return response.data;
-    } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no posibility to post new build through API',
-            true
-        );
-    }
-};
+            return response.data;
+        } catch (err) {
+            throw new AppError(
+                err.response.statusText,
+                err.response.status,
+                'There is no posibility to post new build through API'
+            );
+        }
+    },
 
-export const getBuildDetailsService: AsyncRequestHandlerApi<IBuildDetails> = async (
-    req,
-    res
-) => {
-    const { buildId } = req.params;
+    getBuildDetails: async (req, res): Promise<IBuildDetails> => {
+        const { buildId } = req.params;
 
-    try {
-        const response = await axiosInstance.get<IBuildDetails>(
-            `/api/build/details`,
-            {
+        try {
+            const response = await axiosInstance.get<IBuildDetails>(
+                `/api/build/details`,
+                {
+                    params: {
+                        buildId,
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err) {
+            throw new AppError(
+                err.response.statusText,
+                err.response.status,
+                'There is no such build found through API'
+            );
+        }
+    },
+
+    getBuildLogs: async (req, res): Promise<string> => {
+        const { buildId } = req.params;
+
+        try {
+            const response = await axiosInstance.get<string>(`/api/build/log`, {
                 params: {
                     buildId,
                 },
-            }
-        );
+            });
 
-        return response.data;
-    } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no such build found through API',
-            true
-        );
-    }
-};
-
-export const getBuildLogsService: AsyncRequestHandlerApi<string> = async (
-    req,
-    res
-) => {
-    const { buildId } = req.params;
-
-    try {
-        const response = await axiosInstance.get<string>(`/api/build/log`, {
-            params: {
-                buildId,
-            },
-        });
-
-        return response.data;
-    } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no logs to get through API',
-            true
-        );
-    }
+            return response.data;
+        } catch (err) {
+            throw new AppError(
+                err.response.statusText,
+                err.response.status,
+                'There is no logs to get through API'
+            );
+        }
+    },
 };

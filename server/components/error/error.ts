@@ -9,7 +9,7 @@ export class AppError extends Error {
         name: string,
         httpCode: HttpCode,
         description: string,
-        isOperational: boolean
+        isOperational = true
     ) {
         super(description);
 
