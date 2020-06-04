@@ -1,6 +1,6 @@
 import { axiosInstance } from '@server/settings';
 import { ISettings, ISettingsData } from './interfaces';
-import { AppError } from '../error/error';
+import { AppError } from '@server/components/error/error';
 
 export const settingsService = {
     getSettings: async (): Promise<ISettingsData> => {

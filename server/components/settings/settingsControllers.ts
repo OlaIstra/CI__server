@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import path from 'path';
 
 import { AsyncRequestHandler } from '@server/interfaces';
-import { AppError } from '../error/error';
+import { AppError } from '@server/components/error/error';
 import { settingsService } from './settingsServices';
 
 export const getSettings: AsyncRequestHandler = async (req, res) => {

@@ -1,6 +1,6 @@
 import { axiosInstance } from '@server/settings';
 import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
-import { AppError } from '../error/error';
+import { AppError } from '@server/components/error/error';
 
 export const buildService = {
     getBuilds: async (): Promise<IBuilds> => {
