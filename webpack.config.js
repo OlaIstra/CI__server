@@ -25,7 +25,7 @@ module.exports = {
     },
     devtool: isDev ? 'inline-source-map' : false,
     devServer: {
-        port: 3020,
+        port: 5000,
         hot: isDev,
     },
     optimization: {
