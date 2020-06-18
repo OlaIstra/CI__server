@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "CI-server",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "start": "cross-env NODE_ENV=development webpack-dev-server --host 0.0.0.0 --open",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
