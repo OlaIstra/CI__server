@@ -1,14 +1,18 @@
-import { state } from '@server/state';
+//import { state } from '@server/state';
 import { AsyncRequestHandler } from '@server/interfaces';
 import { AppError } from '@server/components/error/error';
 import { buildService } from './buildServices';
+import { pool } from '@server/db';
 
 export const getBuilds: AsyncRequestHandler = async (req, res) => {
     try {
-        const result = await buildService.getBuilds();
-
-        state.builds = result.data;
-        return res.send(result.data);
+        return pool.query(
+            'SELECT * FROM builds',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (qErr: unknown, qRes: any) => {
+                res.json(qRes.rows);
+            }
+        );
     } catch (err) {
         throw new AppError(
             err.response.statusText,

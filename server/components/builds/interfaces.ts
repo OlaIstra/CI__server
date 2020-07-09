@@ -1,9 +1,9 @@
 export interface IBuild {
     id: string;
     configurationId: string;
-    buildNumber: number;
     commitMessage: string;
     commitHash: string;
+    buildNumber: number;
     branchName: string;
     authorName: string;
     status: string;

@@ -8,6 +8,7 @@ import router from './components/routes';
 require('dotenv').config();
 
 const port = process.env.PORT;
+//const port = 4000;
 
 export async function bootstrap(): Promise<void> {
     const app = await express();

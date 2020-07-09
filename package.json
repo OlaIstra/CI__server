@@ -84,6 +84,7 @@
         "dotenv": "^8.2.0",
         "morgan": "^1.10.0",
         "normalize.css": "^8.0.1",
+        "pg": "^8.2.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.0",
@@ -106,5 +107,6 @@
         "hooks": {
             "pre-commit": "lint-staged"
         }
-    }
+    },
+    "proxy": "http://localhost:4000"
 }

@@ -4,16 +4,21 @@ import path from 'path';
 import { AsyncRequestHandler } from '@server/interfaces';
 import { AppError } from '@server/components/error/error';
 import { settingsService } from './settingsServices';
+import { pool } from '@server/db';
 
 export const getSettings: AsyncRequestHandler = async (req, res) => {
     try {
-        const result = await settingsService.getSettings();
-
-        return res.send(result);
-    } catch (err) {
+        return pool.query(
+            'SELECT * FROM settings',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (qErr: unknown, qRes: any) => {
+                res.json(qRes.rows);
+            }
+        );
+    } catch (qErr) {
         throw new AppError(
-            err.response.statusText,
-            err.response.status,
+            qErr.response.statusText,
+            qErr.response.status,
             'Some problem to get settings'
         );
     }
