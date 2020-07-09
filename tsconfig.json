@@ -1,18 +1,20 @@
 {
-	"compilerOptions": {
+    "compilerOptions": {
         "esModuleInterop": true,
-        "allowJs": true,
         "checkJs": false,
         "outDir": "./dist",
-		"module": "commonjs",
-		"jsx": "react",
-		"baseUrl": "./src",
-		"paths": {
-			"@core/*": ["core/*"],
-			"@pages/*": ["pages/*"],
-			"@atoms/*": ["core/atoms/*"]
-		}
-	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js"]
+        "module": "commonjs",
+        "jsx": "react",
+        "resolveJsonModule": true,
+        "baseUrl": "./",
+        "paths": {
+            "@core/*": ["src/core/*"],
+            "@pages/*": ["src/pages/*"],
+            "@atoms/*": ["src/core/atoms/*"],
+            "@server/*": ["server/*"]
+        },
+        "plugins": [{ "transform": "typescript-transform-paths" }]
+    },
+    "include": ["src/**/*", "server/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js"]
 }

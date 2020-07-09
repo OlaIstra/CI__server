@@ -1,0 +1,11 @@
+/**/*.scss
+/**/*.eot
+/**/*.svg
+/**/*.ttf
+/**/*.woff
+/**/*.png
+/**/*.ico
+/**/*.html
+/**/*.json
+/**/*.yml
+Dockerfile

@@ -20,11 +20,12 @@ module.exports = {
             '@core': path.resolve(__dirname, 'src/core'),
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@atoms': path.resolve(__dirname, 'src/core/atoms'),
+            '@server': path.resolve(__dirname, 'server/'),
         },
     },
     devtool: isDev ? 'inline-source-map' : false,
     devServer: {
-        port: 3020,
+        port: 5000,
         hot: isDev,
     },
     optimization: {
