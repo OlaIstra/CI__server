@@ -1,17 +1,26 @@
 import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
+import { ConnectionOptions } from 'typeorm';
 
 import swaggerDocs from './swagger.json';
 import router from './components/routes';
+import { typeOrmConfig } from './typeorm.config';
+import { connectDb } from './connectDb';
 
 require('dotenv').config();
 
 const port = process.env.PORT;
-//const port = 4000;
 
-export async function bootstrap(): Promise<void> {
+export async function bootstrap(config): Promise<void> {
     const app = await express();
+
+    const dbConfig = {
+        ...typeOrmConfig,
+        ...config.db,
+    } as ConnectionOptions;
+
+    await connectDb(dbConfig);
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
