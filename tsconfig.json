@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "lib": ["ESnext", "es5", "es6", "dom"],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "esModuleInterop": true,
@@ -9,6 +10,8 @@
         "jsx": "react",
         "resolveJsonModule": true,
         "baseUrl": "./",
+        "strict": true,
+        "strictPropertyInitialization": false,
         "paths": {
             "@core/*": ["src/core/*"],
             "@pages/*": ["src/pages/*"],

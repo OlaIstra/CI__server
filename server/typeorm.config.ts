@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 import { Settings } from './components/settings/settingsEntity';
-import { Builds } from './components/builds/buildsEntity';
+import { Build } from './components/builds/buildsEntity';
 
 export const typeOrmConfig: ConnectionOptions = {
     type: 'postgres',
@@ -10,5 +10,5 @@ export const typeOrmConfig: ConnectionOptions = {
     password: 'qwerty',
     port: 5432,
     synchronize: true,
-    entities: [Settings, Builds],
+    entities: [Settings, Build],
 };

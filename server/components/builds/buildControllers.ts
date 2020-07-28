@@ -1,18 +1,17 @@
-//import { state } from '@server/state';
-import { AsyncRequestHandler } from '@server/interfaces';
+import { Response, Request } from 'express';
+
 import { AppError } from '@server/components/error/error';
 import { buildService } from './buildServices';
-import { pool } from '@server/db';
+import { Build } from './buildsEntity';
+import { IBuild } from './interfaces';
 
-export const getBuilds: AsyncRequestHandler = async (req, res) => {
+export const getBuilds = async (
+    _: unknown,
+    res: Response<Build[]>
+): Promise<void> => {
     try {
-        return pool.query(
-            'SELECT * FROM builds',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (qErr: unknown, qRes: any) => {
-                res.json(qRes.rows);
-            }
-        );
+        const builds = await buildService.getBuilds();
+        res.send(builds);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -22,11 +21,14 @@ export const getBuilds: AsyncRequestHandler = async (req, res) => {
     }
 };
 
-export const postBuild: AsyncRequestHandler = async (req, res) => {
+export const saveBuild = async (
+    req: Request<{ id: string }, unknown, IBuild>,
+    res: Response<Build>
+): Promise<void> => {
     try {
-        const result = await buildService.buildRequest(req, res);
-
-        return res.send(result);
+        const result = await buildService.saveBuild(req.body);
+        // todo validation for id после добавления gitService
+        res.send(result);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -36,11 +38,14 @@ export const postBuild: AsyncRequestHandler = async (req, res) => {
     }
 };
 
-export const getBuildDetails: AsyncRequestHandler = async (req, res) => {
+export const getBuildDetails = async (
+    req: Request<{ id: string }>,
+    res: Response<Build>
+): Promise<void> => {
     try {
-        const response = await buildService.getBuildDetails(req, res);
+        const response = await buildService.getBuildDetails(req.params.id);
 
-        return res.send(response);
+        res.send(response);
     } catch (err) {
         throw new AppError(
             err.response.statusText,
@@ -50,11 +55,14 @@ export const getBuildDetails: AsyncRequestHandler = async (req, res) => {
     }
 };
 
-export const getBuildLogs: AsyncRequestHandler = async (req, res) => {
+export const getBuildLogs = async (
+    req: Request<{ id: string }>,
+    res: Response<Build['buildLogs']>
+): Promise<void> => {
     try {
-        const result = await buildService.getBuildLogs(req, res);
+        const result = await buildService.getBuildDetails(req.params.id);
 
-        return res.send(result);
+        res.send(result?.buildLogs);
     } catch (err) {
         throw new AppError(
             err.response.statusText,

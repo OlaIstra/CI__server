@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, getRepository } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Settings {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     repoName: string;
@@ -16,9 +16,4 @@ export class Settings {
 
     @Column()
     timePeriod: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function getSettingsRepository() {
-    return getRepository(Settings);
 }

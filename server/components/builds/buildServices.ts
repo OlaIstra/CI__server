@@ -1,15 +1,13 @@
-import { axiosInstance } from '@server/settings';
-import { IBuilds, IBuildDetails, IBuildPost } from './interfaces';
 import { AppError } from '@server/components/error/error';
+import { Build } from './buildsEntity';
+import { getRepository } from 'typeorm';
+
+const repository = getRepository(Build);
 
 export const buildService = {
-    getBuilds: async (): Promise<IBuilds> => {
+    getBuilds: async (): Promise<Build[]> => {
         try {
-            const response = await axiosInstance.get<IBuilds>(
-                `/api/build/list`
-            );
-
-            return response.data;
+            return repository.find();
         } catch (err) {
             throw new AppError(
                 err.response.statusText,
@@ -19,22 +17,9 @@ export const buildService = {
         }
     },
 
-    buildRequest: async (req, res): Promise<IBuildPost> => {
-        const { commitHash } = req.params;
-        const { commitMessage, branchName, authorName } = req.body;
-
+    saveBuild: async (buildData: Build): Promise<Build> => {
         try {
-            const response = await axiosInstance.post<IBuildPost>(
-                `/api/build/request`,
-                {
-                    commitMessage: commitMessage,
-                    commitHash: commitHash,
-                    branchName: branchName,
-                    authorName: authorName,
-                }
-            );
-
-            return response.data;
+            return repository.save(buildData);
         } catch (err) {
             throw new AppError(
                 err.response.statusText,
@@ -44,45 +29,14 @@ export const buildService = {
         }
     },
 
-    getBuildDetails: async (req, res): Promise<IBuildDetails> => {
-        const { buildId } = req.params;
-
+    getBuildDetails: async (buildId: string): Promise<Build | undefined> => {
         try {
-            const response = await axiosInstance.get<IBuildDetails>(
-                `/api/build/details`,
-                {
-                    params: {
-                        buildId,
-                    },
-                }
-            );
-
-            return response.data;
+            return repository.findOne({ id: buildId });
         } catch (err) {
             throw new AppError(
                 err.response.statusText,
                 err.response.status,
                 'There is no such build found through API'
-            );
-        }
-    },
-
-    getBuildLogs: async (req, res): Promise<string> => {
-        const { buildId } = req.params;
-
-        try {
-            const response = await axiosInstance.get<string>(`/api/build/log`, {
-                params: {
-                    buildId,
-                },
-            });
-
-            return response.data;
-        } catch (err) {
-            throw new AppError(
-                err.response.statusText,
-                err.response.status,
-                'There is no logs to get through API'
             );
         }
     },
