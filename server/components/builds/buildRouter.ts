@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import {
     getBuilds,
-    postBuild,
+    saveBuild,
     getBuildDetails,
     getBuildLogs,
 } from './buildControllers';
@@ -11,10 +11,10 @@ const router = Router();
 
 router.get('/', getBuilds);
 
-router.post('/:commitHash', postBuild);
+router.post('/:commitHash', saveBuild);
 
-router.get('/:buildId', getBuildDetails);
+router.get('/:id', getBuildDetails);
 
-router.get('/:buildId/logs', getBuildLogs);
+router.get('/:id/logs', getBuildLogs);
 
 export default router;

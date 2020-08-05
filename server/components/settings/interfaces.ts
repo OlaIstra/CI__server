@@ -1,9 +1,9 @@
 export interface ISettings {
-    id?: string;
+    id: string;
     repoName: string;
     buildCommand: string;
     mainBranch: string;
-    period: number;
+    timePeriod: number;
 }
 
 export interface ISettingsData {

@@ -1,15 +1,14 @@
-import { axiosInstance } from '@server/settings';
-import { ISettings, ISettingsData } from './interfaces';
 import { AppError } from '@server/components/error/error';
 
-export const settingsService = {
-    getSettings: async (): Promise<ISettingsData> => {
-        try {
-            const response = await axiosInstance.get<ISettingsData>(
-                `/api/conf`
-            );
+import { Settings } from './settingsEntity';
+import { getRepository } from 'typeorm';
 
-            return response.data;
+const repository = getRepository(Settings);
+
+export const settingsService = {
+    getSettings: async (): Promise<Settings | undefined> => {
+        try {
+            return repository.findOne();
         } catch (err) {
             throw new AppError(
                 err.response.statusText,
@@ -19,17 +18,10 @@ export const settingsService = {
         }
     },
 
-    settingsRequest: async (req, res): Promise<ISettings> => {
-        const { repoName, buildCommand, mainBranch, period } = req.body;
-
+    saveSettings: async (settingsData: Settings): Promise<Settings> => {
         try {
-            const response = await axiosInstance.post<ISettings>(`/api/conf`, {
-                repoName: repoName,
-                buildCommand: buildCommand,
-                mainBranch: mainBranch,
-                period: Number(period),
-            });
-            return JSON.parse(response.config.data);
+            //добавить фнукционал по update settings - если в базе ужзе есть настройки, то надо перерисать, а если нет, то добавить
+            return repository.save(settingsData);
         } catch (err) {
             throw new AppError(
                 err.response.statusText,
