@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { AppError } from '@server/components/error/error';
 import { settingsService } from './settingsServices';
+import { gitCommandsService } from './../gitCommands/gitCommandsService';
 import { ISettings } from './interfaces';
 import { Settings } from './settingsEntity';
 
@@ -12,43 +13,28 @@ export const getSettings = async (
     try {
         const result = await settingsService.getSettings();
         res.send(result);
-    } catch (qErr) {
-        throw new AppError(
-            qErr.response.statusText,
-            qErr.response.status,
-            'Some problem to get settings'
-        );
+    } catch (err) {
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };
 
 export const saveSettings = async (
     req: Request<{}, unknown, ISettings>,
-    res: Response<Settings>
+    res: Response<Settings | string>
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
 
-        //
+        const isLocalRepo = gitCommandsService.findLocalRepo();
 
-        try {
-            // ToDo add commands to clone repo from gitService (from Kirill)
-            // execSync(`git clone ${result.repoName}`, {
-            //     stdio: [0, 1, 2],
-            //     cwd: path.resolve(__dirname, '../'),
-            // });
-        } catch (err) {
-            throw new AppError(
-                err.response.statusText,
-                err.response.status,
-                'Some problem to clone repo'
-            );
+        if (isLocalRepo) {
+            gitCommandsService.deleteLocalRepo();
         }
+
+        await gitCommandsService.cloneRepo('OlaIstra', req.body.repoName);
+
         res.send(result);
     } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'Some problem to post new settings'
-        );
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };

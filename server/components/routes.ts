@@ -8,6 +8,5 @@ const router = Router();
 export default function(): Router {
     router.use('/settings', settingsRouter);
     router.use('/builds', buildRouter);
-
     return router;
 }

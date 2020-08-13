@@ -17,17 +17,15 @@ export const connectDb = async (
 ): Promise<Connection | undefined> => {
     while (retries) {
         try {
-            logger.info(`try to connect`);
             await createConnection(typeOrmConfig)
                 .then(connection => {
                     // here you can start to work with your entities
                 })
                 .catch(error => {
-                    throw new Error(error);
+                    throw new Error(error.name);
                 });
-            logger.info(`Connected`);
         } catch (err) {
-            if (err.name === 'AlreadyHasActiveConnectionError') {
+            if (err.message.includes('AlreadyHasActiveConnectionError')) {
                 return getConnection('default');
             }
 

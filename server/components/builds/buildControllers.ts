@@ -3,7 +3,8 @@ import { Response, Request } from 'express';
 import { AppError } from '@server/components/error/error';
 import { buildService } from './buildServices';
 import { Build } from './buildsEntity';
-import { IBuild } from './interfaces';
+import { gitCommandsService } from '../gitCommands/gitCommandsService';
+import { settingsService } from './../settings/settingsServices';
 
 export const getBuilds = async (
     _: unknown,
@@ -13,28 +14,33 @@ export const getBuilds = async (
         const builds = await buildService.getBuilds();
         res.send(builds);
     } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'Some problem to get list of builds'
-        );
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };
 
 export const saveBuild = async (
-    req: Request<{ id: string }, unknown, IBuild>,
-    res: Response<Build>
+    req: Request<{ commitHash: string }, unknown, any>,
+    res: Response<any>
 ): Promise<void> => {
+    const { commitHash } = req.body;
+
+    const settings = await settingsService.getSettings();
+
+    let branchName = 'master';
+
+    if (settings && settings.mainBranch) {
+        branchName = settings.mainBranch;
+    }
+
+    const buildInfo = await gitCommandsService.getCommitByHash(
+        commitHash,
+        branchName
+    );
     try {
-        const result = await buildService.saveBuild(req.body);
-        // todo validation for id после добавления gitService
+        const result = await buildService.saveBuild(buildInfo);
         res.send(result);
     } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no posibility to post new build'
-        );
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };
 
@@ -47,11 +53,7 @@ export const getBuildDetails = async (
 
         res.send(response);
     } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no such build'
-        );
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };
 
@@ -64,10 +66,19 @@ export const getBuildLogs = async (
 
         res.send(result?.buildLogs);
     } catch (err) {
-        throw new AppError(
-            err.response.statusText,
-            err.response.status,
-            'There is no logs'
-        );
+        throw new AppError(err.name, err.httpCode, err.description);
+    }
+};
+
+export const deleteBuilds = async (
+    _: any,
+    res: Response<string>
+): Promise<boolean> => {
+    try {
+        await buildService.deleteBuilds();
+        res.send('success');
+        return true;
+    } catch (err) {
+        throw new AppError(err.name, err.httpCode, err.description);
     }
 };

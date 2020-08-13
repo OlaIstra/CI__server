@@ -2,8 +2,7 @@
     "parser": "@typescript-eslint/parser",
     "extends": [
         "plugin:@typescript-eslint/recommended",
-        "react-app",
-        "prettier"
+        "react-app"
     ],
     "rules": {
         "no-console": "off",
@@ -11,13 +10,13 @@
         "@typescript-eslint/interface-name-prefix": [
             2,
             { "prefixWithI": "always", "allowUnderscorePrefix": true }
-        ]
+        ],
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "overrides": [
         {
             "files": ["*.js"],
             "rules": { "@typescript-eslint/no-var-requires": 0 }
         }
-    ],
-    "plugins": ["prettier"]
-}
+    ]
+}    

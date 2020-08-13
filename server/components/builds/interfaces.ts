@@ -3,7 +3,7 @@ export interface IBuild {
     configurationId: string;
     commitMessage: string;
     commitHash: string;
-    buildNumber: number;
+    // buildNumber: number;
     branchName: string;
     authorName: string;
     status: string;
@@ -27,7 +27,14 @@ export interface IBuildDetails extends IBuild {
 export interface IBuildPost {
     data: {
         id: string;
-        buildNumber: number;
+        // buildNumber: number;
         status: string;
     };
+}
+
+export interface IBuildCommit {
+    authorName: string;
+    commitMessage: string;
+    commitHash: string;
+    branchName: string;
 }
