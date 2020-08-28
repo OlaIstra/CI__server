@@ -18,9 +18,6 @@ export class Build {
     @Column()
     commitHash: string;
 
-    // @Column()
-    // buildNumber?: number;
-
     @Column()
     branchName: string;
 

@@ -21,5 +21,5 @@
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },
     "include": ["src/**/*", "server/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js", "pgdata"]
+    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js"]
 }

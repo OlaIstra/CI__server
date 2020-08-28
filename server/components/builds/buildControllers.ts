@@ -3,8 +3,9 @@ import { Response, Request } from 'express';
 import { AppError } from '@server/components/error/error';
 import { buildService } from './buildServices';
 import { Build } from './buildsEntity';
-import { gitCommandsService } from '../gitCommands/gitCommandsService';
-import { settingsService } from './../settings/settingsServices';
+import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
+import { settingsService } from '@server/components/settings/settingsServices';
+import { IBuildCommit } from './interfaces';
 
 export const getBuilds = async (
     _: unknown,
@@ -19,18 +20,14 @@ export const getBuilds = async (
 };
 
 export const saveBuild = async (
-    req: Request<{ commitHash: string }, unknown, any>,
-    res: Response<any>
+    req: Request<{ commitHash: string }, unknown>,
+    res: Response<IBuildCommit>
 ): Promise<void> => {
     const { commitHash } = req.body;
 
     const settings = await settingsService.getSettings();
 
-    let branchName = 'master';
-
-    if (settings && settings.mainBranch) {
-        branchName = settings.mainBranch;
-    }
+    const branchName = settings?.mainBranch;
 
     const buildInfo = await gitCommandsService.getCommitByHash(
         commitHash,
@@ -50,7 +47,6 @@ export const getBuildDetails = async (
 ): Promise<void> => {
     try {
         const response = await buildService.getBuildDetails(req.params.id);
-
         res.send(response);
     } catch (err) {
         throw new AppError(err.name, err.httpCode, err.description);
@@ -63,7 +59,6 @@ export const getBuildLogs = async (
 ): Promise<void> => {
     try {
         const result = await buildService.getBuildDetails(req.params.id);
-
         res.send(result?.buildLogs);
     } catch (err) {
         throw new AppError(err.name, err.httpCode, err.description);
@@ -71,13 +66,12 @@ export const getBuildLogs = async (
 };
 
 export const deleteBuilds = async (
-    _: any,
+    _: unknown,
     res: Response<string>
-): Promise<boolean> => {
+): Promise<void> => {
     try {
         await buildService.deleteBuilds();
         res.send('success');
-        return true;
     } catch (err) {
         throw new AppError(err.name, err.httpCode, err.description);
     }

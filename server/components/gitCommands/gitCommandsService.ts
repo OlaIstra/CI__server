@@ -1,27 +1,37 @@
 import path from 'path';
 import { promisify } from 'util';
-import { exec } from 'child_process';
+import { exec, ExecOptions } from 'child_process';
 import os from 'os';
 import fs from 'fs';
 
-import { AppError } from '../error/error';
-import { IBuildCommit } from '../builds/interfaces';
+import { AppError } from '@server/components/error/error';
+import { IBuildCommit } from '@server/components/builds/interfaces';
 
-const localRepo = 'repository';
+require('dotenv').config();
+
+const localRepo = process.env.LOCAL_REPO || '';
 const execAsync = promisify(exec);
 const homeDir = os.homedir();
 const localRepoPath = path.join(homeDir, localRepo);
 
 export const gitCommandsService = {
-    executeCommand: async (command: string, options?: any): Promise<any> => {
+    executeCommand: async (
+        command: string,
+        options?: { cwd: 'buffer' | null | string } & ExecOptions
+    ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }> => {
         return await execAsync(command, options);
     },
 
-    cloneRepo: (username: string, repoName: string): boolean => {
+    cloneRepo: (username: string, repoName: string): void => {
         try {
+            const isLocalRepo = gitCommandsService.findLocalRepo();
+
+            if (isLocalRepo) {
+                gitCommandsService.deleteLocalRepo();
+            }
+
             const command = `git clone https://github.com/${username}/${repoName} ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
-            return true;
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
         }
@@ -36,21 +46,19 @@ export const gitCommandsService = {
         }
     },
 
-    deleteLocalRepo: (): boolean => {
+    deleteLocalRepo: (): void => {
         try {
             const command = `rm -rf ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
-            return true;
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
         }
     },
 
-    checkout: (branchName: string): boolean => {
+    checkout: (branchName: string): void => {
         try {
             const command = `cd ${localRepoPath} && git checkout ${branchName}`;
             gitCommandsService.executeCommand(command);
-            return true;
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
         }
@@ -58,7 +66,7 @@ export const gitCommandsService = {
 
     getCommitByHash: async (
         commitHash = '',
-        branchName: string
+        branchName = 'master'
     ): Promise<IBuildCommit> => {
         await gitCommandsService.checkout(branchName);
 

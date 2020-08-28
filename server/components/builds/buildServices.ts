@@ -43,11 +43,10 @@ export const buildService = {
         }
     },
 
-    deleteBuilds: async (): Promise<boolean> => {
+    deleteBuilds: async (): Promise<void> => {
         try {
             const repository = getRepository(Build);
             await repository.clear();
-            return true;
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
         }

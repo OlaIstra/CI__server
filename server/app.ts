@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { ConnectionOptions } from 'typeorm';
@@ -14,13 +14,11 @@ const port = process.env.PORT;
 export async function bootstrap(config: {
     port?: number;
     router?: { prefix: string; getRouter: () => Promise<() => express.Router> };
-    db?: any;
 }): Promise<void> {
     const app = await express();
 
     const dbConfig = {
         ...typeOrmConfig,
-        ...config.db,
     } as ConnectionOptions;
 
     await connectDb(dbConfig);
@@ -32,9 +30,9 @@ export async function bootstrap(config: {
 
     app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-    const router: any = await config.router?.getRouter();
+    const router: (() => Router) | undefined = await config.router?.getRouter();
 
-    app.use('/api', router());
+    if (router) app.use('/api', router());
 
     await app.listen(port, function() {
         console.log(`Server is on the port ${port}`);

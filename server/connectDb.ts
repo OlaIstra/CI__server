@@ -25,7 +25,7 @@ export const connectDb = async (
                     throw new Error(error.name);
                 });
         } catch (err) {
-            if (err.message.includes('AlreadyHasActiveConnectionError')) {
+            if (err.name === 'AlreadyHasActiveConnectionError') {
                 return getConnection('default');
             }
 

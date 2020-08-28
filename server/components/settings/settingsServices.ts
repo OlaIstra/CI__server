@@ -3,6 +3,7 @@ import deepEqual from 'deep-equal';
 import { AppError } from '@server/components/error/error';
 import { Settings } from './settingsEntity';
 import { getRepository } from 'typeorm';
+import { HttpStatus } from '@server/HttpStatus';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
@@ -16,13 +17,11 @@ export const settingsService = {
 
     saveSettings: async (
         settingsData: Settings
-    ): Promise<Settings | string | undefined> => {
+    ): Promise<Settings | number | string | undefined> => {
         try {
             const repository = getRepository(Settings);
 
-            const prevSettings:
-                | Settings
-                | undefined = await repository.findOne();
+            const prevSettings = await repository.findOne();
 
             if (!prevSettings) {
                 return await repository.save(settingsData);
@@ -36,9 +35,9 @@ export const settingsService = {
 
             if (!isEqual) {
                 await repository.update(prevSettings.id, newSettings);
-                return 'success update settings';
+                return HttpStatus.OK;
             } else {
-                return 'store previous settings';
+                return HttpStatus.NOT_MODIFIED;
             }
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
