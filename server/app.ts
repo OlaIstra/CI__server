@@ -30,9 +30,11 @@ export async function bootstrap(config: {
 
     app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-    const router: (() => Router) | undefined = await config.router?.getRouter();
+    const router = await config.router?.getRouter();
 
-    if (router) app.use('/api', router());
+    if (router) {
+        app.use('/api', router());
+    }
 
     await app.listen(port, function() {
         console.log(`Server is on the port ${port}`);

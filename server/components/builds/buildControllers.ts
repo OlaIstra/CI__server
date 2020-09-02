@@ -20,7 +20,7 @@ export const getBuilds = async (
 };
 
 export const saveBuild = async (
-    req: Request<{ commitHash: string }, unknown>,
+    req: Request<{ commitHash: string }>,
     res: Response<IBuildCommit>
 ): Promise<void> => {
     const { commitHash } = req.body;

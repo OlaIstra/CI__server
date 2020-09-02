@@ -17,9 +17,9 @@ const localRepoPath = path.join(homeDir, localRepo);
 export const gitCommandsService = {
     executeCommand: async (
         command: string,
-        options?: { cwd: 'buffer' | null | string } & ExecOptions
+        options?: ExecOptions
     ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }> => {
-        return await execAsync(command, options);
+        return execAsync(command, options);
     },
 
     cloneRepo: (username: string, repoName: string): void => {

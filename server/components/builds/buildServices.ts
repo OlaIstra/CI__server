@@ -1,7 +1,10 @@
+import deepEqual from 'deep-equal';
+
 import { AppError } from '@server/components/error/error';
 import { Build } from './buildsEntity';
 import { getRepository } from 'typeorm';
 import { IBuildCommit } from './interfaces';
+import { HttpStatus } from '@server/HttpStatus';
 
 export const buildService = {
     getBuilds: async (): Promise<Build[]> => {
@@ -31,13 +34,20 @@ export const buildService = {
         }
     },
 
-    updateBuild: async (buildId: string, buildData: Build): Promise<Build> => {
+    updateBuild: async (buildId: string, buildData: Build): Promise<number> => {
         try {
             const repository = getRepository(Build);
 
             const prevBuild = await repository.findOne({ id: buildId });
-            const newBuild = { ...prevBuild, ...buildData };
-            return repository.save(newBuild);
+
+            const isEqual = deepEqual(prevBuild, buildData);
+
+            if (!isEqual) {
+                repository.save(buildData);
+                return HttpStatus.OK;
+            } else {
+                return HttpStatus.NOT_MODIFIED;
+            }
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);
         }

@@ -15,16 +15,15 @@ export const settingsService = {
         }
     },
 
-    saveSettings: async (
-        settingsData: Settings
-    ): Promise<Settings | number | string | undefined> => {
+    saveSettings: async (settingsData: Settings): Promise<number> => {
         try {
             const repository = getRepository(Settings);
 
             const prevSettings = await repository.findOne();
 
             if (!prevSettings) {
-                return await repository.save(settingsData);
+                await repository.save(settingsData);
+                return HttpStatus.OK;
             }
 
             const newSettings = repository.create({
