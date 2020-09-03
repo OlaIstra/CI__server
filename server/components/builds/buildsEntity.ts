@@ -7,7 +7,7 @@ export enum BuildStatus {
     Fail = 'Fail',
     Cancelled = 'Cancelled',
 }
-@Entity()
+@Entity('build')
 export class Build {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -17,9 +17,6 @@ export class Build {
 
     @Column()
     commitHash: string;
-
-    @Column()
-    buildNumber: number;
 
     @Column()
     branchName: string;

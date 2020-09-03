@@ -1,33 +1,45 @@
-import { AppError } from '@server/components/error/error';
+import deepEqual from 'deep-equal';
 
+import { AppError } from '@server/components/error/error';
 import { Settings } from './settingsEntity';
 import { getRepository } from 'typeorm';
-
-const repository = getRepository(Settings);
+import { HttpStatus } from '@server/HttpStatus';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
         try {
+            const repository = getRepository(Settings);
             return repository.findOne();
         } catch (err) {
-            throw new AppError(
-                err.response.statusText,
-                err.response.status,
-                'Some problem to get settings from API'
-            );
+            throw new AppError(err.name, err.httpCode, err.description);
         }
     },
 
-    saveSettings: async (settingsData: Settings): Promise<Settings> => {
+    saveSettings: async (settingsData: Settings): Promise<number> => {
         try {
-            //добавить фнукционал по update settings - если в базе ужзе есть настройки, то надо перерисать, а если нет, то добавить
-            return repository.save(settingsData);
+            const repository = getRepository(Settings);
+
+            const prevSettings = await repository.findOne();
+
+            if (!prevSettings) {
+                await repository.save(settingsData);
+                return HttpStatus.OK;
+            }
+
+            const newSettings = repository.create({
+                ...settingsData,
+                id: prevSettings.id,
+            });
+            const isEqual = deepEqual(prevSettings, newSettings);
+
+            if (!isEqual) {
+                await repository.update(prevSettings.id, newSettings);
+                return HttpStatus.OK;
+            } else {
+                return HttpStatus.NOT_MODIFIED;
+            }
         } catch (err) {
-            throw new AppError(
-                err.response.statusText,
-                err.response.status,
-                'Some problem to post new settings through API'
-            );
+            throw new AppError(err.name, err.httpCode, err.description);
         }
     },
 };
