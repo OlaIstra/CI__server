@@ -1,11 +1,14 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const { config: dotenvConfig } = require('dotenv');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { stylesInTsLoader } = require('./styles-in-ts-loader');
+const babelrc = require('../babel.config');
+// const { stylesInTsLoader } = require('./styles-in-ts-loader');
 
 const root = process.cwd();
 dotenvConfig({ path: path.resolve(root, '.env') });
@@ -13,36 +16,121 @@ dotenvConfig({ path: path.resolve(root, '.env') });
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
+// OLD
+
+// const common = {
+//     // context: path.resolve(root, 'src'),
+//     mode: isDev ? 'development' : 'production',
+//     bail: !isDev,
+//     output: {
+//         path: path.join(root, 'dist'),
+//         publicPath: '/',
+//     },
+//     resolve: {
+//         mainFields: ['browser', 'main', 'module'], // WHAT is it
+//         extensions: ['.ts', '.tsx', '.js', '.json'],
+//         alias: {
+//             '@core': path.resolve(root, 'src/core'),
+//             '@pages': path.resolve(root, 'src/pages'),
+//             '@atoms': path.resolve(root, 'src/core/atoms'),
+//             '@server': path.resolve(root, 'server/'),
+//         },
+//     },
+//     devtool: isDev ? 'inline-source-map' : false,
+//     optimization: {
+//         splitChunks: {
+//             chunks: 'all',
+//         },
+//     },
+//     module: {
+//         strictExportPresence: true,
+//         rules: [
+//             {
+//                 test: /\.(css)$/,
+//                 /* eslint-disable-next-line sonarjs/no-duplicate-string */
+//                 use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+//             },
+//             {
+//                 test: /\.scss$/,
+//                 use: [
+//                     // { loader: 'isomorphic-style-loader' }, // WHAT is it
+//                     // {
+//                     //     loader: stylesInTsLoader, // WHAT is it
+//                     //     query: {
+//                     //         mode: isDev ? 'emit' : 'verify', // WHAT is it
+//                     //     },
+//                     // },
+//                     {
+//                         loader: 'css-loader', // WHAT is it
+//                         options: {
+//                             localsConvention: 'camelCaseOnly', // WHAT is it
+//                             modules: {
+//                                 mode: 'local', // WHAT is it
+//                                 localIdentName: '[name]__[local]--[hash:base64:5]', // WHAT is it
+//                             },
+//                         },
+//                     },
+//                     'sass-loader',
+//                 ],
+//             },
+//             {
+//                 test: /\.tsx?$/,
+//                 exclude: /node_modules/,
+//                 use: {
+//                     loader: 'babel-loader',
+//                     options: babelrc,
+//                 },
+//             },
+//             {
+//                 test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/i,
+//                 use: [
+//                     {
+//                         loader: 'url-loader',
+//                         options: {
+//                             limit: 8192,
+//                         },
+//                     },
+//                 ],
+//             },
+//         ],
+//     },
+// };
+
 const common = {
-    context: path.resolve(root, 'src'),
+    // context: path.resolve(__dirname, 'src'),
     mode: isDev ? 'development' : 'production',
-    bail: !isDev,
     output: {
-        path: path.join(root, 'dist'),
-        publicPath: '/',
+        // filename: isDev ? `bundle.js` : `bundle.[hash].js`,
+        // path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
-        mainFields: ['browser', 'main', 'module'], // WHAT is it
-        extensions: ['.ts', '.tsx', '.js', '.json'],
+        extensions: ['.tsx', '.ts', '.js'],
         alias: {
-            '@core': path.resolve(__dirname, 'src/core'),
-            '@pages': path.resolve(__dirname, 'src/pages'),
-            '@atoms': path.resolve(__dirname, 'src/core/atoms'),
-            '@server': path.resolve(__dirname, 'server/'),
+            '@core': path.resolve(root, 'src/core'),
+            '@pages': path.resolve(root, 'src/pages'),
+            '@atoms': path.resolve(root, 'src/core/atoms'),
+            '@server': path.resolve(root, 'server/'),
         },
     },
     devtool: isDev ? 'inline-source-map' : false,
+    devServer: {
+        port: 5000,
+        hot: isDev,
+    },
     optimization: {
         splitChunks: {
             chunks: 'all',
         },
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: isDev ? `bundle.css` : `bundle.[hash].css`,
+        }),
+    ],
     module: {
-        strictExportPresence: true,
         rules: [
             {
                 test: /\.(css)$/,
-                /* eslint-disable-next-line sonarjs/no-duplicate-string */
                 use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
@@ -63,15 +151,11 @@ const common = {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                options: {
-                    presets: [
-                        'react',
-                        'stage-0',
-                        ['env', { targets: { browsers: ['last 2 versions'] } }],
-                    ],
+                use: {
+                    loader: 'babel-loader',
+                    options: babelrc,
                 },
+                exclude: /node_modules/,
             },
             {
                 test: /\.(png|jpe?g|gif|eot|svg|ttf|woff|woff2)$/i,
@@ -106,6 +190,14 @@ const client = merge(common, {
     },
     plugins: [
         new LoadablePlugin(), // WHY there are no other plugins?
+        new HtmlWebpackPlugin({
+            favicon: path.resolve(root, 'src/favicon.ico'),
+            template: path.resolve(root, 'src', 'index.html'),
+            minify: {
+                removeComments: isProd,
+                collapseWhitespace: isProd,
+            },
+        }),
     ],
 });
 
@@ -120,11 +212,11 @@ const server = merge(common, {
     module: {
         rules: [
             {
-                test: /\.s?css$/,
+                test: /\.scss$/,
                 use: [
-                    { loader: 'isomorphic-style-loader' }, // WHAT is it
+                    // { loader: 'isomorphic-style-loader' }, // Это не нужно
                     {
-                        loader: stylesInTsLoader, // WHAT is it
+                        // loader: stylesInTsLoader, // WHAT is it
                         query: {
                             mode: isDev ? 'emit' : 'verify', // WHAT is it
                         },
