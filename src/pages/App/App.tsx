@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { Routes } from './Routes';
 import { Footer } from '@core/components/Footer/Footer';
 
+import { Routes } from './Routes';
 import '@core/styles/variables.scss';
 import './App.scss';
 

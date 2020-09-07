@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Title } from '@atoms/Title/Title';
 import { Input } from '@atoms/Input/Input';
 import { Button } from '@atoms/Button/Button';

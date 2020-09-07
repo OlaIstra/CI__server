@@ -1,10 +1,10 @@
 import deepEqual from 'deep-equal';
-
-import { AppError } from '@server/components/error/error';
-import { Build } from './buildsEntity';
 import { getRepository } from 'typeorm';
-import { IBuildCommit } from './interfaces';
+import { AppError } from '@server/components/error/error';
 import { HttpStatus } from '@server/HttpStatus';
+
+import { Build } from './buildsEntity';
+import { IBuildCommit } from './interfaces';
 
 export const buildService = {
     getBuilds: async (): Promise<Build[]> => {

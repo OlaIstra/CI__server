@@ -1,9 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import loadable from '@loadable/component';
 
-import { ConfigurationPage } from '@pages/ConfigurationPage/ConfigurationPage';
-import { SettingsPage } from '@pages/SettingsPage/SettingsPage';
-import { HistoryPage } from '@pages/HistoryPage/HistoryPage';
+const ConfigurationPage = loadable(() => import('@pages/ConfigurationPage/ConfigurationPage'));
+const SettingsPage = loadable(() => import('@pages/SettingsPage/SettingsPage'));
+const HistoryPage = loadable(() => import('@pages/HistoryPage/HistoryPage'));
 
 export const Routes: React.FC = () => (
     <Switch>

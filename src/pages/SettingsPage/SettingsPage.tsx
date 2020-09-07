@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Header } from '@core/components/Header/Header';
 import { Title } from '@atoms/Title/Title';
 import { Input } from '@atoms/Input/Input';
@@ -22,10 +21,7 @@ export const SettingsPage: React.FC = () => (
                 </div>
                 <div className='form__block'>
                     <Title>Build command</Title>
-                    <Input
-                        placeholder='user-name/repo-name'
-                        icon='icon-cross'
-                    />
+                    <Input placeholder='user-name/repo-name' icon='icon-cross' />
                 </div>
                 <div className='form__block'>
                     <Title>Build command</Title>
@@ -52,3 +48,5 @@ export const SettingsPage: React.FC = () => (
         </div>
     </>
 );
+
+export default SettingsPage;

@@ -1,9 +1,9 @@
 import deepEqual from 'deep-equal';
-
-import { AppError } from '@server/components/error/error';
-import { Settings } from './settingsEntity';
 import { getRepository } from 'typeorm';
+import { AppError } from '@server/components/error/error';
 import { HttpStatus } from '@server/HttpStatus';
+
+import { Settings } from './settingsEntity';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
