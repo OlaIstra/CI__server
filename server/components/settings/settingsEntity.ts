@@ -5,15 +5,15 @@ export class Settings {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column('text')
     repoName: string;
 
-    @Column()
+    @Column('text')
     buildCommand: string;
 
-    @Column()
+    @Column('text')
     mainBranch: string;
 
-    @Column()
+    @Column('int')
     timePeriod: number;
 }

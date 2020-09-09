@@ -12,16 +12,16 @@ export class Build {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column('text')
     commitMessage: string;
 
-    @Column()
+    @Column('text')
     commitHash: string;
 
-    @Column()
+    @Column('text')
     branchName: string;
 
-    @Column()
+    @Column('text')
     authorName: string;
 
     @Column({

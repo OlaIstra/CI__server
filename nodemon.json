@@ -1,6 +1,13 @@
 {
     "ext": "ts tsx",
-    "ignore": ["**/*.(test|spec).(ts|js)"],
-    "watch": ["web-api/**/*.ts", "shared/**/*.ts", "web/**/*.ts", "web/**/*.tsx"],
-    "exec": "cross-env TARGET=client NODE_ENV=production webpack && cross-env TARGET=server webpack && node dist/server/server.js"
+    "ignore": [
+        "**/*.(test|spec).(ts|js)"
+    ],
+    "watch": [
+        "web-api/**/*.ts",
+        "shared/**/*.ts",
+        "web/**/*.ts",
+        "web/**/*.tsx"
+    ],
+    "exec": "cross-env TARGET=server webpack && node dist/server/server.js"
 }
