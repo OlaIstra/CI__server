@@ -39,6 +39,7 @@ module.exports = merge(common, {
         server: path.join(root, 'server/index.ts'), // TODO add server here
     },
     output: {
+        filename: '[name].js',
         path: path.join(root, 'dist', 'server'),
     },
     devtool: isDev ? 'source-map' : false,

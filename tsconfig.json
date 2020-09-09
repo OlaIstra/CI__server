@@ -13,6 +13,7 @@
         "strict": true,
         "strictPropertyInitialization": false,
         "paths": {
+            "src/*": ["src/*"],
             "@core/*": ["src/core/*"],
             "@pages/*": ["src/pages/*"],
             "@atoms/*": ["src/core/atoms/*"],

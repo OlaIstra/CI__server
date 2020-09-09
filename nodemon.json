@@ -9,5 +9,5 @@
         "web/**/*.ts",
         "web/**/*.tsx"
     ],
-    "exec": "cross-env TARGET=server webpack && node dist/server/server.js"
+    "exec": "cross-env TARGET=client webpack && cross-env TARGET=server webpack && node dist/server/server.js"
 }

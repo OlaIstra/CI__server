@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { ConnectionOptions } from 'typeorm';
+import { ssrSupport } from 'src/server';
 
 import swaggerDocs from './swagger.json';
 import { typeOrmConfig } from './typeorm.config';
@@ -11,12 +12,14 @@ require('dotenv').config();
 
 const port = process.env.PORT;
 
-export async function bootstrap(config: {
+interface IConfig {
     port?: number;
     enableSSR?: boolean;
     router?: { prefix: string; getRouter: () => Promise<() => express.Router> };
     listenCallback?: () => void;
-}): Promise<void> {
+}
+
+export async function bootstrap(config: IConfig): Promise<void> {
     const app = await express();
 
     const dbConfig = {
@@ -36,6 +39,10 @@ export async function bootstrap(config: {
 
     if (router) {
         app.use('/api', router());
+    }
+
+    if (config.enableSSR) {
+        ssrSupport(app);
     }
 
     await app.listen(port, function() {
