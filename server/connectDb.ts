@@ -1,9 +1,4 @@
-import {
-    createConnection,
-    getConnection,
-    ConnectionOptions,
-    Connection,
-} from 'typeorm';
+import { createConnection, getConnection, ConnectionOptions, Connection } from 'typeorm';
 import pino from 'pino';
 
 const logger = pino({
@@ -13,12 +8,12 @@ const logger = pino({
 
 export const connectDb = async (
     typeOrmConfig: ConnectionOptions,
-    retries = 2
+    retries = 2,
 ): Promise<Connection | undefined> => {
     while (retries) {
         try {
             await createConnection(typeOrmConfig)
-                .then(connection => {
+                .then(() => {
                     // here you can start to work with your entities
                 })
                 .catch(error => {

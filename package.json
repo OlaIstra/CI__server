@@ -4,12 +4,13 @@
     "description": "CI-server",
     "scripts": {
         "test": "jest",
-        "dev": "cross-env NODE_ENV=development TARGET=client webpack-dev-server --host 0.0.0.0 --open",
+        "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
+        "ssr": "cross-env NODE_ENV=development PORT=8080 nodemon",
+        "server": "nodemon -r tsconfig-paths/register server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
         "eslint": "eslint server/**/* src/**/* --ext .js,.ts,.tsx --max-warnings=0 --no-error-on-unmatched-pattern",
-        "prettier": "prettier --write '**/*.ts'",
-        "server": "nodemon -r tsconfig-paths/register server/index.ts"
+        "prettier": "prettier --write '**/*.ts'"
     },
     "repository": {
         "type": "git",
@@ -75,7 +76,7 @@
         "mini-css-extract-plugin": "^0.9.0",
         "nodemon": "^2.0.4",
         "prettier": "^1.19.1",
-        "react-scripts": "3.4.1",
+        "react-scripts": "3.4.3",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "style-loader": "^1.2.1",
@@ -105,6 +106,7 @@
         "pino": "^6.4.0",
         "pino-pretty": "^4.0.3",
         "react": "^16.13.1",
+        "react-dev-utils": "^10.0.0",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.2.0",

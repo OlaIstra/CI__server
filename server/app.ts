@@ -13,7 +13,9 @@ const port = process.env.PORT;
 
 export async function bootstrap(config: {
     port?: number;
+    enableSSR?: boolean;
     router?: { prefix: string; getRouter: () => Promise<() => express.Router> };
+    listenCallback?: () => void;
 }): Promise<void> {
     const app = await express();
 

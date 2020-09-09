@@ -1,14 +1,9 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const LoadablePlugin = require('@loadable/webpack-plugin');
-const { merge } = require('webpack-merge');
-const nodeExternals = require('webpack-node-externals');
 const { config: dotenvConfig } = require('dotenv');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const babelrc = require('../babel.config');
-// const { stylesInTsLoader } = require('./styles-in-ts-loader');
 
 const root = process.cwd();
 dotenvConfig({ path: path.resolve(root, '.env') });
@@ -97,12 +92,7 @@ const isDev = !isProd;
 // };
 
 const common = {
-    // context: path.resolve(__dirname, 'src'),
     mode: isDev ? 'development' : 'production',
-    output: {
-        // filename: isDev ? `bundle.js` : `bundle.[hash].js`,
-        // path: path.resolve(__dirname, 'dist'),
-    },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
@@ -172,79 +162,6 @@ const common = {
     },
 };
 
-const client = merge(common, {
-    target: 'web',
-    entry: {
-        client: path.join(root, 'src/index.tsx'),
-    },
-    output: {
-        path: path.join(root, 'dist', 'client'),
-    },
-    node: {
-        // WHAT is it
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty',
-        dgram: 'empty',
-        ['child_process']: 'empty',
-    },
-    plugins: [
-        new LoadablePlugin(), // WHY there are no other plugins?
-        new HtmlWebpackPlugin({
-            favicon: path.resolve(root, 'src/favicon.ico'),
-            template: path.resolve(root, 'src', 'index.html'),
-            minify: {
-                removeComments: isProd,
-                collapseWhitespace: isProd,
-            },
-        }),
-    ],
-});
-
-const server = merge(common, {
-    target: 'node',
-    entry: {
-        server: path.join(root, 'web-api/main.ts'), // TODO add server here
-    },
-    output: {
-        path: path.join(root, 'dist', 'server'),
-    },
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                use: [
-                    // { loader: 'isomorphic-style-loader' }, // Это не нужно
-                    {
-                        // loader: stylesInTsLoader, // WHAT is it
-                        query: {
-                            mode: isDev ? 'emit' : 'verify', // WHAT is it
-                        },
-                    },
-                    {
-                        loader: 'css-loader', // WHAT is it
-                        options: {
-                            localsConvention: 'camelCaseOnly', // WHAT is it
-                            modules: {
-                                mode: 'local', // WHAT is it
-                                localIdentName: '[name]__[local]--[hash:base64:5]', // WHAT is it
-                            },
-                        },
-                    },
-                    'sass-loader',
-                ],
-            },
-        ],
-    },
-    externals: [nodeExternals()],
-    node: {
-        __dirname: false,
-        __filename: false,
-    },
-});
-
 module.exports = {
     common,
-    client,
-    server,
 };
