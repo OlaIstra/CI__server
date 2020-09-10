@@ -42,6 +42,7 @@ export const ssrFunction = (app: {
                 </ChunkExtractorManager>,
             );
             const html = renderToString(jsx);
+            console.log(html);
 
             const css = new Set();
 
