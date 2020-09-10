@@ -5,14 +5,12 @@ const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 
 const { common } = require('./webpack.common.config');
+
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
-console.log('isDev', isDev);
 const isWebpackBar = isDev ? new WebpackBar({ name: 'server' }) : '';
 
 const root = process.cwd();
-// const stylesInTsLoader = require('./styles-in-ts-loader');
-
 const optimization = isDev
     ? {}
     : {
@@ -39,6 +37,7 @@ module.exports = merge(common, {
         server: path.join(root, 'server/index.ts'), // TODO add server here
     },
     output: {
+        filename: '[name].js',
         path: path.join(root, 'dist', 'server'),
     },
     devtool: isDev ? 'source-map' : false,
@@ -49,12 +48,7 @@ module.exports = merge(common, {
             {
                 test: /\.scss$/,
                 use: [
-                    // {
-                    //     loader: stylesInTsLoader, // WHAT is it
-                    //     query: {
-                    //         mode: isDev ? 'emit' : 'verify', // WHAT is it
-                    //     },
-                    // },
+                    { loader: 'isomorphic-style-loader' }, // WHAT is it
                     {
                         loader: 'css-loader', // WHAT is it
                         options: {

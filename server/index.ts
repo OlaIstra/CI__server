@@ -12,7 +12,4 @@ bootstrap({
             return getRouter.default;
         },
     },
-    listenCallback: () => {
-        console.info(`✅✅✅ Server is running at 8000 ✅✅✅`);
-    },
 });

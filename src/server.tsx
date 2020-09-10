@@ -1,62 +1,64 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import path from 'path';
+import fs from 'fs';
 import express from 'express';
 import React from 'react';
+import { StaticRouterContext } from 'react-router';
+import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
-import { ChunkExtractor } from '@loadable/server';
+import { parse as parseUrl } from 'url';
+import { html as htmlTemplate, oneLineTrim } from 'common-tags';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
-const app = express();
+import App from './pages/App/App';
 
-app.use(express.static(path.join(__dirname, '../../public')));
+const root = process.cwd();
 
-if (process.env.NODE_ENV !== 'production') {
-    /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-    const { default: webpackConfig } = require('../webpack.config.js');
-    /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-    const webpack = require('webpack');
+export const ssrFunction = (app: {
+    use: (arg0: import('express-serve-static-core').Handler) => void;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    get: (arg0: string, arg1: (req: any, res: any) => void) => void;
+}) => {
+    app.use(express.static('./dist/client'));
 
-    const compiler = webpack(webpackConfig);
+    app.get('/*', (req, res) => {
+        try {
+            const url = req.originalUrl || req.url;
 
-    app.use(
-        webpackDevMiddleware(compiler, {
-            logLevel: 'silent',
-            publicPath: '/dist/web',
-            writeToDisk(filePath: string) {
-                return /dist\/node\//.test(filePath) || /loadable-stats/.test(filePath);
-            },
-        }),
-    );
-}
+            const indexFile = path.resolve(root, 'dist/client/index.html');
+            const statsFile = path.resolve(root, 'dist/client/loadable-stats.json');
+            const context: StaticRouterContext = {};
+            const location = parseUrl(url);
 
-const nodeStats = path.resolve(__dirname, '../../public/dist/node/loadable-stats.json');
+            const webExtractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
+            const scriptTags = webExtractor.getScriptTags();
+            const styleTags = webExtractor.getStyleTags();
+            const jsx = webExtractor.collectChunks(
+                <ChunkExtractorManager extractor={webExtractor}>
+                    <StaticRouter location={location} context={context}>
+                        <App />
+                    </StaticRouter>
+                </ChunkExtractorManager>,
+            );
+            const html = renderToString(jsx);
 
-const webStats = path.resolve(__dirname, '../../public/dist/web/loadable-stats.json');
+            const css = new Set();
 
-app.get('*', (req, res) => {
-    const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
-    const { default: App } = nodeExtractor.requireEntrypoint();
-
-    const webExtractor = new ChunkExtractor({ statsFile: webStats });
-    const jsx = webExtractor.collectChunks(<App />);
-
-    const html = renderToString(jsx);
-
-    res.set('content-type', 'text/html');
-    res.send(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-        ${webExtractor.getLinkTags()}
-        ${webExtractor.getStyleTags()}
-        </head>
-        <body>
-          <div id="main">${html}</div>
-          ${webExtractor.getScriptTags()}
-        </body>
-      </html>
-    `);
-});
-
-// eslint-disable-next-line no-console
-app.listen(9000, () => console.log('Server started http://localhost:9000'));
+            fs.readFile(indexFile, 'utf8', (err, data) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log('Something went wrong:', err);
+                    return res.status(500).send('Oops, better luck next time!');
+                }
+                // data = data.replace('__STYLES__', stylesTags);
+                // data = data.replace('__SCRIPTS__', scriptTags);
+                data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+                console.log(data);
+                return res.send(data);
+            });
+        } catch (error) {
+            console.log('ERROR!!!', error);
+        }
+    });
+};
