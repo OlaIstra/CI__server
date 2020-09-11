@@ -5,7 +5,7 @@
     "scripts": {
         "test": "jest",
         "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
-        "ssr": "cross-env NODE_ENV=development PORT=8080 nodemon",
+        "ssr": "cross-env NODE_ENV=production PORT=8080 nodemon",
         "server": "nodemon -r tsconfig-paths/register server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
@@ -58,6 +58,7 @@
         "@types/react-redux": "^7.1.7",
         "@types/react-router-dom": "^5.1.4",
         "@types/swagger-ui-express": "^4.1.2",
+        "@types/webpack-hot-middleware": "^2.25.3",
         "@typescript-eslint/eslint-plugin": "^2.27.0",
         "@typescript-eslint/parser": "^3.0.0",
         "babel-eslint": "^8.2.6",
@@ -81,6 +82,7 @@
         "mini-css-extract-plugin": "^0.9.0",
         "nodemon": "^2.0.4",
         "prettier": "^1.19.1",
+        "react-hot-loader": "^4.12.21",
         "react-scripts": "3.4.3",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
@@ -98,6 +100,7 @@
         "webpackbar": "^4.0.0"
     },
     "dependencies": {
+        "@hot-loader/react-dom": "^16.13.0",
         "@loadable/component": "^5.13.1",
         "@loadable/server": "^5.13.1",
         "@types/common-tags": "^1.8.0",
@@ -105,6 +108,7 @@
         "@types/loadable__server": "^5.12.2",
         "axios": "^0.19.2",
         "classnames": "^2.2.6",
+        "core-js": "^3.6.5",
         "deep-equal": "^2.0.3",
         "morgan": "^1.10.0",
         "normalize.css": "^8.0.1",
@@ -117,6 +121,7 @@
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.2.0",
         "reflect-metadata": "^0.1.13",
+        "regenerator-runtime": "^0.13.7",
         "swagger-ui-express": "^4.1.4",
         "typeorm": "^0.2.25"
     },

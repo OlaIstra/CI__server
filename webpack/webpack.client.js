@@ -3,29 +3,32 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { config: dotenvConfig } = require('dotenv');
 
+const { stylesInTsLoader } = require('./styles-in-ts-loader');
 const { common } = require('./webpack.common.config');
 
 const root = process.cwd();
 
 dotenvConfig({ path: path.resolve(root, '.env') });
 
-const isProd = process.env.NODE_ENV === 'production';
-const isDev = !isProd;
+const _DEV_ = process.env.NODE_ENV !== 'production';
 const DEBUG = JSON.stringify(process.env.DEBUG === 'true');
 
-console.log(`ENV = ${isDev ? 'development' : 'production'}`);
+console.log(`ENV = ${_DEV_ ? 'development' : 'production'}`);
 console.log(`DEBUG = ${DEBUG}`);
 
 const config = merge(common, {
     target: 'web',
     entry: {
-        client: path.join(root, 'src/index.tsx'),
+        client: [
+            // 'react-hot-loader/patch',
+            // 'webpack-hot-middleware/client?reload=true',
+            path.join(root, 'src/index.tsx'),
+        ],
     },
     output: {
         path: path.join(root, 'dist', 'client'),
@@ -46,34 +49,71 @@ const config = merge(common, {
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    isDev
+                    _DEV_
                         ? 'style-loader'
                         : {
                               loader: MiniCssExtractPlugin.loader,
                               options: {
-                                  hmr: isDev,
-                                  reloadAll: true,
+                                  hmr: false,
+                                  // reloadAll: true,
                               },
                           },
+                    {
+                        loader: stylesInTsLoader,
+                        query: {
+                            mode: _DEV_ ? 'emit' : 'verify',
+                        },
+                    },
                     'css-loader',
                     'sass-loader',
                 ],
             },
+            // {
+            //     test: /\.s?css$/,
+            //     use: [
+            //         _DEV_
+            //             ? 'style-loader'
+            //             : {
+            //                   loader: MiniCssExtractPlugin.loader,
+            //                   options: {
+            //                       hmr: false,
+            //                   },
+            //               },
+
+            //         {
+            //             loader: stylesInTsLoader,
+            //             query: {
+            //                 mode: _DEV_ ? 'emit' : 'verify',
+            //             },
+            //         },
+            //         {
+            //             loader: 'css-loader',
+            //             options: {
+            //                 localsConvention: 'camelCaseOnly',
+            //                 modules: {
+            //                     mode: 'local',
+            //                     localIdentName: '[name]__[local]--[hash:base64:5]',
+            //                 },
+            //             },
+            //         },
+            //         {
+            //             loader: 'sass-loader',
+            //         },
+            //     ],
+            // },
         ],
     },
     plugins: [
-        new LoadablePlugin(),
-        new HtmlWebpackPlugin({
-            favicon: path.resolve(root, 'src/favicon.ico'),
-            template: path.resolve(root, 'src', 'index.html'),
-            minify: {
-                removeComments: isProd,
-                collapseWhitespace: isProd,
-            },
+        new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: _DEV_ ? `bundle.css` : `bundle.[hash].css`,
         }),
         new webpack.ContextReplacementPlugin(/node_modules\/moment\/locale/, /ru/),
-        new webpack.DefinePlugin({ DEBUG, isDev }), // plugin to define global constants TODO take isDev from .env
+        new webpack.DefinePlugin({ DEBUG, _DEV_ }), // plugin to define global constants TODO take _DEV_ from .env
         new WebpackBar({ name: 'client', color: 'orange' }),
+        new LoadablePlugin({
+            filename: `loadable-stats.json`,
+        }),
     ],
     optimization: {
         minimizer: [
@@ -106,7 +146,7 @@ const config = merge(common, {
     },
 });
 
-if (isDev) {
+if (_DEV_) {
     // TODO how to use it
     config.devServer = {
         host: process.env.WEBPACK_DEV_HOST,

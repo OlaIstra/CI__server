@@ -21,13 +21,11 @@
         "no-inline-comments": "off",
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
-        "@typescript-eslint/interface-name-prefix": [
-            2,
-            { "prefixWithI": "always", "allowUnderscorePrefix": true }
-        ],
         "@typescript-eslint/no-explicit-any": 1,
         "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/interface-name-prefix": 0,
+        "@typescript-eslint/no-empty-interface": 0,
         "no-param-reassign": 0,
         "prettier/prettier": ["error", { "singleQuote": true }],
         "react/display-name": 0,

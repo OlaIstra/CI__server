@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 import path from 'path';
 import fs from 'fs';
@@ -26,14 +28,16 @@ export const ssrFunction = (app: {
         try {
             const url = req.originalUrl || req.url;
 
-            const indexFile = path.resolve(root, 'dist/client/index.html');
+            const indexFile = path.resolve(root, 'public/index.html');
             const statsFile = path.resolve(root, 'dist/client/loadable-stats.json');
             const context: StaticRouterContext = {};
             const location = parseUrl(url);
 
             const webExtractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
             const scriptTags = webExtractor.getScriptTags();
+            console.log(scriptTags);
             const styleTags = webExtractor.getStyleTags();
+            console.log(styleTags);
             const jsx = webExtractor.collectChunks(
                 <ChunkExtractorManager extractor={webExtractor}>
                     <StaticRouter location={location} context={context}>
@@ -42,7 +46,6 @@ export const ssrFunction = (app: {
                 </ChunkExtractorManager>,
             );
             const html = renderToString(jsx);
-            console.log(html);
 
             const css = new Set();
 
@@ -52,8 +55,8 @@ export const ssrFunction = (app: {
                     console.log('Something went wrong:', err);
                     return res.status(500).send('Oops, better luck next time!');
                 }
-                // data = data.replace('__STYLES__', stylesTags);
-                // data = data.replace('__SCRIPTS__', scriptTags);
+                data = data.replace('__STYLES__', styleTags);
+                data = data.replace('__SCRIPTS__', scriptTags);
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
                 console.log(data);
                 return res.send(data);

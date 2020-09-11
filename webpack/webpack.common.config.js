@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { config: dotenvConfig } = require('dotenv');
 
 const babelrc = require('../babel.config');
@@ -8,14 +7,16 @@ const babelrc = require('../babel.config');
 const root = process.cwd();
 dotenvConfig({ path: path.resolve(root, '.env') });
 
-const isProd = process.env.NODE_ENV === 'production';
-const isDev = !isProd;
+const _DEV_ = process.env.NODE_ENV !== 'production';
 
 const common = {
-    mode: isDev ? 'development' : 'production',
+    mode: _DEV_ ? 'development' : 'production',
+    bail: !_DEV_,
     resolve: {
+        mainFields: ['browser', 'main', 'module'],
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
+            'react-dom': '@hot-loader/react-dom',
             '@src': path.resolve(root, 'src/'),
             '@core': path.resolve(root, 'src/core'),
             '@pages': path.resolve(root, 'src/pages'),
@@ -23,27 +24,27 @@ const common = {
             '@server': path.resolve(root, 'server/'),
         },
     },
-    devtool: isDev ? 'inline-source-map' : false,
+    devtool: _DEV_ ? 'inline-source-map' : false,
     devServer: {
         port: 5000,
-        hot: isDev,
+        hot: _DEV_,
     },
     optimization: {
         splitChunks: {
             chunks: 'all',
         },
     },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: isDev ? `bundle.css` : `bundle.[hash].css`,
-        }),
-    ],
+    // plugins: [
+    //     new MiniCssExtractPlugin({
+    //         filename: _DEV_ ? `bundle.css` : `bundle.[hash].css`,
+    //     }),
+    // ],
     module: {
         rules: [
-            {
-                test: /\.(css)$/,
-                use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-            },
+            // {
+            //     test: /\.(css)$/,
+            //     use: [_DEV_ ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+            // },
             {
                 test: /\.tsx?$/,
                 use: {

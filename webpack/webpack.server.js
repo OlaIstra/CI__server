@@ -6,15 +6,15 @@ const nodeExternals = require('webpack-node-externals');
 
 const { common } = require('./webpack.common.config');
 
-const isProd = process.env.NODE_ENV === 'production';
-const isDev = !isProd;
-const isWebpackBar = isDev ? new WebpackBar({ name: 'server' }) : '';
+const _DEV_ = process.env.NODE_ENV !== 'production';
 
 const root = process.cwd();
-const optimization = isDev
+
+const devTool = _DEV_ ? 'source-map' : false;
+const optimization = _DEV_
     ? {}
     : {
-          minimize: isDev,
+          minimize: true,
           minimizer: [
               new TerserPlugin({
                   cache: true,
@@ -40,9 +40,9 @@ module.exports = merge(common, {
         filename: '[name].js',
         path: path.join(root, 'dist', 'server'),
     },
-    devtool: isDev ? 'source-map' : false,
+    devtool: devTool,
     optimization: optimization,
-    plugins: [isWebpackBar],
+    plugins: [new WebpackBar({ name: 'server' })],
     module: {
         rules: [
             {
