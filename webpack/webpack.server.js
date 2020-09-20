@@ -34,7 +34,7 @@ const optimization = _DEV_
 module.exports = merge(common, {
     target: 'node',
     entry: {
-        server: path.join(root, 'server/index.ts'), // TODO add server here
+        server: path.join(root, 'server/index.ts'),
     },
     output: {
         filename: '[name].js',
@@ -48,14 +48,14 @@ module.exports = merge(common, {
             {
                 test: /\.scss$/,
                 use: [
-                    { loader: 'isomorphic-style-loader' }, // WHAT is it
+                    { loader: 'isomorphic-style-loader' },
                     {
-                        loader: 'css-loader', // WHAT is it
+                        loader: 'css-loader',
                         options: {
-                            localsConvention: 'camelCaseOnly', // WHAT is it
+                            localsConvention: 'camelCaseOnly',
                             modules: {
-                                mode: 'local', // WHAT is it
-                                localIdentName: '[name]__[local]--[hash:base64:5]', // WHAT is it
+                                mode: 'local',
+                                localIdentName: '[name]__[local]--[hash:base64:5]',
                             },
                         },
                     },

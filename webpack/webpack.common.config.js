@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 const path = require('path');
 const { config: dotenvConfig } = require('dotenv');
 
@@ -34,17 +33,8 @@ const common = {
             chunks: 'all',
         },
     },
-    // plugins: [
-    //     new MiniCssExtractPlugin({
-    //         filename: _DEV_ ? `bundle.css` : `bundle.[hash].css`,
-    //     }),
-    // ],
     module: {
         rules: [
-            // {
-            //     test: /\.(css)$/,
-            //     use: [_DEV_ ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-            // },
             {
                 test: /\.tsx?$/,
                 use: {

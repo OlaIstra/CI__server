@@ -35,9 +35,7 @@ export const ssrFunction = (app: {
 
             const webExtractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
             const scriptTags = webExtractor.getScriptTags();
-            console.log(scriptTags);
             const styleTags = webExtractor.getStyleTags();
-            console.log(styleTags);
             const jsx = webExtractor.collectChunks(
                 <ChunkExtractorManager extractor={webExtractor}>
                     <StaticRouter location={location} context={context}>
@@ -51,18 +49,15 @@ export const ssrFunction = (app: {
 
             fs.readFile(indexFile, 'utf8', (err, data) => {
                 if (err) {
-                    // eslint-disable-next-line no-console
-                    console.log('Something went wrong:', err);
                     return res.status(500).send('Oops, better luck next time!');
                 }
                 data = data.replace('__STYLES__', styleTags);
                 data = data.replace('__SCRIPTS__', scriptTags);
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
-                console.log(data);
                 return res.send(data);
             });
         } catch (error) {
-            console.log('ERROR!!!', error);
+            console.log(error);
         }
     });
 };

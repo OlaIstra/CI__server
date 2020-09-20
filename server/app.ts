@@ -43,7 +43,6 @@ export async function bootstrap(config: IConfig): Promise<void> {
 
     if (config.enableSSR) {
         ssrFunction(app);
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     }
 
     await app.listen(port, function() {

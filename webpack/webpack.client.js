@@ -1,4 +1,3 @@
-// /* eslint-disable no-console */
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
@@ -18,15 +17,12 @@ dotenvConfig({ path: path.resolve(root, '.env') });
 const _DEV_ = process.env.NODE_ENV !== 'production';
 const DEBUG = JSON.stringify(process.env.DEBUG === 'true');
 
-console.log(`ENV = ${_DEV_ ? 'development' : 'production'}`);
-console.log(`DEBUG = ${DEBUG}`);
-
 const config = merge(common, {
     target: 'web',
     entry: {
         client: [
-            // 'react-hot-loader/patch',
-            // 'webpack-hot-middleware/client?reload=true',
+            'react-hot-loader/patch',
+            'webpack-hot-middleware/client?reload=true',
             path.join(root, 'src/index.tsx'),
         ],
     },
@@ -37,7 +33,6 @@ const config = merge(common, {
         modules: [root, path.resolve(root, 'src'), path.resolve(root, 'public'), 'node_modules'],
     },
     node: {
-        // WHAT is it
         fs: 'empty',
         net: 'empty',
         tls: 'empty',
@@ -55,7 +50,6 @@ const config = merge(common, {
                               loader: MiniCssExtractPlugin.loader,
                               options: {
                                   hmr: false,
-                                  // reloadAll: true,
                               },
                           },
                     {
@@ -68,39 +62,6 @@ const config = merge(common, {
                     'sass-loader',
                 ],
             },
-            // {
-            //     test: /\.s?css$/,
-            //     use: [
-            //         _DEV_
-            //             ? 'style-loader'
-            //             : {
-            //                   loader: MiniCssExtractPlugin.loader,
-            //                   options: {
-            //                       hmr: false,
-            //                   },
-            //               },
-
-            //         {
-            //             loader: stylesInTsLoader,
-            //             query: {
-            //                 mode: _DEV_ ? 'emit' : 'verify',
-            //             },
-            //         },
-            //         {
-            //             loader: 'css-loader',
-            //             options: {
-            //                 localsConvention: 'camelCaseOnly',
-            //                 modules: {
-            //                     mode: 'local',
-            //                     localIdentName: '[name]__[local]--[hash:base64:5]',
-            //                 },
-            //             },
-            //         },
-            //         {
-            //             loader: 'sass-loader',
-            //         },
-            //     ],
-            // },
         ],
     },
     plugins: [
@@ -147,7 +108,6 @@ const config = merge(common, {
 });
 
 if (_DEV_) {
-    // TODO how to use it
     config.devServer = {
         host: process.env.WEBPACK_DEV_HOST,
         port: process.env.WEBPACK_DEV_PORT,
