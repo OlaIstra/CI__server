@@ -16,7 +16,8 @@
             "@core/*": ["src/core/*"],
             "@pages/*": ["src/pages/*"],
             "@atoms/*": ["src/core/atoms/*"],
-            "@server/*": ["server/*"]
+            "@server/*": ["server/*"],
+            "@src/*": ["src/*"]
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },

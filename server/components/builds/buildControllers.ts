@@ -1,16 +1,13 @@
 import { Response, Request } from 'express';
-
 import { AppError } from '@server/components/error/error';
-import { buildService } from './buildServices';
-import { Build } from './buildsEntity';
 import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
 import { settingsService } from '@server/components/settings/settingsServices';
+
+import { buildService } from './buildServices';
+import { Build } from './buildsEntity';
 import { IBuildCommit } from './interfaces';
 
-export const getBuilds = async (
-    _: unknown,
-    res: Response<Build[]>
-): Promise<void> => {
+export const getBuilds = async (_: unknown, res: Response<Build[]>): Promise<void> => {
     try {
         const builds = await buildService.getBuilds();
         res.send(builds);
@@ -21,7 +18,7 @@ export const getBuilds = async (
 
 export const saveBuild = async (
     req: Request<{ commitHash: string }>,
-    res: Response<IBuildCommit>
+    res: Response<IBuildCommit>,
 ): Promise<void> => {
     const { commitHash } = req.body;
 
@@ -29,10 +26,7 @@ export const saveBuild = async (
 
     const branchName = settings?.mainBranch;
 
-    const buildInfo = await gitCommandsService.getCommitByHash(
-        commitHash,
-        branchName
-    );
+    const buildInfo = await gitCommandsService.getCommitByHash(commitHash, branchName);
     try {
         const result = await buildService.saveBuild(buildInfo);
         res.send(result);
@@ -43,7 +37,7 @@ export const saveBuild = async (
 
 export const getBuildDetails = async (
     req: Request<{ id: string }>,
-    res: Response<Build>
+    res: Response<Build>,
 ): Promise<void> => {
     try {
         const response = await buildService.getBuildDetails(req.params.id);
@@ -55,7 +49,7 @@ export const getBuildDetails = async (
 
 export const getBuildLogs = async (
     req: Request<{ id: string }>,
-    res: Response<Build['buildLogs']>
+    res: Response<Build['buildLogs']>,
 ): Promise<void> => {
     try {
         const result = await buildService.getBuildDetails(req.params.id);
@@ -65,10 +59,7 @@ export const getBuildLogs = async (
     }
 };
 
-export const deleteBuilds = async (
-    _: unknown,
-    res: Response<string>
-): Promise<void> => {
+export const deleteBuilds = async (_: unknown, res: Response<string>): Promise<void> => {
     try {
         await buildService.deleteBuilds();
         res.send('success');

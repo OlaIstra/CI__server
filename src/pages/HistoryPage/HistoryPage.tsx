@@ -1,11 +1,10 @@
 import React from 'react';
-
 import { Header } from '@core/components/Header/Header';
 import { Button } from '@atoms/Button/Button';
 import { Modal } from '@core/components/Modal/Modal';
 import './HistoryPage.scss';
 
-export const HistoryPage: React.FC = () => (
+const HistoryPage: React.FC = () => (
     <>
         <Header title='philip1967/my-awesome-repo'>
             <div className='btn__block'>
@@ -21,9 +20,7 @@ export const HistoryPage: React.FC = () => (
                             <span className='icon-tick' />
                             #1333
                         </div>
-                        <div className='repo__title'>
-                            add documentation for postgres scaler
-                        </div>
+                        <div className='repo__title'>add documentation for postgres scaler</div>
                     </div>
                     <div className='repo__flex'>
                         <div className='repo__branch'>
@@ -55,3 +52,5 @@ export const HistoryPage: React.FC = () => (
         </div>
     </>
 );
+
+export default HistoryPage;

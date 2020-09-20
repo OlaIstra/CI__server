@@ -3,7 +3,6 @@ import { promisify } from 'util';
 import { exec, ExecOptions } from 'child_process';
 import os from 'os';
 import fs from 'fs';
-
 import { AppError } from '@server/components/error/error';
 import { IBuildCommit } from '@server/components/builds/interfaces';
 
@@ -17,7 +16,7 @@ const localRepoPath = path.join(homeDir, localRepo);
 export const gitCommandsService = {
     executeCommand: async (
         command: string,
-        options?: ExecOptions
+        options?: ExecOptions,
     ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }> => {
         return execAsync(command, options);
     },
@@ -64,17 +63,14 @@ export const gitCommandsService = {
         }
     },
 
-    getCommitByHash: async (
-        commitHash = '',
-        branchName = 'master'
-    ): Promise<IBuildCommit> => {
+    getCommitByHash: async (commitHash = '', branchName = 'master'): Promise<IBuildCommit> => {
         await gitCommandsService.checkout(branchName);
 
         const { stdout } = await gitCommandsService.executeCommand(
             `git log -1 --format="%an|%B" ${commitHash}`,
             {
                 cwd: localRepoPath,
-            }
+            },
         );
 
         const [authorName, commitMessage] = String(stdout)
