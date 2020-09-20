@@ -5,7 +5,7 @@
     "scripts": {
         "test": "jest",
         "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
-        "ssr": "cross-env NODE_ENV=production PORT=8080 nodemon",
+        "start": "cross-env NODE_ENV=production PORT=8080 nodemon",
         "server": "nodemon -r tsconfig-paths/register server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
