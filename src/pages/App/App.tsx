@@ -1,5 +1,7 @@
 import React from 'react';
-import { Footer } from '@core/components/Footer/Footer';
+import loadable from '@loadable/component';
+
+const Footer = loadable(() => import('@core/components/Footer/Footer'));
 
 import { Routes } from './Routes';
 import '@core/styles/variables.scss';

@@ -3,9 +3,10 @@
     "version": "1.0.0",
     "description": "CI-server",
     "scripts": {
+        "start": "node dist/server/server.js",
         "test": "jest",
         "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
-        "start": "cross-env NODE_ENV=production PORT=8080 nodemon",
+        "start:dev": "cross-env NODE_ENV=development PORT=8080 nodemon",
         "server": "nodemon -r tsconfig-paths/register server/index.ts",
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
@@ -124,7 +125,10 @@
         "regenerator-runtime": "^0.13.7",
         "swagger-ui-express": "^4.1.4",
         "typeorm": "^0.2.25",
-        "webpack-hot-middleware": "^2.25.0"
+        "webpack-hot-middleware": "^2.25.0",
+        "express": "*",
+        "body-parser": "*",
+        "bcrypt": "^5.0.0"
     },
     "browserslist": {
         "production": [
