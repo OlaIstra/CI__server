@@ -11,6 +11,8 @@ export const getSettings = async (_: unknown, res: Response<Settings>): Promise<
         const result = await settingsService.getSettings();
         res.send(result);
     } catch (err) {
+        console.log('no result');
+        console.log(err);
         throw new AppError(err.name, err.httpCode, err.description);
     }
 };
@@ -21,7 +23,7 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        await gitCommandsService.cloneRepo('OlaIstra', req.body.repoName);
+        await gitCommandsService.cloneRepo(req.body.userName, req.body.repoName);
         res.send(result);
     } catch (err) {
         throw new AppError(err.name, err.httpCode, err.description);

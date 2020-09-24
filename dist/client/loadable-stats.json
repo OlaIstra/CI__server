@@ -1,45 +1,25 @@
 {
   "errors": [],
-  "warnings": [
-    "chunk styles [mini-css-extract-plugin]\nConflicting order. Following module has been added:\n * css ./webpack/styles-in-ts-loader.js??ref--6-1!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/core/atoms/Title/Title.scss\ndespite it was not able to fulfill desired ordering with these modules:\n * css ./webpack/styles-in-ts-loader.js??ref--6-1!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/core/atoms/Button/Button.scss\n   - couldn't fulfill desired order of chunk group(s) core-components-Footer-Footer, pages-HistoryPage-HistoryPage\n   - while fulfilling desired order of chunk group(s) pages-ConfigurationPage-ConfigurationPage, pages-SettingsPage-SettingsPage",
-    "chunk styles [mini-css-extract-plugin]\nConflicting order. Following module has been added:\n * css ./webpack/styles-in-ts-loader.js??ref--6-1!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/core/atoms/Button/Button.scss\ndespite it was not able to fulfill desired ordering with these modules:\n * css ./webpack/styles-in-ts-loader.js??ref--6-1!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/core/atoms/Input/Input.scss\n   - couldn't fulfill desired order of chunk group(s) pages-SettingsPage-SettingsPage\n   - while fulfilling desired order of chunk group(s) pages-HistoryPage-HistoryPage"
-  ],
+  "warnings": [],
   "version": "4.44.2",
-  "hash": "643cce1c790c17299cc3",
-  "publicPath": "",
+  "hash": "a2ad914cfcf9d6754ea0",
+  "publicPath": "/",
   "outputPath": "/home/olaistra/CI__server/dist/client",
   "assetsByChunkName": {
-    "styles": [
-      "0.bundle.643cce1c790c17299cc3.css",
-      "styles.js"
-    ],
-    "vendor": "vendor.js",
     "client": "client.js",
     "core-components-Footer-Footer": "core-components-Footer-Footer.js",
     "pages-ConfigurationPage-ConfigurationPage": "pages-ConfigurationPage-ConfigurationPage.js",
     "pages-HistoryPage-HistoryPage": "pages-HistoryPage-HistoryPage.js",
-    "pages-SettingsPage-SettingsPage": "pages-SettingsPage-SettingsPage.js"
+    "pages-SettingsPage-SettingsPage": "pages-SettingsPage-SettingsPage.js",
+    "styles": "styles.js",
+    "vendor": "vendor.js"
   },
   "assets": [
     {
-      "name": "0.bundle.643cce1c790c17299cc3.css",
-      "size": 42440,
-      "chunks": [
-        0
-      ],
-      "chunkNames": [
-        "styles"
-      ],
-      "info": {
-        "immutable": true
-      },
-      "emitted": false
-    },
-    {
       "name": "client.js",
-      "size": 36189,
+      "size": 82201,
       "chunks": [
-        2
+        "client"
       ],
       "chunkNames": [
         "client"
@@ -49,9 +29,9 @@
     },
     {
       "name": "core-components-Footer-Footer.js",
-      "size": 3497,
+      "size": 5654,
       "chunks": [
-        3
+        "core-components-Footer-Footer"
       ],
       "chunkNames": [
         "core-components-Footer-Footer"
@@ -61,9 +41,9 @@
     },
     {
       "name": "pages-ConfigurationPage-ConfigurationPage.js",
-      "size": 5105,
+      "size": 11422,
       "chunks": [
-        4
+        "pages-ConfigurationPage-ConfigurationPage"
       ],
       "chunkNames": [
         "pages-ConfigurationPage-ConfigurationPage"
@@ -73,9 +53,9 @@
     },
     {
       "name": "pages-HistoryPage-HistoryPage.js",
-      "size": 8131,
+      "size": 16205,
       "chunks": [
-        5
+        "pages-HistoryPage-HistoryPage"
       ],
       "chunkNames": [
         "pages-HistoryPage-HistoryPage"
@@ -85,9 +65,9 @@
     },
     {
       "name": "pages-SettingsPage-SettingsPage.js",
-      "size": 8873,
+      "size": 16678,
       "chunks": [
-        6
+        "pages-SettingsPage-SettingsPage"
       ],
       "chunkNames": [
         "pages-SettingsPage-SettingsPage"
@@ -97,9 +77,9 @@
     },
     {
       "name": "styles.js",
-      "size": 865,
+      "size": 67719,
       "chunks": [
-        0
+        "styles"
       ],
       "chunkNames": [
         "styles"
@@ -109,21 +89,13 @@
     },
     {
       "name": "vendor.js",
-      "size": 391614,
+      "size": 1631436,
       "chunks": [
-        1
+        "vendor"
       ],
       "chunkNames": [
         "vendor"
       ],
-      "info": {},
-      "emitted": false
-    },
-    {
-      "name": "vendor.js.LICENSE.txt",
-      "size": 1162,
-      "chunks": [],
-      "chunkNames": [],
       "info": {},
       "emitted": false
     }
@@ -132,13 +104,12 @@
   "entrypoints": {
     "client": {
       "chunks": [
-        1,
-        0,
-        2
+        "vendor",
+        "styles",
+        "client"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "client.js"
       ],
@@ -149,13 +120,12 @@
   "namedChunkGroups": {
     "client": {
       "chunks": [
-        1,
-        0,
-        2
+        "vendor",
+        "styles",
+        "client"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "client.js"
       ],
@@ -164,13 +134,12 @@
     },
     "core-components-Footer-Footer": {
       "chunks": [
-        1,
-        0,
-        3
+        "vendor",
+        "styles",
+        "core-components-Footer-Footer"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "core-components-Footer-Footer.js"
       ],
@@ -179,13 +148,12 @@
     },
     "pages-ConfigurationPage-ConfigurationPage": {
       "chunks": [
-        1,
-        0,
-        4
+        "vendor",
+        "styles",
+        "pages-ConfigurationPage-ConfigurationPage"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "pages-ConfigurationPage-ConfigurationPage.js"
       ],
@@ -194,13 +162,12 @@
     },
     "pages-SettingsPage-SettingsPage": {
       "chunks": [
-        1,
-        0,
-        6
+        "vendor",
+        "styles",
+        "pages-SettingsPage-SettingsPage"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "pages-SettingsPage-SettingsPage.js"
       ],
@@ -209,13 +176,12 @@
     },
     "pages-HistoryPage-HistoryPage": {
       "chunks": [
-        1,
-        0,
-        5
+        "vendor",
+        "styles",
+        "pages-HistoryPage-HistoryPage"
       ],
       "assets": [
         "vendor.js",
-        "0.bundle.643cce1c790c17299cc3.css",
         "styles.js",
         "pages-HistoryPage-HistoryPage.js"
       ],
@@ -230,552 +196,5 @@
       "debug": false
     }
   },
-  "children": [
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/atoms/Button/Button.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/atoms/H1/H1.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/atoms/Input/Input.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/atoms/Title/Title.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/components/Footer/Footer.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/components/Header/Header.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/components/Modal/Modal.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/core/styles/variables.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/index.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/pages/App/App.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/pages/ConfigurationPage/ConfigurationPage.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/pages/HistoryPage/HistoryPage.scss"
-    },
-    {
-      "errors": [],
-      "warnings": [],
-      "publicPath": "",
-      "outputPath": "/home/olaistra/CI__server/dist/client",
-      "assetsByChunkName": {},
-      "assets": [],
-      "filteredAssets": 0,
-      "entrypoints": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "namedChunkGroups": {
-        "mini-css-extract-plugin": {
-          "chunks": [
-            0
-          ],
-          "assets": [
-            "*"
-          ],
-          "children": {},
-          "childAssets": {}
-        }
-      },
-      "logging": {
-        "webpack.buildChunkGraph.visitModules": {
-          "entries": [],
-          "filteredEntries": 2,
-          "debug": false
-        }
-      },
-      "children": [],
-      "name": "mini-css-extract-plugin webpack/styles-in-ts-loader.js??ref--6-1!node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/dist/cjs.js!src/pages/SettingsPage/SettingsPage.scss"
-    }
-  ]
+  "children": []
 }

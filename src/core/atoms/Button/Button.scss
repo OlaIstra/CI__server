@@ -47,6 +47,8 @@
         background: $disabledBcgColor;
         color: $disabledColor;
         opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
     }
 
     & span {

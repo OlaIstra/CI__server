@@ -108,9 +108,14 @@
         "@types/loadable__component": "^5.13.0",
         "@types/loadable__server": "^5.12.2",
         "axios": "^0.19.2",
+        "bcrypt": "^5.0.0",
+        "body-parser": "*",
         "classnames": "^2.2.6",
         "core-js": "^3.6.5",
         "deep-equal": "^2.0.3",
+        "express": "*",
+        "mobx": "^5.15.7",
+        "mobx-react-lite": "^2.2.2",
         "morgan": "^1.10.0",
         "normalize.css": "^8.0.1",
         "pg": "^8.2.2",
@@ -125,10 +130,7 @@
         "regenerator-runtime": "^0.13.7",
         "swagger-ui-express": "^4.1.4",
         "typeorm": "^0.2.25",
-        "webpack-hot-middleware": "^2.25.0",
-        "express": "*",
-        "body-parser": "*",
-        "bcrypt": "^5.0.0"
+        "webpack-hot-middleware": "^2.25.0"
     },
     "browserslist": {
         "production": [

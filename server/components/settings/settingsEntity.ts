@@ -6,6 +6,9 @@ export class Settings {
     id: string;
 
     @Column('text')
+    userName: string;
+
+    @Column('text')
     repoName: string;
 
     @Column('text')
