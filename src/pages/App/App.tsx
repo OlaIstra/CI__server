@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import loadable from '@loadable/component';
-
 import Store from '@core/stores/store';
 
 const Footer = loadable(() => import('@core/components/Footer/Footer'));

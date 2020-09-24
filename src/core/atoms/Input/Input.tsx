@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import classNames from 'classnames';
 import './Input.scss';
 import { SettingsUnion } from '@server/components/settings/interfaces';

@@ -1,5 +1,5 @@
-import { ISettings } from './../../../server/components/settings/interfaces';
 import axios, { AxiosResponse } from 'axios';
+import { ISettings } from '@server/components/settings/interfaces';
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 

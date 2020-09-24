@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.44.2",
-  "hash": "a2ad914cfcf9d6754ea0",
+  "hash": "5b54378c0102a715318c",
   "publicPath": "/",
   "outputPath": "/home/olaistra/CI__server/dist/client",
   "assetsByChunkName": {
@@ -53,7 +53,7 @@
     },
     {
       "name": "pages-HistoryPage-HistoryPage.js",
-      "size": 16205,
+      "size": 13732,
       "chunks": [
         "pages-HistoryPage-HistoryPage"
       ],

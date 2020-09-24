@@ -9,5 +9,6 @@
 /**/*.json
 /**/*.yml
 /**/*.sql
+dist
 pgdata
 Dockerfile
