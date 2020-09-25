@@ -44,6 +44,9 @@
             }
         ]
     },
+    "settings": {
+        "import/internal-regex": "^(src|core|pages|atoms|server)/"
+    },
     "overrides": [
         {
             "files": ["*.js"],

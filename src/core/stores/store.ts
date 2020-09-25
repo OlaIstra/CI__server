@@ -1,24 +1,34 @@
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { createContext } from 'react';
+import { ISettings } from '@server/components/settings/interfaces';
 
-import { Activities } from './../api/agent';
-import { ISettings } from './../../../server/components/settings/interfaces';
+import { Activities } from '../api/requestApi';
 
 class Store {
     @observable settings: ISettings;
 
-    @action getSettings = () => {
-        Activities.getSettings().then(response => {
-            console.log('response', response);
-            this.settings = response;
-        });
-    };
+    @action async getSettings() {
+        try {
+            const response = await Activities.getSettings();
+            runInAction(() => {
+                console.log('response', response);
+                this.settings = response;
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    @action saveSettings = (settings: ISettings) => {
-        Activities.saveSettings(settings).then(response => {
-            console.log('this.response', response);
-        });
-    };
+    @action async saveSettings(settings: ISettings) {
+        try {
+            const response = await Activities.saveSettings(settings);
+            runInAction(() => {
+                console.log('response', response);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 export default createContext(new Store());

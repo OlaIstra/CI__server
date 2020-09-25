@@ -1,11 +1,11 @@
-import React, { SyntheticEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import classNames from 'classnames';
 import './Button.scss';
 
 interface IProps {
     classes?: string;
     icon?: string;
-    handleClick?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+    handleClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const Button: React.FC<IProps> = ({ classes, icon, children, handleClick }) => {

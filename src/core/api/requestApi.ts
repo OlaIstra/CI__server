@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { ISettings } from '@server/components/settings/interfaces';
 
-axios.defaults.baseURL = 'http://localhost:8080/api';
+require('dotenv').config();
+
+axios.defaults.baseURL = process.env.BASE_URL_API;
 
 const responseBody = (response: AxiosResponse) => response.data;
 

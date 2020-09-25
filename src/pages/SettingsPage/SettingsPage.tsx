@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext, useState } from 'react';
+import React, { MouseEvent, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '@core/components/Header/Header';
 import { Title } from '@atoms/Title/Title';
@@ -21,7 +21,7 @@ export const SettingsPage: React.FC = () => {
 
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-    const saveSettings = (event: SyntheticEvent<HTMLButtonElement>) => {
+    const saveSettings = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         console.log('settings', settings);
         store.saveSettings(settings);
@@ -42,7 +42,7 @@ export const SettingsPage: React.FC = () => {
         Object.values(settings).includes('') ? setIsDisabled(true) : setIsDisabled(false);
     };
 
-    const clearAll = (event: SyntheticEvent<HTMLButtonElement>) => {
+    const clearAll = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setSettings({
             id: '123',
