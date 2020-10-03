@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { bootstrap } from './app';
+import { bootstrap } from './bootstrap';
 
 bootstrap({
     port: 8080,
