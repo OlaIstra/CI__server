@@ -6,14 +6,16 @@ services:
             dockerfile: ./server/Dockerfile
         ports:
             - '4000:4000'
-    src:
-        build:
-            context: .
-            dockerfile: ./src/Dockerfile
-        ports:
-            - '5000:5000'
-        depends_on:
-            - server
+        command: npm run start:dev
+    # src:
+    #     build:
+    #         context: .
+    #         dockerfile: ./src/Dockerfile
+    #     ports:
+    #         - '5000:5000'
+    #     depends_on:
+    #         - server
+    #     command: npm run start
 
     postgres:
         container_name: postgres

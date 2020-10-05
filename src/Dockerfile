@@ -1,11 +1,10 @@
-#base image
 FROM node:alpine
 
-WORKDIR '/app'
-COPY ./package.json .
+RUN npm install -g npm@latest
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 
-RUN npm install
-COPY . .
+WORKDIR '/src'
+COPY . ./package.json
 
-# start app
-CMD ["npm", "start"]
+RUN npm i
+COPY . /src
