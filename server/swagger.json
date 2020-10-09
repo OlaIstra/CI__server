@@ -41,13 +41,6 @@
                 "produces": ["application/xml", "application/json"],
                 "parameters": [
                     {
-                        "name": "userName",
-                        "in": "formData",
-                        "description": "User name",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "name": "repoName",
                         "in": "formData",
                         "description": "Name of repo",
@@ -244,9 +237,6 @@
                 "id": {
                     "type": "integer",
                     "format": "int64"
-                },
-                "userName": {
-                    "type": "string"
                 },
                 "repoName": {
                     "type": "string"

@@ -21,7 +21,7 @@ export const gitCommandsService = {
         return execAsync(command, options);
     },
 
-    cloneRepo: (userName: string, repoName: string): void => {
+    cloneRepo: (repoName: string): void => {
         try {
             const isLocalRepo = gitCommandsService.findLocalRepo();
 
@@ -29,7 +29,7 @@ export const gitCommandsService = {
                 gitCommandsService.deleteLocalRepo();
             }
 
-            const command = `git clone https://github.com/${userName}/${repoName} ${localRepoPath}`;
+            const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);

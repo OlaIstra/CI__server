@@ -1,21 +1,20 @@
 import { action, observable, runInAction } from 'mobx';
 import { createContext } from 'react';
-import { ISettings } from '@server/components/settings/interfaces';
+import { ISettings } from '@shared/interfaces/settings';
 
 import { Activities } from '../api/requestApi';
 
-class Store {
+class StoreSettings {
     @observable settings: ISettings;
 
     @action async getSettings() {
         try {
             const response = await Activities.getSettings();
             runInAction(() => {
-                console.log('response', response);
                 this.settings = response;
             });
         } catch (error) {
-            console.log(error);
+            // TODO error
         }
     }
 
@@ -23,12 +22,12 @@ class Store {
         try {
             const response = await Activities.saveSettings(settings);
             runInAction(() => {
-                console.log('response', response);
+                this.settings = response;
             });
         } catch (error) {
-            console.log(error);
+            // TODO error
         }
     }
 }
 
-export default createContext(new Store());
+export default createContext(new StoreSettings());

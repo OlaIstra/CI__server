@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "CI-server",
     "scripts": {
-        "start": "node dist/server/server.js",
+        "start": "cross-env TARGET=client webpack && cross-env TARGET=server webpack && node dist/server/server.js",
         "test": "jest",
         "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
         "start:dev": "cross-env NODE_ENV=development PORT=8080 nodemon",
@@ -73,6 +73,7 @@
         "eslint-loader": "^4.0.2",
         "eslint-plugin-prettier": "^3.1.3",
         "eslint-plugin-sonarjs": "^0.5.0",
+        "express-pino-logger": "^5.0.0",
         "file-loader": "^6.0.0",
         "html-webpack-plugin": "^4.3.0",
         "husky": "^4.2.5",

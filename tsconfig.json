@@ -17,6 +17,7 @@
             "@pages/*": ["src/pages/*"],
             "@atoms/*": ["src/core/atoms/*"],
             "@server/*": ["server/*"],
+            "@shared/*": ["shared/*"],
             "@src/*": ["src/*"]
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]

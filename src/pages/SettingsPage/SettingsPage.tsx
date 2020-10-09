@@ -4,15 +4,15 @@ import { Header } from '@core/components/Header/Header';
 import { Title } from '@atoms/Title/Title';
 import { Input } from '@atoms/Input/Input';
 import { Button } from '@atoms/Button/Button';
+import { ISettings, SettingsUnion } from '@shared/interfaces/settings';
+import storeSettings from '@core/stores/storeSettings';
+
 import './SettingsPage.scss';
-import { ISettings, SettingsUnion } from '@server/components/settings/interfaces';
-import Store from '@core/stores/store';
 
 export const SettingsPage: React.FC = () => {
-    const store = useContext(Store);
+    const store = useContext(storeSettings);
     const [settings, setSettings] = useState<ISettings>({
         id: '123',
-        userName: '',
         repoName: '',
         buildCommand: '',
         mainBranch: '',
@@ -23,21 +23,14 @@ export const SettingsPage: React.FC = () => {
 
     const saveSettings = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log('settings', settings);
         store.saveSettings(settings);
     };
 
     const handleChange = (value: string, property: SettingsUnion) => {
-        console.log(property, value);
-        console.log(typeof value);
-        setSettings(prev => ({
+        setSettings((prev: ISettings) => ({
             ...prev,
             [property]: value,
         }));
-
-        console.log(settings);
-
-        console.log('Object.values(settings).includes', Object.values(settings).includes(''));
 
         Object.values(settings).includes('') ? setIsDisabled(true) : setIsDisabled(false);
     };
@@ -46,7 +39,6 @@ export const SettingsPage: React.FC = () => {
         event.preventDefault();
         setSettings({
             id: '123',
-            userName: '',
             repoName: '',
             buildCommand: '',
             mainBranch: '',
@@ -64,16 +56,6 @@ export const SettingsPage: React.FC = () => {
                     Configure repository connection and synchronization settings.
                 </Title>
                 <form action='' className='form'>
-                    <div className='form__block'>
-                        <Title>User name</Title>
-                        <Input
-                            placeholder='user-name'
-                            icon='icon-cross'
-                            inputValue={settings.userName}
-                            handleChange={handleChange}
-                            property='userName'
-                        />
-                    </div>
                     <div className='form__block'>
                         <Title>GitHub repository</Title>
                         <Input

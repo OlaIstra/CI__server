@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import classNames from 'classnames';
 import './Input.scss';
-import { SettingsUnion } from '@server/components/settings/interfaces';
+import { SettingsUnion } from '@shared/interfaces/settings';
 
 interface IProps {
     placeholder: string;
@@ -20,12 +20,15 @@ export const Input: React.FC<IProps> = ({
     property,
     handleChange,
 }) => {
-    const handleInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        handleChange(event.currentTarget.value, property);
-    };
-    const handleDelete = () => {
+    const handleInputValue = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            handleChange(event.currentTarget.value, property);
+        },
+        [handleChange],
+    );
+    const handleDelete = useCallback(() => {
         handleChange('', property);
-    };
+    }, [handleChange]);
 
     const inputClass = classNames('input', classes);
 
@@ -37,7 +40,7 @@ export const Input: React.FC<IProps> = ({
                 value={inputValue}
                 onChange={handleInputValue}
             />
-            {icon ? <span className={icon} onClick={handleDelete}></span> : null}
+            {icon && <span className={icon} onClick={handleDelete}></span>}
         </div>
     );
 };

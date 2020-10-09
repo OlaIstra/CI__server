@@ -17,7 +17,7 @@
         "node": true
     },
     "rules": {
-        "no-console": "off",
+        "no-console": 1,
         "no-inline-comments": "off",
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
@@ -45,7 +45,10 @@
         ]
     },
     "settings": {
-        "import/internal-regex": "^(src|core|pages|atoms|server)/"
+        "import/internal-regex": "^(src|core|pages|atoms|server)/",
+        "react": {
+            "version": "detect"
+        }
     },
     "overrides": [
         {

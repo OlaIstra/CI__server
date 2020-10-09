@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import path from 'path';
-
 import { ConnectionOptions } from 'typeorm';
+
 import { Settings } from './components/settings/settingsEntity';
 import { Build } from './components/builds/buildsEntity';
 
@@ -13,7 +13,6 @@ config({
 
 export const typeOrmConfig: ConnectionOptions = {
     type: 'postgres',
-    username: process.env.POSTGRES_USER,
     host: process.env.DATABASE_HOST,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,

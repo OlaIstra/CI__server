@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ISettings } from '@server/components/settings/interfaces';
+import { ISettings } from '@shared/interfaces/settings';
 
 require('dotenv').config();
 
@@ -14,12 +14,15 @@ const requests = {
     delete: (url: string) => axios.delete(url).then(responseBody),
 };
 
+const apiSettings = 'api/settings';
+const apiBuilds = 'api/builds';
+
 export const Activities = {
-    getSettings: () => requests.get('/settings'),
-    saveSettings: (settings: ISettings) => requests.post('/settings', settings),
-    getBuilds: () => requests.get('/builds'),
-    saveBuild: (commitHash: string) => requests.post('/builds', commitHash),
-    getBuildDetails: (id: string) => requests.get(`/builds/${id}`),
-    getBuildLogs: (id: string) => requests.get(`/builds/${id}/logs`),
-    deleteBuilds: () => requests.delete('/builds'),
+    getSettings: () => requests.get(apiSettings),
+    saveSettings: (settings: ISettings) => requests.post(apiSettings, settings),
+    getBuilds: () => requests.get(apiBuilds),
+    saveBuild: (commitHash: string) => requests.post(apiBuilds, commitHash),
+    getBuildDetails: (id: string) => requests.get(`${apiBuilds}/${id}`),
+    getBuildLogs: (id: string) => requests.get(`${apiBuilds}/${id}/logs`),
+    deleteBuilds: () => requests.delete(apiBuilds),
 };
