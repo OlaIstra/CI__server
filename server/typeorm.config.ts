@@ -13,6 +13,7 @@ config({
 
 export const typeOrmConfig: ConnectionOptions = {
     type: 'postgres',
+    username: process.env.POSTGRES_USER,
     host: process.env.DATABASE_HOST,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,

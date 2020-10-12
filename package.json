@@ -4,6 +4,7 @@
     "description": "CI-server",
     "scripts": {
         "start": "cross-env TARGET=client webpack && cross-env TARGET=server webpack && node dist/server/server.js",
+        "server:dev": "cross-env TARGET=server webpack && node dist/server/server.js",
         "test": "jest",
         "dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
         "start:dev": "cross-env NODE_ENV=development PORT=8080 nodemon",
