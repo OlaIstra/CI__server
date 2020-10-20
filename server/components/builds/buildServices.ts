@@ -1,7 +1,7 @@
 import deepEqual from 'deep-equal';
 import { getRepository } from 'typeorm';
-import { AppError } from '@server/components/error/error';
-import { HttpStatus } from '@server/HttpStatus';
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 
 import { Build } from './buildsEntity';
 import { IBuildCommit } from './interfaces';
@@ -44,9 +44,9 @@ export const buildService = {
 
             if (!isEqual) {
                 repository.save(buildData);
-                return HttpStatus.OK;
+                return HttpCode.OK;
             } else {
-                return HttpStatus.NOT_MODIFIED;
+                return HttpCode.NOT_MODIFIED;
             }
         } catch (err) {
             throw new AppError(err.name, err.httpCode, err.description);

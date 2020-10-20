@@ -10,8 +10,9 @@ import { StaticRouterContext } from 'react-router';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import { parse as parseUrl } from 'url';
-import { html as htmlTemplate, oneLineTrim } from 'common-tags';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import { Store } from '@core/stores/store';
+import { StoreContext } from '@core/stores/services';
 
 import App from './pages/App/App';
 
@@ -25,6 +26,10 @@ export const ssrFunction = (app: {
     app.use(express.static('./dist/client'));
 
     app.get('/*', (req, res) => {
+        const store = new Store();
+
+        //await createStoreAggregateMiddleware(store)(req, res);
+
         try {
             const url = req.originalUrl || req.url;
 
@@ -38,9 +43,11 @@ export const ssrFunction = (app: {
             const styleTags = webExtractor.getStyleTags();
             const jsx = webExtractor.collectChunks(
                 <ChunkExtractorManager extractor={webExtractor}>
-                    <StaticRouter location={location} context={context}>
-                        <App />
-                    </StaticRouter>
+                    <StoreContext.Provider value={store}>
+                        <StaticRouter location={location} context={context}>
+                            <App />
+                        </StaticRouter>
+                    </StoreContext.Provider>
                 </ChunkExtractorManager>,
             );
             const html = renderToString(jsx);
@@ -54,10 +61,11 @@ export const ssrFunction = (app: {
                 data = data.replace('__STYLES__', styleTags);
                 data = data.replace('__SCRIPTS__', scriptTags);
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+                // переменная для стора черех json.ыекштпшан
                 return res.send(data);
             });
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     });
 };

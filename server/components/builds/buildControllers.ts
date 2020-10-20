@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import { AppError } from '@server/components/error/error';
+import { AppError } from '@shared/error/error';
 import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
 import { settingsService } from '@server/components/settings/settingsServices';
 

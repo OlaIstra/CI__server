@@ -1,29 +1,37 @@
-import React, { MouseEvent, useContext, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '@core/components/Header/Header';
 import { Title } from '@atoms/Title/Title';
 import { Input } from '@atoms/Input/Input';
 import { Button } from '@atoms/Button/Button';
 import { ISettings, SettingsUnion } from '@shared/interfaces/settings';
-import storeSettings from '@core/stores/storeSettings';
+import { requests } from '@core/api/requestApi';
+import { IEndpoints } from '@shared/enums';
 
 import './SettingsPage.scss';
 
-export const SettingsPage: React.FC = () => {
-    const store = useContext(storeSettings);
-    const [settings, setSettings] = useState<ISettings>({
-        id: '123',
-        repoName: '',
-        buildCommand: '',
-        mainBranch: '',
-        timePeriod: 0,
-    });
+const initialSettings = {
+    id: '',
+    repoName: '',
+    buildCommand: '',
+    mainBranch: '',
+    timePeriod: 10,
+};
 
+export const SettingsPage: React.FC = () => {
+    const [settings, setSettings] = useState<ISettings>(initialSettings);
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
+
+    useEffect(() => {
+        requests.get(IEndpoints.Settings).then(res => {
+            setSettings(res);
+            setIsDisabled(false);
+        });
+    }, []);
 
     const saveSettings = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        store.saveSettings(settings);
+        requests.post(IEndpoints.Settings, settings);
     };
 
     const handleChange = (value: string, property: SettingsUnion) => {
@@ -37,13 +45,7 @@ export const SettingsPage: React.FC = () => {
 
     const clearAll = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        setSettings({
-            id: '123',
-            repoName: '',
-            buildCommand: '',
-            mainBranch: '',
-            timePeriod: 0,
-        });
+        setSettings(initialSettings);
         setIsDisabled(true);
     };
 

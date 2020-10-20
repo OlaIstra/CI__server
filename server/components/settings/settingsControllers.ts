@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { AppError } from '@server/components/error/error';
-import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
+import { AppError } from '@shared/error/error';
 import { ISettings } from '@shared/interfaces/settings';
 
 import { settingsService } from './settingsServices';
@@ -21,7 +20,7 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        await gitCommandsService.cloneRepo(req.body.repoName);
+        // await gitCommandsService.cloneRepo(req.body.repoName);
         res.send(result);
     } catch (err) {
         throw new AppError(err.name, err.httpCode, err.description);

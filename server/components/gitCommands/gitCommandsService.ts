@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import { exec, ExecOptions } from 'child_process';
 import os from 'os';
 import fs from 'fs';
-import { AppError } from '@server/components/error/error';
+import { AppError } from '@shared/error/error';
 import { IBuildCommit } from '@server/components/builds/interfaces';
 
 require('dotenv').config();

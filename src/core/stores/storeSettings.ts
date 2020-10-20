@@ -1,15 +1,15 @@
 import { action, observable, runInAction } from 'mobx';
-import { createContext } from 'react';
 import { ISettings } from '@shared/interfaces/settings';
+import { IEndpoints } from '@shared/enums';
 
-import { Activities } from '../api/requestApi';
+import { requests } from '../api/requestApi';
 
-class StoreSettings {
+export class StoreSettings {
     @observable settings: ISettings;
 
     @action async getSettings() {
         try {
-            const response = await Activities.getSettings();
+            const response = await requests.get(IEndpoints.Settings);
             runInAction(() => {
                 this.settings = response;
             });
@@ -20,7 +20,7 @@ class StoreSettings {
 
     @action async saveSettings(settings: ISettings) {
         try {
-            const response = await Activities.saveSettings(settings);
+            const response = await requests.post(IEndpoints.Settings, settings);
             runInAction(() => {
                 this.settings = response;
             });
@@ -29,5 +29,3 @@ class StoreSettings {
         }
     }
 }
-
-export default createContext(new StoreSettings());
