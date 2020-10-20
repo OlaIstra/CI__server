@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AppError } from '@shared/error/error';
 import { ISettings } from '@shared/interfaces/settings';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 
 import { settingsService } from './settingsServices';
 import { Settings } from './settingsEntity';
@@ -10,7 +11,7 @@ export const getSettings = async (_: unknown, res: Response<Settings>): Promise<
         const result = await settingsService.getSettings();
         res.send(result);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
     }
 };
 
@@ -23,6 +24,6 @@ export const saveSettings = async (
         // await gitCommandsService.cloneRepo(req.body.repoName);
         res.send(result);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
     }
 };

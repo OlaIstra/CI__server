@@ -14,7 +14,6 @@ export const connectDb = async (
         try {
             await createConnection(typeOrmConfig);
         } catch (err) {
-            console.log('err.name', err);
             if (err.name === 'AlreadyHasActiveConnectionError') {
                 return getConnection('default');
             }

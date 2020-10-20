@@ -1,6 +1,8 @@
 import { action, observable, runInAction } from 'mobx';
 import { ISettings } from '@shared/interfaces/settings';
 import { IEndpoints } from '@shared/enums';
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 
 import { requests } from '../api/requestApi';
 
@@ -14,7 +16,7 @@ export class StoreSettings {
                 this.settings = response;
             });
         } catch (error) {
-            // TODO error
+            throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
         }
     }
 
@@ -25,7 +27,7 @@ export class StoreSettings {
                 this.settings = response;
             });
         } catch (error) {
-            // TODO error
+            throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
         }
     }
 }

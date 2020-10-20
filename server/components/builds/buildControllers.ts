@@ -1,3 +1,4 @@
+import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Response, Request } from 'express';
 import { AppError } from '@shared/error/error';
 import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
@@ -12,7 +13,7 @@ export const getBuilds = async (_: unknown, res: Response<Build[]>): Promise<voi
         const builds = await buildService.getBuilds();
         res.send(builds);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot get builds', HttpCode.NOT_FOUND);
     }
 };
 
@@ -31,7 +32,7 @@ export const saveBuild = async (
         const result = await buildService.saveBuild(buildInfo);
         res.send(result);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot save build', HttpCode.FORBIDDEN);
     }
 };
 
@@ -43,7 +44,7 @@ export const getBuildDetails = async (
         const response = await buildService.getBuildDetails(req.params.id);
         res.send(response);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot get build details', HttpCode.NOT_FOUND);
     }
 };
 
@@ -55,7 +56,7 @@ export const getBuildLogs = async (
         const result = await buildService.getBuildDetails(req.params.id);
         res.send(result?.buildLogs);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot get build logs', HttpCode.NOT_FOUND);
     }
 };
 
@@ -64,6 +65,6 @@ export const deleteBuilds = async (_: unknown, res: Response<string>): Promise<v
         await buildService.deleteBuilds();
         res.send('success');
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot delete builds', HttpCode.FORBIDDEN);
     }
 };

@@ -11,7 +11,7 @@ export const settingsService = {
             const repository = getRepository(Settings);
             return repository.findOne();
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
         }
     },
 
@@ -39,7 +39,7 @@ export const settingsService = {
                 return HttpCode.NOT_MODIFIED;
             }
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
         }
     },
 };

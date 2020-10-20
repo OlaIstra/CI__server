@@ -5,6 +5,7 @@ import os from 'os';
 import fs from 'fs';
 import { AppError } from '@shared/error/error';
 import { IBuildCommit } from '@server/components/builds/interfaces';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 
 require('dotenv').config();
 
@@ -32,7 +33,7 @@ export const gitCommandsService = {
             const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot clone repo', HttpCode.FORBIDDEN);
         }
     },
 
@@ -41,7 +42,7 @@ export const gitCommandsService = {
             const file = fs.statSync(path.join(homeDir, localRepo));
             return file.isDirectory();
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot find local repo', HttpCode.NOT_FOUND);
         }
     },
 
@@ -50,7 +51,7 @@ export const gitCommandsService = {
             const command = `rm -rf ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot delete local repo', HttpCode.FORBIDDEN);
         }
     },
 
@@ -59,7 +60,7 @@ export const gitCommandsService = {
             const command = `cd ${localRepoPath} && git checkout ${branchName}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot checkout branch', HttpCode.FORBIDDEN);
         }
     },
 

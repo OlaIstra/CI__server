@@ -13,6 +13,8 @@ import { parse as parseUrl } from 'url';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import { Store } from '@core/stores/store';
 import { StoreContext } from '@core/stores/services';
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 
 import App from './pages/App/App';
 
@@ -65,7 +67,7 @@ export const ssrFunction = (app: {
                 return res.send(data);
             });
         } catch (error) {
-            // console.log(error);
+            throw new AppError('Cannot create application', HttpCode.FORBIDDEN);
         }
     });
 };
