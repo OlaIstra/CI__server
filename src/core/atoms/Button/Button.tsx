@@ -1,18 +1,20 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+
 import './Button.scss';
 
 interface IProps {
+    type?: 'button' | 'submit' | 'reset';
     classes?: string;
     icon?: string;
-    handleClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+    handleClick?: () => void;
 }
 
-export const Button: React.FC<IProps> = ({ classes, icon, children, handleClick }) => {
+export const Button: React.FC<IProps> = ({ classes, icon, children, handleClick, type }) => {
     const btnClass = classNames('btn', classes);
 
     return (
-        <button className={btnClass} onClick={handleClick}>
+        <button type={type} className={btnClass} onClick={handleClick}>
             {icon && <span className={icon} />}
             {children}
         </button>

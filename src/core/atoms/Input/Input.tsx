@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import classNames from 'classnames';
-import './Input.scss';
 import { SettingsUnion } from '@shared/interfaces/settings';
+import './Input.scss';
 
 interface IProps {
     placeholder: string;
