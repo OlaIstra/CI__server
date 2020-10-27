@@ -21,7 +21,6 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        // await gitCommandsService.cloneRepo(req.body.repoName);
         res.send(result);
     } catch (err) {
         throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);

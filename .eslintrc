@@ -17,6 +17,7 @@
         "node": true
     },
     "rules": {
+        "import-path/parent-depth": ["error", 2],
         "no-console": 1,
         "no-inline-comments": "off",
         "import/no-unresolved": "off",
@@ -56,5 +57,5 @@
             "rules": { "@typescript-eslint/no-var-requires": 0 }
         }
     ],
-    "plugins": ["react", "@typescript-eslint", "prettier", "sonarjs"]
+    "plugins": ["react", "@typescript-eslint", "prettier", "sonarjs", "import-path"]
 }

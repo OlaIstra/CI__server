@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ISettings } from '@shared/interfaces/settings';
-
-import { IEndpoints } from './../../../shared/enums';
+import { IEndpoints } from '@shared/enums';
 
 require('dotenv').config();
 
