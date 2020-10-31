@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+
+import { ISettings } from '@shared/interfaces/settings';
+import { EndPoints } from '@shared/enums';
 import { Title } from '@atoms/Title/Title';
 import { Button } from '@atoms/Button/Button';
-import { ISettings } from '@shared/interfaces/settings';
 import { requests } from '@core/api/requestApi';
-import { IEndpoints } from '@shared/enums';
 import { validationSchema } from '@pages/SettingsPage/Settings.validation';
 
 import './Form.scss';
@@ -21,18 +22,18 @@ export const CustomForm: React.FC = () => {
     const [settings, setSettings] = useState<ISettings>(initialValues);
 
     useEffect(() => {
-        requests.get(IEndpoints.Settings).then(res => {
+        requests.get(EndPoints.Settings).then(res => {
             setSettings(res);
         });
     }, []);
 
-    const onSubmit = (settings: ISettings) => {
-        requests.post(IEndpoints.Settings, settings);
-    };
+    const onSubmit = useCallback((settings: ISettings) => {
+        requests.post(EndPoints.Settings, settings);
+    }, []);
 
-    const clearAll = () => {
+    const clearAll = useCallback(() => {
         setSettings(initialValues);
-    };
+    }, [setSettings]);
 
     return (
         <>
@@ -120,5 +121,3 @@ export const CustomForm: React.FC = () => {
         </>
     );
 };
-
-export default CustomForm;

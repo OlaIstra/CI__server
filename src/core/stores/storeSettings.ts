@@ -1,9 +1,9 @@
 import { action, observable, runInAction } from 'mobx';
+
 import { ISettings } from '@shared/interfaces/settings';
-import { IEndpoints } from '@shared/enums';
+import { EndPoints } from '@shared/enums';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-
 import { requests } from '../api/requestApi';
 
 export class StoreSettings {
@@ -11,7 +11,7 @@ export class StoreSettings {
 
     @action async getSettings() {
         try {
-            const response = await requests.get(IEndpoints.Settings);
+            const response = await requests.get(EndPoints.Settings);
             runInAction(() => {
                 this.settings = response;
             });
@@ -22,7 +22,7 @@ export class StoreSettings {
 
     @action async saveSettings(settings: ISettings) {
         try {
-            const response = await requests.post(IEndpoints.Settings, settings);
+            const response = await requests.post(EndPoints.Settings, settings);
             runInAction(() => {
                 this.settings = response;
             });

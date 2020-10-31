@@ -3,10 +3,12 @@ import { promisify } from 'util';
 import { exec, ExecOptions } from 'child_process';
 import os from 'os';
 import fs from 'fs';
-import { AppError } from '@shared/error/error';
-import { IBuildCommit } from '@server/components/builds/interfaces';
-import { HttpCode } from '@shared/error/httpStatusCodes';
 
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
+import { IBuildCommit } from '@server/components/builds/interfaces';
+
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 require('dotenv').config();
 
 const localRepo = process.env.LOCAL_REPO || '';

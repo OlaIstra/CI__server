@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Header } from '@core/components/Header/Header';
 import { Title } from '@atoms/Title/Title';
 import { Button } from '@atoms/Button/Button';

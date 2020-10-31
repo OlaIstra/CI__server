@@ -1,5 +1,6 @@
 {
     "parser": "@typescript-eslint/parser",
+    "plugins": ["react", "@typescript-eslint", "prettier", "sonarjs"],
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
@@ -17,13 +18,13 @@
         "node": true
     },
     "rules": {
-        "import-path/parent-depth": ["error", 2],
         "no-console": 1,
         "no-inline-comments": "off",
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "@typescript-eslint/no-explicit-any": 1,
         "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "@typescript-eslint/interface-name-prefix": 0,
         "@typescript-eslint/no-empty-interface": 0,
@@ -46,9 +47,12 @@
         ]
     },
     "settings": {
-        "import/internal-regex": "^(src|core|pages|atoms|server)/",
+        "import/internal-regex": "^(@src|@core|@pages|@atoms|@server|@shared)/",
         "react": {
             "version": "detect"
+        },
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx", ".d.ts"]
         }
     },
     "overrides": [
@@ -56,6 +60,5 @@
             "files": ["*.js"],
             "rules": { "@typescript-eslint/no-var-requires": 0 }
         }
-    ],
-    "plugins": ["react", "@typescript-eslint", "prettier", "sonarjs", "import-path"]
+    ]
 }

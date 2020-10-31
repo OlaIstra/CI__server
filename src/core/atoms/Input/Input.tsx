@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import classNames from 'classnames';
-import { SettingsUnion } from '@shared/interfaces/settings';
+
+import { SettingsParameters } from '@shared/interfaces/settings';
+
 import './Input.scss';
 
 interface IProps {
@@ -8,8 +10,8 @@ interface IProps {
     classes?: string;
     icon?: string;
     inputValue: string | number;
-    property: SettingsUnion;
-    handleChange: (value: string, property: SettingsUnion) => void;
+    property: SettingsParameters;
+    handleChange: (value: string, property: SettingsParameters) => void;
 }
 
 export const Input: React.FC<IProps> = ({

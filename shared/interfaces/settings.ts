@@ -6,4 +6,4 @@ export interface ISettings {
     timePeriod: number;
 }
 
-export type SettingsUnion = 'repoName' | 'buildCommand' | 'mainBranch' | 'timePeriod';
+export type SettingsParameters = 'repoName' | 'buildCommand' | 'mainBranch' | 'timePeriod';

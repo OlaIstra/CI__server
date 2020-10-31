@@ -11,11 +11,11 @@ import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import { parse as parseUrl } from 'url';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import { Store } from '@core/stores/store';
-import { StoreContext } from '@core/stores/services';
+
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-
+import { Store } from '@core/stores/store';
+import { StoreContext } from '@core/stores/services';
 import App from './pages/App/App';
 
 const root = process.cwd();
