@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Header } from '@core/components/Header/Header';
 import { Button } from '@atoms/Button/Button';
 import { Modal } from '@core/components/Modal/Modal';
+
 import './HistoryPage.scss';
 
 const HistoryPage: React.FC = () => (

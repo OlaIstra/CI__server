@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Title } from '@atoms/Title/Title';
 import { Button } from '@atoms/Button/Button';
+
 import './Modal.scss';
 
 export const Modal: React.FC = () => {

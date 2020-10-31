@@ -1,13 +1,14 @@
-import express, { Router } from 'express';
+import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { ConnectionOptions } from 'typeorm';
-import { ssrFunction } from '@src/server';
 
+import { ssrFunction } from '@src/server';
 import swaggerDocs from './swagger.json';
 import { typeOrmConfig } from './typeorm.config';
 import { connectDb } from './connectDb';
 
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 require('dotenv').config();
 
 const port = process.env.PORT;

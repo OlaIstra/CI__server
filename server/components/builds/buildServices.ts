@@ -1,8 +1,8 @@
 import deepEqual from 'deep-equal';
 import { getRepository } from 'typeorm';
+
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-
 import { Build } from './buildsEntity';
 import { IBuildCommit } from './interfaces';
 

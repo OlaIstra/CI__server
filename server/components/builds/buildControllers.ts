@@ -1,9 +1,9 @@
-import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Response, Request } from 'express';
+
+import { HttpCode } from '@shared/error/httpStatusCodes';
 import { AppError } from '@shared/error/error';
 import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
 import { settingsService } from '@server/components/settings/settingsServices';
-
 import { buildService } from './buildServices';
 import { Build } from './buildsEntity';
 import { IBuildCommit } from './interfaces';

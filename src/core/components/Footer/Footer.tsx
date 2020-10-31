@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Button } from '@atoms/Button/Button';
 import { Title } from '@atoms/Title/Title';
+
 import './Footer.scss';
 
 const Footer: React.FC = () => (

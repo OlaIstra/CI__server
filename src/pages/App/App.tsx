@@ -2,6 +2,7 @@ import React from 'react';
 import loadable from '@loadable/component';
 
 import { Routes } from './Routes';
+
 import '@core/styles/variables.scss';
 import './App.scss';
 
