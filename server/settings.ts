@@ -1,11 +1,10 @@
 import axios from 'axios';
 import https from 'https';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-require('dotenv').config();
+import { envConfig } from '@shared/config';
 
 const agent = new https.Agent({ rejectUnauthorized: false });
 export const axiosInstance = axios.create({
-    baseURL: `${process.env.BASE_URL}`,
+    baseURL: `${envConfig.BASE_URL}`,
     httpsAgent: agent,
 });

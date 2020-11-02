@@ -7,11 +7,9 @@ import { ssrFunction } from '@src/server';
 import swaggerDocs from './swagger.json';
 import { typeOrmConfig } from './typeorm.config';
 import { connectDb } from './connectDb';
+import { envConfig } from '@shared/config';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-require('dotenv').config();
-
-const port = process.env.PORT;
+const port = envConfig.PORT;
 
 interface IConfig {
     port?: number;

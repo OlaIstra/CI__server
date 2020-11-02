@@ -2,11 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 
 import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
+import { envConfig } from '@shared/config';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-require('dotenv').config();
-
-axios.defaults.baseURL = process.env.BASE_URL_API;
+axios.defaults.baseURL = envConfig.BASE_URL_API;
 
 const responseBody = (response: AxiosResponse<ISettings>) => response.data;
 

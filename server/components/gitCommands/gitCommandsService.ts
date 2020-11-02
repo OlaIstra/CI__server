@@ -7,11 +7,9 @@ import fs from 'fs';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { IBuildCommit } from '@server/components/builds/interfaces';
+import { envConfig } from '@shared/config';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-require('dotenv').config();
-
-const localRepo = process.env.LOCAL_REPO || '';
+const localRepo = envConfig.LOCAL_REPO || '';
 const execAsync = promisify(exec);
 const homeDir = os.homedir();
 const localRepoPath = path.join(homeDir, localRepo);
