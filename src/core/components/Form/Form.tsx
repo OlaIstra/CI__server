@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { observer } from 'mobx-react-lite';
 
 import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
@@ -10,6 +11,10 @@ import { validationSchema } from '@pages/SettingsPage/Settings.validation';
 
 import './Form.scss';
 
+interface Props {
+    initialSettings: ISettings;
+}
+
 const initialValues = {
     id: '',
     repoName: '',
@@ -18,14 +23,8 @@ const initialValues = {
     timePeriod: 0,
 };
 
-export const CustomForm: React.FC = () => {
-    const [settings, setSettings] = useState<ISettings>(initialValues);
-
-    useEffect(() => {
-        requests.get(EndPoints.Settings).then(res => {
-            setSettings(res);
-        });
-    }, []);
+export const CustomForm: React.FC<Props> = observer(({ initialSettings }) => {
+    const [settings, setSettings] = useState(initialSettings);
 
     const onSubmit = useCallback((settings: ISettings) => {
         requests.post(EndPoints.Settings, settings);
@@ -120,4 +119,4 @@ export const CustomForm: React.FC = () => {
             </Formik>
         </>
     );
-};
+});

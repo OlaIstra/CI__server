@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import loadable from '@loadable/component';
 
 import { Routes } from './Routes';
@@ -17,4 +18,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default observer(App);

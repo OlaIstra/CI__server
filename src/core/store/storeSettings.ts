@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
@@ -6,10 +6,27 @@ import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { requests } from '../api/requestApi';
 
-export class StoreSettings {
-    @observable settings: ISettings;
+const initialValues = {
+    id: '',
+    repoName: '',
+    buildCommand: '',
+    mainBranch: '',
+    timePeriod: 0,
+};
 
-    @action async getSettings() {
+export class SettingsStore {
+    settings: ISettings;
+
+    constructor(settings?: ISettings) {
+        makeObservable(this, {
+            settings: observable,
+            getSettings: action,
+            saveSettings: action,
+        });
+        this.settings = settings ? settings : initialValues;
+    }
+
+    async getSettings() {
         try {
             const response = await requests.get(EndPoints.Settings);
             runInAction(() => {
@@ -20,7 +37,7 @@ export class StoreSettings {
         }
     }
 
-    @action async saveSettings(settings: ISettings) {
+    async saveSettings(settings: ISettings) {
         try {
             const response = await requests.post(EndPoints.Settings, settings);
             runInAction(() => {

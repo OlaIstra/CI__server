@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "target":"ES2020",
         "lib": ["ESnext", "es5", "es6", "dom"],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -12,6 +13,7 @@
         "baseUrl": "./",
         "strict": true,
         "strictPropertyInitialization": false,
+        "useDefineForClassFields": true,
         "paths": {
             "@core/*": ["src/core/*"],
             "@pages/*": ["src/pages/*"],

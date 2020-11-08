@@ -14,9 +14,10 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { Store } from '@core/stores/store';
-import { StoreContext } from '@core/stores/services';
+import RootStore from '@core/store/rootStore';
+import { StoreContext } from '@core/store/helpers/storeContext.ts';
 import App from './pages/App/App';
+import { getInitialStore } from '@core/store/getInitialStore';
 
 const root = process.cwd();
 
@@ -27,10 +28,10 @@ export const ssrFunction = (app: {
 }) => {
     app.use(express.static('./dist/client'));
 
-    app.get('/*', (req, res) => {
-        const store = new Store();
+    app.get('/*', async (req, res) => {
+        const store = new RootStore();
 
-        //await createStoreAggregateMiddleware(store)(req, res);
+        const initialStore = await getInitialStore(store);
 
         try {
             const url = req.originalUrl || req.url;
@@ -63,7 +64,10 @@ export const ssrFunction = (app: {
                 data = data.replace('__STYLES__', styleTags);
                 data = data.replace('__SCRIPTS__', scriptTags);
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
-                // переменная для стора черех json.ыекштпшан
+                data = data.replace(
+                    'window.__INITIAL_STATE__ = {}',
+                    `window.__INITIAL_STATE__ = ${JSON.stringify(store.settingsStore.settings)}`,
+                );
                 return res.send(data);
             });
         } catch (error) {
