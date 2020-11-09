@@ -23,7 +23,7 @@ export class SettingsStore {
             getSettings: action,
             saveSettings: action,
         });
-        this.settings = settings ? settings : initialValues;
+        this.settings = settings || initialValues;
     }
 
     async getSettings() {

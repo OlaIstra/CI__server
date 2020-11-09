@@ -17,7 +17,7 @@ import { HttpCode } from '@shared/error/httpStatusCodes';
 import RootStore from '@core/store/rootStore';
 import { StoreContext } from '@core/store/helpers/storeContext.ts';
 import App from './pages/App/App';
-import { getInitialStore } from '@core/store/getInitialStore';
+import { getInitialStore } from '@src/getInitialStore';
 
 const root = process.cwd();
 
