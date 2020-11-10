@@ -1,6 +1,6 @@
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import RootStore from './core/store/rootStore';
+import RootStore from '../src/core/store/rootStore';
 import { settingsService } from '@server/components/settings/settingsServices';
 
 export const getInitialStore = async (store: RootStore) => {

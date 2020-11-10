@@ -6,15 +6,10 @@ import { loadableReady } from '@loadable/component';
 import App from '@pages/App/App';
 import { StoreContext } from '@core/store/helpers/storeContext.ts';
 import RootStore from '@core/store/rootStore';
-import { IWindow } from './global';
 
 import './index.scss';
 
-declare const window: IWindow;
-
-const initialState = window.__INITIAL_STATE__;
-
-const store = new RootStore(initialState);
+const store = new RootStore(window.__INITIAL_STATE__);
 
 const app = (
     <StoreContext.Provider value={store}>
