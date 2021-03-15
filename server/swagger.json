@@ -41,6 +41,13 @@
                 "produces": ["application/xml", "application/json"],
                 "parameters": [
                     {
+                        "name": "userName",
+                        "in": "formData",
+                        "description": "User name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "name": "repoName",
                         "in": "formData",
                         "description": "Name of repo",
