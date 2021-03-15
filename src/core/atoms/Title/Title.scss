@@ -1,21 +1,10 @@
 @import '../../styles/variables';
 
 .title {
+    font-size: $fontSizeSmall;
+    letter-spacing: $letterSpacingMicro;
+    color: $fontColor;
+    font-family: 'Helvetica_cyr';
+    font-weight: $fontWeightBold;
     text-align: center;
-
-    &--light {
-        color: $fontColor;
-    }
-
-    &--bold {
-        margin-bottom: 8px;
-        font-weight: bold;
-        font-size: 15px;
-    }
-
-    &--huge {
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 22px;
-    }
 }

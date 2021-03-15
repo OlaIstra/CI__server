@@ -9,17 +9,16 @@ import './ConfigurationPage.scss';
 
 const ConfigurationPage: React.FC = () => (
     <>
-        <Header title='School CI server'>
-            <Link to='/settings'>
-                <Button icon='icon-settings'>Settings</Button>
-            </Link>
-        </Header>
+        <Header />
         <div className='configPage'>
-            <div className='configPage_logo' />
-            <Title>Configure repository connection and synchronization settings</Title>
-            <Link to='/settings'>
-                <Button classes='btn--primary'>Open settings</Button>
+            <div className='configPage__logo' />
+            <h1>
+                KIRKL <span>CI</span>
+            </h1>
+            <Link className='configPage__link' to='/settings'>
+                <Button classes='btn--base'>Open settings</Button>
             </Link>
+            <Title>Configure repository connection and synchronization settings</Title>
         </div>
     </>
 );

@@ -1,4 +1,4 @@
 export enum EndPoints {
     Settings = 'api/settings',
-    Builds = 'api/builds',
+    Jobs = 'api/jobs',
 }

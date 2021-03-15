@@ -6,7 +6,7 @@ import fs from 'fs';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { IBuildCommit } from '@server/components/builds/interfaces';
+import { IJobCommit } from '@server/components/jobs/interfaces';
 import { envConfig } from '@shared/config';
 
 const localRepo = envConfig.LOCAL_REPO || '';
@@ -64,8 +64,8 @@ export const gitCommandsService = {
         }
     },
 
-    getCommitByHash: async (commitHash = '', branchName = 'master'): Promise<IBuildCommit> => {
-        await gitCommandsService.checkout(branchName);
+    getCommitByHash: async (commitHash = '', branchName = 'master'): Promise<IJobCommit> => {
+        //await gitCommandsService.checkout(branchName);
 
         const { stdout } = await gitCommandsService.executeCommand(
             `git log -1 --format="%an|%B" ${commitHash}`,

@@ -99,7 +99,7 @@ export const CustomForm: React.FC<Props> = observer(({ initialSettings }) => {
                                         id='timePeriod'
                                         name='timePeriod'
                                         placeholder='enter'
-                                        classes='input input--block'
+                                        classes='input input__block'
                                     />
                                 </div>
                                 minutesSettingsPage

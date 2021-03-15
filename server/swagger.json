@@ -91,12 +91,12 @@
                 }
             }
         },
-        "/api/builds": {
+        "/api/jobs": {
             "get": {
-                "tags": ["builds"],
-                "summary": "Get list of builds",
-                "description": "Get list of builds",
-                "operationId": "getBuilds",
+                "tags": ["jobs"],
+                "summary": "Get list of jobs",
+                "description": "Get list of jobs",
+                "operationId": "jobs",
                 "consumes": ["application/json", "application/xml"],
                 "produces": ["application/xml", "application/json"],
                 "responses": {
@@ -105,7 +105,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/Build"
+                                "$ref": "#/definitions/Job"
                             }
                         }
                     },
@@ -115,10 +115,10 @@
                 }
             },
             "post": {
-                "tags": ["builds"],
-                "summary": "Save build",
-                "description": "Save build",
-                "operationId": "postBuilds",
+                "tags": ["jobs"],
+                "summary": "Save job",
+                "description": "Save job",
+                "operationId": "postJobs",
                 "consumes": ["application/json", "application/xml"],
                 "produces": ["application/xml", "application/json"],
                 "parameters": [
@@ -136,7 +136,7 @@
                         "schema": {
                             "type": "object",
                             "items": {
-                                "$ref": "#/definitions/Build"
+                                "$ref": "#/definitions/Job"
                             }
                         }
                     },
@@ -152,25 +152,25 @@
                 }
             },
             "delete": {
-                "tags": ["builds"],
-                "summary": "Delete build",
+                "tags": ["jobs"],
+                "summary": "Delete jobs",
                 "description": "",
-                "operationId": "deleteBuilds",
+                "operationId": "deleteJobs",
                 "produces": ["application/xml", "application/json"],
                 "parameters": []
             }
         },
-        "/api/builds/{id}": {
+        "/api/jobs/{id}": {
             "get": {
-                "tags": ["builds"],
-                "summary": "Get build details",
-                "description": "Get details of build",
-                "operationId": "getBuildDetails",
+                "tags": ["jobs"],
+                "summary": "Get job details",
+                "description": "Get details of job",
+                "operationId": "getJobDetails",
                 "produces": ["application/xml", "application/json"],
                 "parameters": [
                     {
                         "id": "string",
-                        "description": "ID of build",
+                        "description": "ID of job",
                         "required": true
                     }
                 ],
@@ -180,27 +180,27 @@
                         "schema": {
                             "type": "object",
                             "items": {
-                                "$ref": "#/definitions/getBuildDetails"
+                                "$ref": "#/definitions/getJobDetails"
                             }
                         }
                     },
                     "404": {
-                        "description": "Build not found"
+                        "description": "Job not found"
                     }
                 }
             }
         },
-        "/api/builds/{id}/logs": {
+        "/api/jobs/{id}/logs": {
             "get": {
-                "tags": ["builds"],
-                "summary": "Get logs of build",
-                "description": "Get logs of build",
-                "operationId": "getBuildLogs",
+                "tags": ["jobs"],
+                "summary": "Get logs of job",
+                "description": "Get logs of job",
+                "operationId": "getJobLogs",
                 "produces": ["application/xml", "application/json"],
                 "parameters": [
                     {
                         "id": "string",
-                        "description": "ID of build",
+                        "description": "ID of job",
                         "required": true
                     }
                 ],
@@ -208,7 +208,7 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "$ref": "#/definitions/getBuildLogs"
+                            "$ref": "#/definitions/getJobLogs"
                         }
                     }
                 }
@@ -216,7 +216,7 @@
         }
     },
     "definitions": {
-        "Build": {
+        "Job": {
             "type": "object",
             "properties": {
                 "id": {
@@ -228,7 +228,7 @@
                 }
             },
             "xml": {
-                "name": "Build"
+                "name": "Job"
             }
         },
         "Settings": {

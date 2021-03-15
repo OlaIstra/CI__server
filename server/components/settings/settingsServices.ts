@@ -11,7 +11,7 @@ export const settingsService = {
             const repository = getRepository(Settings);
             return repository.findOne();
         } catch (err) {
-            throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
+            throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
         }
     },
 

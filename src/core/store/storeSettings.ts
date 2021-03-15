@@ -33,7 +33,7 @@ export class SettingsStore {
                 this.settings = response;
             });
         } catch (error) {
-            throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
+            throw new AppError('Cannot get settings. Bug in store settings', HttpCode.NOT_FOUND);
         }
     }
 

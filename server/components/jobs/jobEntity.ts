@@ -1,14 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-export enum BuildStatus {
+export enum JobStatus {
     Waiting = 'Waiting',
     InProgress = 'InProgress',
     Success = 'Success',
     Fail = 'Fail',
     Cancelled = 'Cancelled',
 }
-@Entity('build')
-export class Build {
+@Entity('job')
+export class Job {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -26,13 +26,13 @@ export class Build {
 
     @Column({
         type: 'enum',
-        enum: BuildStatus,
-        default: BuildStatus.Waiting,
+        enum: JobStatus,
+        default: JobStatus.Waiting,
     })
     status: string;
 
     @Column('text', { nullable: true })
-    buildLogs?: number;
+    jobLogs?: number;
 
     @Column('text', { nullable: true })
     start?: string;

@@ -11,7 +11,7 @@ export const getSettings = async (_: unknown, res: Response<Settings>): Promise<
         const result = await settingsService.getSettings();
         res.send(result);
     } catch (err) {
-        throw new AppError('Cannot get settings', HttpCode.NOT_FOUND);
+        throw new AppError('Cannot get settings. Bug in settingsController', HttpCode.NOT_FOUND);
     }
 };
 
