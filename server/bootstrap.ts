@@ -1,16 +1,15 @@
-import express, { Router } from 'express';
+import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { ConnectionOptions } from 'typeorm';
-import { ssrFunction } from '@src/server';
 
+import { ssrFunction } from '@src/server';
 import swaggerDocs from './swagger.json';
 import { typeOrmConfig } from './typeorm.config';
 import { connectDb } from './connectDb';
+import { envConfig } from '@shared/config';
 
-require('dotenv').config();
-
-const port = process.env.PORT;
+const port = envConfig.PORT;
 
 interface IConfig {
     port?: number;

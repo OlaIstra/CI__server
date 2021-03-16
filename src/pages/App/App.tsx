@@ -1,17 +1,21 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import loadable from '@loadable/component';
 
-const Footer = loadable(() => import('@core/components/Footer/Footer'));
-
 import { Routes } from './Routes';
+
 import '@core/styles/variables.scss';
 import './App.scss';
 
-const App: React.FC = () => (
-    <>
-        <Routes />
-        <Footer />
-    </>
-);
+const Footer = loadable(() => import('@core/components/Footer/Footer'));
 
-export default App;
+const App: React.FC = () => {
+    return (
+        <>
+            <Routes />
+            <Footer />
+        </>
+    );
+};
+
+export default observer(App);

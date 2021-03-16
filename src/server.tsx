@@ -10,10 +10,14 @@ import { StaticRouterContext } from 'react-router';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import { parse as parseUrl } from 'url';
-import { html as htmlTemplate, oneLineTrim } from 'common-tags';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
+import RootStore from '@core/store/rootStore';
+import { StoreContext } from '@core/store/helpers/storeContext.ts';
 import App from './pages/App/App';
+import { getInitialStore } from '@server/getInitialStore';
 
 const root = process.cwd();
 
@@ -24,7 +28,11 @@ export const ssrFunction = (app: {
 }) => {
     app.use(express.static('./dist/client'));
 
-    app.get('/*', (req, res) => {
+    app.get('/*', async (req, res) => {
+        const store = new RootStore();
+
+        const initialStore = await getInitialStore(store);
+
         try {
             const url = req.originalUrl || req.url;
 
@@ -38,9 +46,11 @@ export const ssrFunction = (app: {
             const styleTags = webExtractor.getStyleTags();
             const jsx = webExtractor.collectChunks(
                 <ChunkExtractorManager extractor={webExtractor}>
-                    <StaticRouter location={location} context={context}>
-                        <App />
-                    </StaticRouter>
+                    <StoreContext.Provider value={store}>
+                        <StaticRouter location={location} context={context}>
+                            <App />
+                        </StaticRouter>
+                    </StoreContext.Provider>
                 </ChunkExtractorManager>,
             );
             const html = renderToString(jsx);
@@ -54,10 +64,14 @@ export const ssrFunction = (app: {
                 data = data.replace('__STYLES__', styleTags);
                 data = data.replace('__SCRIPTS__', scriptTags);
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+                data = data.replace(
+                    'window.__INITIAL_STATE__ = {}',
+                    `window.__INITIAL_STATE__ = ${JSON.stringify(store.settingsStore.settings)}`,
+                );
                 return res.send(data);
             });
         } catch (error) {
-            console.log(error);
+            throw new AppError('Cannot create application', HttpCode.FORBIDDEN);
         }
     });
 };

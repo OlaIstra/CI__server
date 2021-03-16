@@ -7,8 +7,6 @@
     padding: 8px 13px;
     font-size: 13px;
     color: $baseColor;
-    border: none;
-    border-radius: 4px;
     outline: none;
 
     &:hover {
@@ -47,9 +45,26 @@
         background: $disabledBcgColor;
         color: $disabledColor;
         opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
     }
 
     & span {
         margin-right: 5px;
+    }
+
+    &--base {
+        width: 100%;
+        justify-content: center;
+        text-transform: uppercase;
+        color: $accentColor;
+        background-color: transparent;
+        padding: 25px;
+        border: 2px solid #fefefd;
+        font-size: $fontSizeNormal;
+        letter-spacing: $letterSpacingNormal;
+        line-height: $lineHeightLarge;
+        font-family: 'Helvetica_cyr';
+        font-weight: $fontWeightBold;
     }
 }

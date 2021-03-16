@@ -9,5 +9,7 @@
 /**/*.json
 /**/*.yml
 /**/*.sql
+dist
 pgdata
 Dockerfile
+node_modules

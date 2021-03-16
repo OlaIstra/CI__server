@@ -1,29 +1,28 @@
 import { Request, Response } from 'express';
-import { AppError } from '@server/components/error/error';
-import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
 
-import { settingsService } from './settingsServices';
-import { ISettings } from './interfaces';
+import { AppError } from '@shared/error/error';
+import { ISettings } from '@shared/interfaces/settings';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
+import { settingsService } from './settingsServices';
 
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
         const result = await settingsService.getSettings();
         res.send(result);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot get settings. Bug in settingsController', HttpCode.NOT_FOUND);
     }
 };
 
 export const saveSettings = async (
-    req: Request<{}, unknown, ISettings>,
+    req: Request<Record<string, unknown>, unknown, ISettings>,
     res: Response<Settings | string | number>,
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        await gitCommandsService.cloneRepo('OlaIstra', req.body.repoName);
         res.send(result);
     } catch (err) {
-        throw new AppError(err.name, err.httpCode, err.description);
+        throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
     }
 };

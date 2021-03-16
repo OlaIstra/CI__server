@@ -1,6 +1,22 @@
-$baseColor: #000000;
-$fontColor: #7f8285;
-$bcgColor: #f0f2f3;
+// variables
+$paddingBase: 5px;
+$paddingSmall: $paddingBase * 2;
+$paddingNormal: $paddingBase * 3;
+$paddingMedium: $paddingBase * 4;
+$paddingLarge: $paddingBase * 8;
+
+$heightBase: 8px;
+$heightSmall: $heightBase * 5;
+$heightNormall: $heightBase * 6;
+
+$radiusBase: 8px;
+$radiusMedium: $radiusBase * 6;
+
+//colors
+$baseColor: #003f4d;
+$fontColor: #636363;
+$accentColor: #b73603;
+$bcgColor: #b3b3b36e;
 $bcgBtnHoverColor: #dbdbdb;
 $borderBtnColor: #b3b3b3;
 $hoverColor: #87aeca;
@@ -14,6 +30,31 @@ $disabledColor: #7f7f7f;
 $activeColor: #e00000;
 $acceptColor: #00b341;
 
+//devices
 $breakpoint-tabletL: 860px;
 $breakpoint-tablet: 768px;
 $breakpoint-mobileL: 500px;
+
+//typography
+$fontSizeMicro: 12px;
+$fontSizeSmall: 13px;
+$fontSizeNormal: 18px;
+$fontSizeMedium: 24px;
+$fontSizeLarge: 30px;
+$fontSizeExtraLarge: 40px;
+
+$fontWeightLight: 300;
+$fontWeightRegular: 400;
+$fontWeightMedium: 500;
+$fontWeightBold: 600;
+
+$lineHeightMicro: 18px;
+$lineHeightSmall: 21px;
+$lineHeightNormal: 24px;
+$lineHeightMedium: 28px;
+$lineHeightLarge: 34px;
+$lineHeightExtraLarge: 40x;
+
+$letterSpacingMicro: 2px;
+$letterSpacingNormal: 5px;
+$letterSpacingExtraLarge: 20px;

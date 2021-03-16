@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "target":"ES2020",
         "lib": ["ESnext", "es5", "es6", "dom"],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -12,15 +13,17 @@
         "baseUrl": "./",
         "strict": true,
         "strictPropertyInitialization": false,
+        "useDefineForClassFields": true,
         "paths": {
             "@core/*": ["src/core/*"],
             "@pages/*": ["src/pages/*"],
             "@atoms/*": ["src/core/atoms/*"],
             "@server/*": ["server/*"],
+            "@shared/*": ["shared/*"],
             "@src/*": ["src/*"]
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },
-    "include": ["src/**/*", "server/**/*"],
+    "include": ["src/**/*", "server/**/*", "shared/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js"]
 }

@@ -1,4 +1,4 @@
-export interface IBuild {
+export interface IJob {
     id: string;
     configurationId: string;
     commitMessage: string;
@@ -8,29 +8,29 @@ export interface IBuild {
     status: string;
 }
 
-export interface IBuilds {
-    data: Array<IBuild>;
+export interface IJobs {
+    data: Array<IJob>;
 }
 
 export interface ICommit {
     data: {
-        data: Array<IBuild>;
+        data: Array<IJob>;
     };
 }
 
-export interface IBuildDetails extends IBuild {
+export interface IJobDetails extends IJob {
     start: string;
     duration: number;
 }
 
-export interface IBuildPost {
+export interface IJobPost {
     data: {
         id: string;
         status: string;
     };
 }
 
-export interface IBuildCommit {
+export interface IJobCommit {
     authorName: string;
     commitMessage: string;
     commitHash: string;

@@ -1,0 +1,16 @@
+@import '../../styles/variables';
+
+.profile {
+    display: flex;
+    margin: 0 20px;
+    align-items: center;
+
+    span {
+        margin-right: 20px;
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+}

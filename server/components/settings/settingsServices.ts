@@ -1,8 +1,8 @@
 import deepEqual from 'deep-equal';
 import { getRepository } from 'typeorm';
-import { AppError } from '@server/components/error/error';
-import { HttpStatus } from '@server/HttpStatus';
 
+import { AppError } from '@shared/error/error';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 
 export const settingsService = {
@@ -11,7 +11,7 @@ export const settingsService = {
             const repository = getRepository(Settings);
             return repository.findOne();
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
         }
     },
 
@@ -23,7 +23,7 @@ export const settingsService = {
 
             if (!prevSettings) {
                 await repository.save(settingsData);
-                return HttpStatus.OK;
+                return HttpCode.OK;
             }
 
             const newSettings = repository.create({
@@ -34,12 +34,12 @@ export const settingsService = {
 
             if (!isEqual) {
                 await repository.update(prevSettings.id, newSettings);
-                return HttpStatus.OK;
+                return HttpCode.OK;
             } else {
-                return HttpStatus.NOT_MODIFIED;
+                return HttpCode.NOT_MODIFIED;
             }
         } catch (err) {
-            throw new AppError(err.name, err.httpCode, err.description);
+            throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
         }
     },
 };

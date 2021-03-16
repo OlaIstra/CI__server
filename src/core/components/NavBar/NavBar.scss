@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.navBar {
+    display: flex;
+    margin: 0;
+    width: 100%;
+
+    li {
+        font-size: $fontSizeMicro;
+        color: $baseColor;
+        font-family: 'Helvetica_cyr';
+        font-weight: $fontWeightBold;
+    }
+}

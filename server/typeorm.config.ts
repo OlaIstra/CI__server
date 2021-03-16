@@ -1,23 +1,16 @@
-import { config } from 'dotenv';
-import path from 'path';
-
 import { ConnectionOptions } from 'typeorm';
+
 import { Settings } from './components/settings/settingsEntity';
-import { Build } from './components/builds/buildsEntity';
-
-const root = process.cwd();
-
-config({
-    path: path.resolve(root, '.env'),
-});
+import { Job } from './components/jobs/jobEntity';
+import { envConfig } from '@shared/config';
 
 export const typeOrmConfig: ConnectionOptions = {
     type: 'postgres',
-    username: process.env.POSTGRES_USER,
-    host: process.env.DATABASE_HOST,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    port: Number(process.env.POSTGRES_PORT) || 5432,
+    username: envConfig.POSTGRES_USER,
+    host: envConfig.DATABASE_HOST,
+    database: envConfig.POSTGRES_DB,
+    password: envConfig.POSTGRES_PASSWORD,
+    port: Number(envConfig.POSTGRES_PORT) || 5432,
     synchronize: true,
-    entities: [Settings, Build],
+    entities: [Settings, Job],
 };

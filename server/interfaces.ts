@@ -1,5 +1,5 @@
-import { IBuild } from './components/builds/interfaces';
+import { IJob } from './components/jobs/interfaces';
 
 export interface IState {
-    builds: Array<IBuild>;
+    jobs: Array<IJob>;
 }

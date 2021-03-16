@@ -21,6 +21,7 @@ const common = {
             '@pages': path.resolve(root, 'src/pages'),
             '@atoms': path.resolve(root, 'src/core/atoms'),
             '@server': path.resolve(root, 'server/'),
+            '@shared': path.resolve(root, 'shared/'),
         },
     },
     devtool: _DEV_ ? 'inline-source-map' : false,

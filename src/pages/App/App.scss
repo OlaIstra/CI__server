@@ -1,8 +1,9 @@
+@import '@core/styles/variables.scss';
+
 @font-face {
     font-family: 'icomoon';
     src: url('../../core/assets/fonts/icomoon.eot?23nkz4');
-    src: url('../../core/assets/fonts/icomoon.eot?23nkz4#iefix')
-            format('embedded-opentype'),
+    src: url('../../core/assets/fonts/icomoon.eot?23nkz4#iefix') format('embedded-opentype'),
         url('../../core/assets/fonts/icomoon.ttf?23nkz4') format('truetype'),
         url('../../core/assets/fonts/icomoon.woff?23nkz4') format('woff'),
         url('../../core/assets/fonts/icomoon.svg?23nkz4#icomoon') format('svg');
@@ -31,14 +32,14 @@
 }
 .icon-clock:before {
     content: '\e901';
-    color: #ff9a00;
+    color: $primaryСolor;
 }
 .icon-code-commit:before {
     content: '\e902';
 }
 .icon-cross:before {
     content: '\e903';
-    color: #ccc;
+    color: $dangerColor;
     font-size: 16px;
 }
 .icon-play:before {
@@ -52,7 +53,7 @@
 }
 .icon-tick:before {
     content: '\e907';
-    color: #00b341;
+    color: $acceptColor;
 }
 .icon-timer:before {
     content: '\e908';
