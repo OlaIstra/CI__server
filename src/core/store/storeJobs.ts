@@ -1,28 +1,33 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-import { IJob, IJobLogs, IJobDetails } from '@shared/interfaces/jobs';
+import { IJob, IJobDetails } from '@shared/interfaces/jobs';
 import { EndPoints } from '@shared/enums';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { requestsJobDetails, requestsJobLogs, requestsJobs } from '@core/api/requestApi';
+import { requestsJobDetails, requestsJobs } from '@core/api/requestApi';
 
 export class JobsStore {
     jobs: Array<IJob> | undefined;
     jobDetais: IJobDetails | undefined;
-    jobLogs: IJobLogs | undefined;
 
-    constructor(jobs?: Array<IJob>, jobDetais?: IJobDetails, jobLogs?: IJobLogs) {
+    constructor(jobs?: Array<IJob>, jobDetais?: IJobDetails) {
         makeObservable(this, {
             jobs: observable,
             getJobs: action,
             saveJob: action,
             getJobDetails: action,
-            getJobLogs: action,
             deleteJobs: action,
         });
         this.jobs = jobs;
         this.jobDetais = jobDetais;
-        this.jobLogs = jobLogs;
+    }
+
+    async setJobs(jobs: IJob[] | undefined) {
+        try {
+            this.jobs = jobs;
+        } catch (error) {
+            throw new AppError('Cannot set jobs. Bug in store jobs', HttpCode.NOT_FOUND);
+        }
     }
 
     async getJobs() {
@@ -56,17 +61,6 @@ export class JobsStore {
             });
         } catch (error) {
             throw new AppError('Cannot get job details', HttpCode.FORBIDDEN);
-        }
-    }
-
-    async getJobLogs(id: string) {
-        try {
-            const response = await requestsJobLogs.get(EndPoints.Jobs, id);
-            runInAction(() => {
-                this.jobLogs = response;
-            });
-        } catch (error) {
-            throw new AppError('Cannot get job logs', HttpCode.FORBIDDEN);
         }
     }
 

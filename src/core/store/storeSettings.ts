@@ -26,6 +26,14 @@ export class SettingsStore {
         this.settings = settings || initialValues;
     }
 
+    async setSettings(settings: ISettings) {
+        try {
+            this.settings = settings;
+        } catch (error) {
+            throw new AppError('Cannot set settings. Bug in store settings', HttpCode.NOT_FOUND);
+        }
+    }
+
     async getSettings() {
         try {
             const response = await requestsSettings.get(EndPoints.Settings);
