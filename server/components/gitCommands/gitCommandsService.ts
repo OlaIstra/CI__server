@@ -6,8 +6,8 @@ import fs from 'fs';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { IJobCommit } from '@server/components/jobs/interfaces';
 import { envConfig } from '@shared/config';
+import { IJobCommit } from '@shared/interfaces/jobs';
 
 const localRepo = envConfig.LOCAL_REPO || '';
 const execAsync = promisify(exec);
@@ -22,10 +22,9 @@ export const gitCommandsService = {
         return execAsync(command, options);
     },
 
-    cloneRepo: (repoName: string): void => {
+    cloneRepo: async (repoName: string): Promise<void> => {
         try {
-            const isLocalRepo = gitCommandsService.findLocalRepo();
-
+            const isLocalRepo = await gitCommandsService.findLocalRepo();
             if (isLocalRepo) {
                 gitCommandsService.deleteLocalRepo();
             }
@@ -33,16 +32,15 @@ export const gitCommandsService = {
             const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError('Cannot clone repo', HttpCode.FORBIDDEN);
+            throw new AppError(`Cannot clone repo: ${err}`, HttpCode.FORBIDDEN);
         }
     },
 
     findLocalRepo: (): boolean => {
         try {
-            const file = fs.statSync(path.join(homeDir, localRepo));
-            return file.isDirectory();
+            return fs.existsSync(path.join(homeDir, localRepo));
         } catch (err) {
-            throw new AppError('Cannot find local repo', HttpCode.NOT_FOUND);
+            throw new AppError(`Cannot find local repo: ${err}`, HttpCode.NOT_FOUND);
         }
     },
 
@@ -51,7 +49,7 @@ export const gitCommandsService = {
             const command = `rm -rf ${localRepoPath}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError('Cannot delete local repo', HttpCode.FORBIDDEN);
+            throw new AppError(`Cannot delete local repo: ${err}`, HttpCode.FORBIDDEN);
         }
     },
 
@@ -60,12 +58,12 @@ export const gitCommandsService = {
             const command = `cd ${localRepoPath} && git checkout ${branchName}`;
             gitCommandsService.executeCommand(command);
         } catch (err) {
-            throw new AppError('Cannot checkout branch', HttpCode.FORBIDDEN);
+            throw new AppError(`Cannot checkout branch: ${err}`, HttpCode.FORBIDDEN);
         }
     },
 
     getCommitByHash: async (commitHash = '', branchName = 'master'): Promise<IJobCommit> => {
-        //await gitCommandsService.checkout(branchName);
+        await gitCommandsService.checkout(branchName);
 
         const { stdout } = await gitCommandsService.executeCommand(
             `git log -1 --format="%an|%B" ${commitHash}`,

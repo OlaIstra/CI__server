@@ -39,7 +39,7 @@ export const settingsService = {
                 return HttpCode.NOT_MODIFIED;
             }
         } catch (err) {
-            throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
+            throw new AppError(`Cannot save settings - service: ${err}`, HttpCode.FORBIDDEN);
         }
     },
 };

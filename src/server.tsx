@@ -66,7 +66,7 @@ export const ssrFunction = (app: {
                 data = data.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
                 data = data.replace(
                     'window.__INITIAL_STATE__ = {}',
-                    `window.__INITIAL_STATE__ = ${JSON.stringify(store.settingsStore.settings)}`,
+                    `window.__INITIAL_STATE__ = ${JSON.stringify(store)}`,
                 );
                 return res.send(data);
             });

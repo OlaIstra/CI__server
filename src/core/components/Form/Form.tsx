@@ -6,7 +6,7 @@ import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
 import { Title } from '@atoms/Title/Title';
 import { Button } from '@atoms/Button/Button';
-import { requests } from '@core/api/requestApi';
+import { requestsSettings } from '@core/api/requestApi';
 import { validationSchema } from '@pages/SettingsPage/Settings.validation';
 
 import './Form.scss';
@@ -27,7 +27,7 @@ export const CustomForm: React.FC<Props> = observer(({ initialSettings }) => {
     const [settings, setSettings] = useState(initialSettings);
 
     const onSubmit = useCallback((settings: ISettings) => {
-        requests.post(EndPoints.Settings, settings);
+        requestsSettings.post(EndPoints.Settings, settings);
     }, []);
 
     const clearAll = useCallback(() => {

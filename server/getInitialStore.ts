@@ -2,14 +2,26 @@ import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import RootStore from '../src/core/store/rootStore';
 import { settingsService } from '@server/components/settings/settingsServices';
+import { jobService } from './components/jobs/jobServices';
+
+const initialSettings = {
+    id: '',
+    repoName: '',
+    buildCommand: '',
+    mainBranch: '',
+    timePeriod: 0,
+};
 
 export const getInitialStore = async (store: RootStore) => {
     try {
-        const result = await settingsService.getSettings();
+        const resultSettings = await settingsService.getSettings();
 
-        if (result) {
-            store.settingsStore.settings = result;
-        }
+        store.settingsStore.settings = resultSettings || initialSettings;
+
+        const resultJobs = await jobService.getJobs();
+
+        store.jobsStore.jobs = resultJobs;
+
         return store;
     } catch (error) {
         throw new AppError('Failed to load data', HttpCode.NOT_FOUND);

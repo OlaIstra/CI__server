@@ -4,7 +4,7 @@ import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { requests } from '../api/requestApi';
+import { requestsSettings } from '../api/requestApi';
 
 const initialValues = {
     id: '',
@@ -28,7 +28,7 @@ export class SettingsStore {
 
     async getSettings() {
         try {
-            const response = await requests.get(EndPoints.Settings);
+            const response = await requestsSettings.get(EndPoints.Settings);
             runInAction(() => {
                 this.settings = response;
             });
@@ -39,7 +39,7 @@ export class SettingsStore {
 
     async saveSettings(settings: ISettings) {
         try {
-            const response = await requests.post(EndPoints.Settings, settings);
+            const response = await requestsSettings.post(EndPoints.Settings, settings);
             runInAction(() => {
                 this.settings = response;
             });

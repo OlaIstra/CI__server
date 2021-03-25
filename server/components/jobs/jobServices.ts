@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Job } from './jobEntity';
-import { IJobCommit } from './interfaces';
+import { IJobCommit } from '@shared/interfaces/jobs';
 
 export const jobService = {
     getJobs: async (): Promise<Job[]> => {
@@ -30,7 +30,7 @@ export const jobService = {
             const repository = getRepository(Job);
             return repository.save(job);
         } catch (err) {
-            throw new AppError('Cannot save job', HttpCode.FORBIDDEN);
+            throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
         }
     },
 

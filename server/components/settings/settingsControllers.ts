@@ -5,6 +5,7 @@ import { ISettings } from '@shared/interfaces/settings';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
+import { gitCommandsService } from '../gitCommands/gitCommandsService';
 
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
@@ -21,8 +22,9 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        res.send(result);
+        await gitCommandsService.cloneRepo(req.body.repoName);
+        res.sendStatus(result);
     } catch (err) {
-        throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
+        throw new AppError(`Cannot save settings - controller: ${err}`, HttpCode.FORBIDDEN);
     }
 };

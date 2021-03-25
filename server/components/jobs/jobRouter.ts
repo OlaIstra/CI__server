@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', getJobs);
 
-router.post('/', saveJob);
+router.post('/:commitHash', saveJob);
 
 router.get('/:id', getJobDetails);
 

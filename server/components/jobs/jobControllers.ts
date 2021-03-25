@@ -6,7 +6,7 @@ import { gitCommandsService } from '@server/components/gitCommands/gitCommandsSe
 import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
-import { IJobCommit } from './interfaces';
+import { IJobCommit } from '@shared/interfaces/jobs';
 
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
@@ -21,18 +21,19 @@ export const saveJob = async (
     req: Request<{ commitHash: string }>,
     res: Response<IJobCommit>,
 ): Promise<void> => {
-    const { commitHash } = req.body;
+    const { commitHash } = req.params;
 
     const settings = await settingsService.getSettings();
 
     const branchName = settings?.mainBranch;
 
     const jobInfo = await gitCommandsService.getCommitByHash(commitHash, branchName);
+
     try {
         const result = await jobService.saveJob(jobInfo);
         res.send(result);
     } catch (err) {
-        throw new AppError('Cannot save job', HttpCode.FORBIDDEN);
+        throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
     }
 };
 

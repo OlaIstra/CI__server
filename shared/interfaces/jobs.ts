@@ -1,6 +1,6 @@
 export interface IJob {
     id: string;
-    configurationId: string;
+    configurationId?: string;
     commitMessage: string;
     commitHash: string;
     branchName: string;
@@ -35,4 +35,8 @@ export interface IJobCommit {
     commitMessage: string;
     commitHash: string;
     branchName: string;
+}
+
+export interface IJobLogs {
+    // TODO
 }
