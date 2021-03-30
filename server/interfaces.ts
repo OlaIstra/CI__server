@@ -1,4 +1,4 @@
-import { IJob } from './components/jobs/interfaces';
+import { IJob } from '@shared/interfaces/jobs';
 
 export interface IState {
     jobs: Array<IJob>;
