@@ -23,11 +23,7 @@ export class JobsStore {
     }
 
     async setJobs(jobs: IJob[] | undefined) {
-        try {
-            this.jobs = jobs;
-        } catch (error) {
-            throw new AppError('Cannot set jobs. Bug in store jobs', HttpCode.NOT_FOUND);
-        }
+        this.jobs = jobs;
     }
 
     async getJobs() {

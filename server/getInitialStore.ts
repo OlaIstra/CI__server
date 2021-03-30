@@ -12,15 +12,13 @@ const initialSettings = {
     timePeriod: 0,
 };
 
-const initialJobs: never[] = [];
-
 export const getInitialStore = async (store: RootStore) => {
     try {
         const resultSettings = (await settingsService.getSettings()) || initialSettings;
 
         store.settingsStore.setSettings(resultSettings);
 
-        const resultJobs = (await jobService.getJobs()) || initialJobs;
+        const resultJobs = (await jobService.getJobs()) || [];
 
         store.jobsStore.setJobs(resultJobs);
 

@@ -27,11 +27,7 @@ export class SettingsStore {
     }
 
     async setSettings(settings: ISettings) {
-        try {
-            this.settings = settings;
-        } catch (error) {
-            throw new AppError('Cannot set settings. Bug in store settings', HttpCode.NOT_FOUND);
-        }
+        this.settings = settings;
     }
 
     async getSettings() {
