@@ -18,9 +18,7 @@ const getEntities = () => {
     const connection = getConnection();
     const { entityMetadatas } = connection;
 
-    return entityMetadatas.map(entity => {
-        return entity.name;
-    });
+    return entityMetadatas.map(entity => entity.name);
 };
 
 const cleanFixtures = (entitiesList: string[]) => {
@@ -45,11 +43,9 @@ const loadFixtures = async (entitiesList: string[]) => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const { default: fixtures } = require(path.join(__dirname, `./fake${entityName}.ts`));
 
-            await repository.save(
-                fixtures.map((element: ProjectEntities) => {
-                    return repository.create(element);
-                }),
-            );
+            const fakeData = fixtures.map((element: ProjectEntities) => repository.create(element));
+
+            await repository.save(fakeData);
         });
     } catch (err) {
         throw new AppError(`Cannot load data to test database: ${err}`, HttpCode.BAD_REQUEST);
