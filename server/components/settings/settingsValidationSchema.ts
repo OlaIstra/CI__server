@@ -1,4 +1,6 @@
-export const settingsValidatonSchema = {
+import { Schema } from 'express-validator';
+
+export const settingsValidatonSchema: Schema = {
     repoName: {
         in: ['body'],
         isEmpty: {

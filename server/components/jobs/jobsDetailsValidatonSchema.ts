@@ -1,4 +1,6 @@
-export const jobsDetailsValidatonSchema = {
+import { Schema } from 'express-validator';
+
+export const jobsDetailsValidatonSchema: Schema = {
     id: {
         in: ['params', 'query'],
         isEmpty: {

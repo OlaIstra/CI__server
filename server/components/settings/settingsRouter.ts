@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { checkSchema } from 'express-validator';
 
 import { settingsValidatonSchema } from './settingsValidationSchema';
 import { getSettings, saveSettings } from './settingsControllers';
+import { validateRequest } from '../validation/validateRequest';
 
 const router = Router();
 
 router.get('/', getSettings);
-router.post('/', checkSchema(settingsValidatonSchema as any), saveSettings);
+router.post('/', validateRequest(saveSettings, settingsValidatonSchema));
 
 export default router;

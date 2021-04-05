@@ -7,7 +7,6 @@ import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
-import checkErrors from '../validation/checkErrors';
 
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
@@ -22,8 +21,6 @@ export const saveJob = async (
     req: Request<{ commitHash: string }>,
     res: Response<IJobCommit>,
 ): Promise<void> => {
-    checkErrors(req, res);
-
     const { commitHash } = req.body;
 
     const settings = await settingsService.getSettings();
@@ -44,8 +41,6 @@ export const getJobDetails = async (
     req: Request<{ id: string }>,
     res: Response<Job>,
 ): Promise<void> => {
-    checkErrors(req, res);
-
     try {
         const response = await jobService.getJobDetails(req.params.id);
         res.send(response);

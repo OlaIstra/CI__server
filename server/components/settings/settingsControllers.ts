@@ -5,7 +5,6 @@ import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
 import { gitCommandsService } from '../gitCommands/gitCommandsService';
-import checkErrors from '../validation/checkErrors';
 
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
@@ -21,8 +20,6 @@ export const saveSettings = async (
     res: Response<Settings | string | number>,
 ): Promise<void> => {
     try {
-        checkErrors(req, res);
-
         const result = await settingsService.saveSettings(req.body);
         await gitCommandsService.cloneRepo(req.body.repoName);
 

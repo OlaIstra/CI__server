@@ -1,15 +1,10 @@
-export const jobsValidatonSchema = {
+import { Schema } from 'express-validator';
+
+export const jobsValidatonSchema: Schema = {
     commitMessage: {
         in: ['body'],
         isEmpty: {
             errorMessage: 'commitMessage is required',
-            negated: true,
-        },
-    },
-    commitHash: {
-        in: ['params', 'query'],
-        isEmpty: {
-            errorMessage: 'commitHash is required',
             negated: true,
         },
     },
@@ -20,5 +15,12 @@ export const jobsValidatonSchema = {
     authorName: {
         in: ['body'],
         isString: true,
+    },
+    commitHash: {
+        in: ['params', 'query'],
+        isEmpty: {
+            errorMessage: 'commitHash is required',
+            negated: true,
+        },
     },
 };
