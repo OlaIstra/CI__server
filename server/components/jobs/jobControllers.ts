@@ -21,7 +21,7 @@ export const saveJob = async (
     req: Request<{ commitHash: string }>,
     res: Response<IJobCommit>,
 ): Promise<void> => {
-    const { commitHash } = req.params;
+    const { commitHash } = req.body;
 
     const settings = await settingsService.getSettings();
 

@@ -119,6 +119,7 @@
         "core-js": "^3.6.5",
         "deep-equal": "^2.0.4",
         "express": "^4.17.1",
+        "express-validator": "^6.10.0",
         "formik": "^2.2.1",
         "mobx": "^6.0.3",
         "mobx-react-lite": "^3.1.5",
