@@ -12,7 +12,8 @@
         "build": "cross-env NODE_ENV=production webpack",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
         "eslint": "eslint src/**/* server/**/* shared/**/* --fix --no-error-on-unmatched-pattern",
-        "prettier": "prettier --write '**/*.ts' '**/*.tsx'"
+        "prettier": "prettier --write '**/*.ts' '**/*.tsx'",
+        "fixtures": "ts-node -r tsconfig-paths/register ./server/fixtures/utils.ts"
     },
     "repository": {
         "type": "git",
