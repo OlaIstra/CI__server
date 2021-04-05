@@ -8,18 +8,16 @@ export const validateRequest = (
     schema: Schema,
 ) => async (req: Request, res: Response, next: NextFunction) => {
     const validatedRequest = await checkSchema(schema).run(req);
-    let isValidRequest = true;
-    const errors = validatedRequest.reduce(function(result: any, item: any) {
+    const errors: string[] = validatedRequest.reduce(function(result: string[], item: any) {
         if (item.errors.length > 0) {
-            isValidRequest = false;
-            result.push(item.errors[0].msg);
+            return [...result, item.errors[0].msg];
         }
         return result;
     }, []);
 
-    if (isValidRequest) {
+    if (errors.length === 0) {
         func(req, res, next);
     } else {
-        res.send({ status: HttpCode.BAD_REQUEST, message: `${errors}` });
+        res.send({ status: HttpCode.BAD_REQUEST, message: `${errors.toString()}` });
     }
 };
