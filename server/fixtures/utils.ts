@@ -45,10 +45,6 @@ const loadFixtures = async (entitiesList: string[]) => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const { default: fixtures } = require(path.join(__dirname, `./fake${entityName}.ts`));
 
-            // const fakeData = fixtures.map((element: ProjectEntities) => {
-            //     return repository.create(element);
-            // });
-
             await repository.save(
                 fixtures.map((element: ProjectEntities) => {
                     return repository.create(element);
