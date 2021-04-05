@@ -1,16 +1,16 @@
 export default [
     {
-        commitMessage: 'fake commit',
-        commitHash: '123456',
+        commitMessage: 'added repos pagination',
+        commitHash: '5356407',
         branchName: 'master',
-        authorName: 'me',
+        authorName: 'OlaIstra',
         status: 'Waiting',
     },
     {
-        commitMessage: 'another fake commit',
-        commitHash: '654321',
+        commitMessage: 'added testing',
+        commitHash: '734ca47',
         branchName: 'master',
-        authorName: 'me',
+        authorName: 'OlaIstra',
         status: 'Waiting',
     },
 ];

@@ -1,7 +1,7 @@
-import { getConnection, ConnectionOptions, getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import path from 'path';
 
-import { HttpCode } from './../../shared/error/httpStatusCodes';
+import { HttpCode } from '@shared/error/httpStatusCodes';
 import { AppError } from '@shared/error/error';
 import { connectDb } from '@server/connectDb';
 import { typeOrmConfig } from '@server/typeorm.config';
@@ -11,23 +11,16 @@ import { Job as JobEntity } from '@server/components/jobs/jobEntity';
 type ProjectEntities = SettingsEntity | JobEntity;
 
 const connectToDB = async () => {
-    const dbConfig = {
-        ...typeOrmConfig,
-    } as ConnectionOptions;
-
-    await connectDb(dbConfig);
+    await connectDb(typeOrmConfig);
 };
 
 const getEntities = () => {
     const connection = getConnection();
     const { entityMetadatas } = connection;
-    const entitiesList: string[] = [];
 
-    entityMetadatas.forEach(entity => {
-        entitiesList.push(entity.name);
+    return entityMetadatas.map(entity => {
+        return entity.name;
     });
-
-    return entitiesList;
 };
 
 const cleanFixtures = (entitiesList: string[]) => {
@@ -52,11 +45,15 @@ const loadFixtures = async (entitiesList: string[]) => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const { default: fixtures } = require(path.join(__dirname, `./fake${entityName}.ts`));
 
-            const fakeData = fixtures.map((element: ProjectEntities) => {
-                return repository.create(element);
-            });
+            // const fakeData = fixtures.map((element: ProjectEntities) => {
+            //     return repository.create(element);
+            // });
 
-            await repository.save(fakeData);
+            await repository.save(
+                fixtures.map((element: ProjectEntities) => {
+                    return repository.create(element);
+                }),
+            );
         });
     } catch (err) {
         throw new AppError(`Cannot load data to test database: ${err}`, HttpCode.BAD_REQUEST);
@@ -66,6 +63,7 @@ const loadFixtures = async (entitiesList: string[]) => {
 export const reloadFixtures = async () => {
     await connectToDB();
     const entities = getEntities();
+
     await cleanFixtures(entities);
     await loadFixtures(entities);
 };
