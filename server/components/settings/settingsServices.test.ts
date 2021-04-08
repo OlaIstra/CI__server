@@ -16,7 +16,7 @@ jest.mock('./settingsEntity', () => ({
     })),
 }));
 
-describe('test settingsService', () => {
+describe('settingsService', () => {
     const NEW_SETTINGS = {
         id: '1223',
         repoName: 'test/test',
@@ -68,7 +68,7 @@ describe('test settingsService', () => {
     });
 
     it('should not update settings if the previous and new settings are equal', async () => {
-        const NEW_SETTINGS = PREV_SETTINGS;
+        const NEW_SETTINGS = { ...PREV_SETTINGS };
         mockFindOne.mockResolvedValue(PREV_SETTINGS);
         mockCreate.mockResolvedValue(NEW_SETTINGS);
         mockSave.mockResolvedValue(NEW_SETTINGS);
@@ -80,7 +80,6 @@ describe('test settingsService', () => {
 
     it('should throw error if error occures', async () => {
         const error = new AppError('Not found', HttpCode.NOT_FOUND);
-
         mockFindOne.mockRejectedValue(error);
 
         expect(settingsService.getSettings()).rejects.toThrowError(error);
