@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, getRepository } from 'typeorm';
 
 @Entity('Settings')
 export class Settings {
@@ -16,4 +16,8 @@ export class Settings {
 
     @Column('int')
     timePeriod: number;
+}
+
+export function getSettingsRepository() {
+    return getRepository(Settings);
 }
