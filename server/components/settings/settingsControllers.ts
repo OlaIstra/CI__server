@@ -4,7 +4,7 @@ import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
-import { gitCommandsService } from '../gitCommands/gitCommandsService';
+import { RepositoryCommandsService } from '../repositoryCommandsService/RepositoryCommandsService';
 
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
@@ -21,7 +21,7 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        await gitCommandsService.cloneRepo(req.body.repoName);
+        await new RepositoryCommandsService().cloneRepo(req.body.repoName);
 
         res.sendStatus(result);
     } catch (err) {

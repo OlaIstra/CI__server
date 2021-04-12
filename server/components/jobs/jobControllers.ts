@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { AppError } from '@shared/error/error';
-import { gitCommandsService } from '@server/components/gitCommands/gitCommandsService';
+import { RepositoryCommandsService } from '@server/components/repositoryCommandsService/RepositoryCommandsService';
 import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
@@ -27,7 +27,7 @@ export const saveJob = async (
 
     const branchName = settings?.mainBranch;
 
-    const jobInfo = await gitCommandsService.getCommitByHash(commitHash, branchName);
+    const jobInfo = await new RepositoryCommandsService().getCommitByHash(commitHash, branchName);
 
     try {
         const result = await jobService.saveJob(jobInfo);

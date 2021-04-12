@@ -1,6 +1,15 @@
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
+import { Job } from './jobEntity';
 import { jobService } from './jobServices';
+
+enum JobStatus {
+    Waiting = 'Waiting',
+    InProgress = 'InProgress',
+    Success = 'Success',
+    Fail = 'Fail',
+    Cancelled = 'Cancelled',
+}
 
 const mockFind = jest.fn();
 const mockFindOne = jest.fn();
@@ -17,14 +26,14 @@ jest.mock('./jobEntity', () => ({
 }));
 
 describe('jobService', () => {
-    const NEW_JOBS = [
+    const NEW_JOBS: Job[] = [
         {
             id: '1',
             commitMessage: 'added repos',
             commitHash: '5356407',
             branchName: 'master',
             authorName: 'author',
-            status: 'Waiting',
+            status: JobStatus.Waiting,
         },
         {
             id: '2',
@@ -32,28 +41,28 @@ describe('jobService', () => {
             commitHash: '734ca47',
             branchName: 'master',
             authorName: 'author',
-            status: 'Waiting',
+            status: JobStatus.Waiting,
         },
     ];
 
-    const NEW_JOB = {
+    const NEW_JOB: Job = {
         id: '3',
         commitMessage: 'test',
         commitHash: '1234567',
         branchName: 'master',
         authorName: 'author',
-        status: 'Waiting',
+        status: JobStatus.Waiting,
     };
 
     const JOB_ID = '3';
 
-    const UPDATED_JOB = {
+    const UPDATED_JOB: Job = {
         id: '3',
         commitMessage: 'updated properties',
         commitHash: '5356407',
         branchName: 'master',
         authorName: 'author',
-        status: 'Waiting',
+        status: JobStatus.Waiting,
     };
 
     afterEach(() => {
@@ -63,7 +72,7 @@ describe('jobService', () => {
         mockClear.mockRestore();
     });
 
-    it('should get list of jobs', async () => {
+    it('should get list of jobs of two jobs', async () => {
         mockFind.mockResolvedValue(NEW_JOBS);
 
         const jobs = await jobService.getJobs();
@@ -89,7 +98,7 @@ describe('jobService', () => {
     });
 
     it('should not update job if the previous and new jobData are equal', async () => {
-        const UPDATED_JOB = { ...NEW_JOB };
+        const UPDATED_JOB: Job = { ...NEW_JOB };
         mockFindOne.mockResolvedValue(UPDATED_JOB);
         mockSave.mockResolvedValue(UPDATED_JOB);
 
@@ -106,13 +115,15 @@ describe('jobService', () => {
         expect(result).toEqual(undefined);
     });
 
-    it('should throw error if error occures', async () => {
+    it.only('should throw error if error occures', async () => {
         const error = new AppError('Not found', HttpCode.NOT_FOUND);
-        mockFindOne.mockRejectedValue(error);
+        mockFind.mockReturnValue(error);
+        mockSave.mockReturnValue(error);
 
-        expect(jobService.getJobs()).rejects.toThrowError(error);
-        expect(jobService.saveJob(NEW_JOB)).rejects.toThrowError(
-            `Cannot save jobs - job: ${error}`,
-        );
+        const resultJobsGet = await jobService.getJobs();
+        const resultJobSave = await jobService.saveJob(NEW_JOB);
+
+        expect(resultJobsGet).toEqual(error);
+        expect(resultJobSave).toEqual(error);
     });
 });
