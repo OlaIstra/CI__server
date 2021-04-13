@@ -1,15 +1,13 @@
 import deepEqual from 'deep-equal';
-import { getRepository } from 'typeorm';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { Settings } from './settingsEntity';
+import { getSettingsRepository, Settings } from './settingsEntity';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
         try {
-            const repository = getRepository(Settings);
-            return repository.findOne();
+            return getSettingsRepository().findOne();
         } catch (err) {
             throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
         }
@@ -17,7 +15,7 @@ export const settingsService = {
 
     saveSettings: async (settingsData: Settings): Promise<number> => {
         try {
-            const repository = getRepository(Settings);
+            const repository = getSettingsRepository();
 
             const prevSettings = await repository.findOne();
 
@@ -26,7 +24,7 @@ export const settingsService = {
                 return HttpCode.OK;
             }
 
-            const newSettings = repository.create({
+            const newSettings = await repository.create({
                 ...settingsData,
                 id: prevSettings.id,
             });
