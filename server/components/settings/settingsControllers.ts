@@ -6,6 +6,8 @@ import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
 import { RepositoryCommandsService } from '../repositoryCommandsService/RepositoryCommandsService';
 
+const RepositoryCommandsInstance = new RepositoryCommandsService();
+
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
         const result = await settingsService.getSettings();
@@ -21,7 +23,7 @@ export const saveSettings = async (
 ): Promise<void> => {
     try {
         const result = await settingsService.saveSettings(req.body);
-        await new RepositoryCommandsService().cloneRepo(req.body.repoName);
+        await RepositoryCommandsInstance.cloneRepo(req.body.repoName);
 
         res.sendStatus(result);
     } catch (err) {

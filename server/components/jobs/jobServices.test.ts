@@ -115,7 +115,7 @@ describe('jobService', () => {
         expect(result).toEqual(undefined);
     });
 
-    it.only('should throw error if error occures', async () => {
+    it('should throw error if error occures', async () => {
         const error = new AppError('Not found', HttpCode.NOT_FOUND);
         mockFind.mockReturnValue(error);
         mockSave.mockReturnValue(error);

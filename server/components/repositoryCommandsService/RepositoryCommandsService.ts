@@ -18,6 +18,7 @@ export class RepositoryCommandsService {
     public async cloneRepo(repoName: string): Promise<void> {
         try {
             const isLocalRepo = await this.findLocalRepo();
+
             if (isLocalRepo) {
                 this.deleteLocalRepo();
             }
@@ -29,14 +30,14 @@ export class RepositoryCommandsService {
         }
     }
 
-    async executeCommand(
+    private async executeCommand(
         command: string,
         options?: ExecOptions,
     ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }> {
         return execAsync(command, options);
     }
 
-    findLocalRepo(): boolean {
+    private findLocalRepo(): boolean {
         try {
             return fs.existsSync(path.join(homeDir, localRepo));
         } catch (err) {
@@ -44,7 +45,7 @@ export class RepositoryCommandsService {
         }
     }
 
-    deleteLocalRepo(): void {
+    private deleteLocalRepo(): void {
         try {
             const command = `rm -rf ${localRepoPath}`;
             this.executeCommand(command);
@@ -53,7 +54,7 @@ export class RepositoryCommandsService {
         }
     }
 
-    checkout(branchName: string): void {
+    private checkout(branchName: string): void {
         try {
             const command = `cd ${localRepoPath} && git checkout ${branchName}`;
             this.executeCommand(command);

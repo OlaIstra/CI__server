@@ -21,9 +21,10 @@ describe('RepositoryCommandsService', () => {
     it('should clone repo if repoName provided', async () => {
         const repository = 'repository';
         const repoName = 'test/test';
+        const repoInstance = new RepositoryCommandsService();
         mockCloneRepo.mockResolvedValue(repository);
 
-        const repo = await new RepositoryCommandsService().cloneRepo(repoName);
+        const repo = await repoInstance.cloneRepo(repoName);
 
         expect(repo).toEqual(repository);
     });
@@ -31,24 +32,33 @@ describe('RepositoryCommandsService', () => {
     it('should return commit information if commitHash provided', async () => {
         const commitHash = '1234567';
         const commitInfo = { authorName: 'author', commitMessage: 'commit message', commitHash };
+        const repoInstance = new RepositoryCommandsService();
         mockGetCommitByHash.mockResolvedValue(commitInfo);
 
-        const commit = await new RepositoryCommandsService().getCommitByHash(commitHash);
+        const commit = await repoInstance.getCommitByHash(commitHash);
 
         expect(commit).toEqual(commitInfo);
     });
 
-    it('should return error if error occures', async () => {
+    it('should return error if error occures during cloneRepo', async () => {
         const error = new AppError('Not found', HttpCode.NOT_FOUND);
         const repoName = 'test/test';
-        const commitHash = '1234567';
+        const repoInstance = new RepositoryCommandsService();
         mockCloneRepo.mockResolvedValue(error);
-        mockGetCommitByHash.mockResolvedValue(error);
 
-        const resultClone = await new RepositoryCommandsService().cloneRepo(repoName);
-        const resultGetCommit = await new RepositoryCommandsService().getCommitByHash(commitHash);
+        const resultClone = await repoInstance.cloneRepo(repoName);
 
         expect(resultClone).toEqual(error);
+    });
+
+    it('should return error if error occures during getting commit info', async () => {
+        const error = new AppError('Not found', HttpCode.NOT_FOUND);
+        const commitHash = '1234567';
+        const repoInstance = new RepositoryCommandsService();
+        mockGetCommitByHash.mockResolvedValue(error);
+
+        const resultGetCommit = await repoInstance.getCommitByHash(commitHash);
+
         expect(resultGetCommit).toEqual(resultGetCommit);
     });
 });

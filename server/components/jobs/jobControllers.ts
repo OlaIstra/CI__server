@@ -8,6 +8,8 @@ import { jobService } from './jobServices';
 import { Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
 
+const RepositoryCommandsInstance = new RepositoryCommandsService();
+
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
         const jobs = await jobService.getJobs();
@@ -27,7 +29,7 @@ export const saveJob = async (
 
     const branchName = settings?.mainBranch;
 
-    const jobInfo = await new RepositoryCommandsService().getCommitByHash(commitHash, branchName);
+    const jobInfo = await RepositoryCommandsInstance.getCommitByHash(commitHash, branchName);
 
     try {
         const result = await jobService.saveJob(jobInfo);
