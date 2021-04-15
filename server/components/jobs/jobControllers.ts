@@ -11,8 +11,6 @@ import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
 
-const repositoryCommandsService = new RepositoryCommandsService();
-
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
         const jobs = await jobService.getJobs();

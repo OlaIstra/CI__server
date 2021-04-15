@@ -136,4 +136,7 @@ describe('jobService', () => {
         mockSave.mockReturnValue(error);
 
         const resultJobSave = await jobService.saveJob(NEW_JOB);
+
+        expect(resultJobSave).toEqual(error);
+    });
 });
