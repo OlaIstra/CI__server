@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, getRepository } from 'typeorm';
 
 export enum JobStatus {
     Waiting = 'Waiting',
@@ -42,4 +42,8 @@ export class Job {
 
     @Column('int', { nullable: true })
     duration?: number;
+}
+
+export function getJobRepository() {
+    return getRepository(Job);
 }

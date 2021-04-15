@@ -1,45 +1,50 @@
 import deepEqual from 'deep-equal';
-import { getRepository } from 'typeorm';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { Job } from './jobEntity';
+import { getJobRepository, Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export const jobService = {
     getJobs: async (): Promise<Job[]> => {
         try {
-            const repository = getRepository(Job);
-            return repository.find();
-        } catch (err) {
-            throw new AppError('Cannot get jobs', HttpCode.NOT_FOUND);
+            return getJobRepository().find();
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOBS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     getJob: async (jobId: string): Promise<Job | undefined> => {
         try {
-            const repository = getRepository(Job);
-            return repository.findOne(jobId);
-        } catch (err) {
-            throw new AppError('Cannot get job', HttpCode.NOT_FOUND);
+            return getJobRepository().findOne(jobId);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOB} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     saveJob: async (job: IJobCommit): Promise<IJobCommit> => {
         try {
-            const repository = getRepository(Job);
-            return repository.save(job);
-        } catch (err) {
-            throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
+            return getJobRepository().save(job);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_SAVE_JOB} ${error}`,
+                HttpCode.BAD_REQUEST,
+            );
         }
     },
 
     updateJob: async (jobId: string, jobData: Job): Promise<number> => {
         try {
-            const repository = getRepository(Job);
+            const repository = getJobRepository();
 
             const prevJob = await repository.findOne({ id: jobId });
-
             const isEqual = deepEqual(prevJob, jobData);
 
             if (!isEqual) {
@@ -48,26 +53,33 @@ export const jobService = {
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
-        } catch (err) {
-            throw new AppError('Cannot update job', HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_UPDATE_JOB} ${error}`,
+                HttpCode.BAD_REQUEST,
+            );
         }
     },
 
     deleteJobs: async (): Promise<void> => {
         try {
-            const repository = getRepository(Job);
-            await repository.clear();
-        } catch (err) {
-            throw new AppError('Cannot delete jobs', HttpCode.FORBIDDEN);
+            await getJobRepository().clear();
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_DELETE_JOBS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     getJobDetails: async (jobId: string): Promise<Job | undefined> => {
         try {
-            const repository = getRepository(Job);
-            return repository.findOne({ id: jobId });
-        } catch (err) {
-            throw new AppError('Cannot get job details', HttpCode.NOT_FOUND);
+            return getJobRepository().findOne({ id: jobId });
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOB_DETAILS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 };

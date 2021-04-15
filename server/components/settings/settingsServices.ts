@@ -1,32 +1,34 @@
 import deepEqual from 'deep-equal';
-import { getRepository } from 'typeorm';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
-import { Settings } from './settingsEntity';
+import { getSettingsRepository, Settings } from './settingsEntity';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
         try {
-            const repository = getRepository(Settings);
-            return repository.findOne();
-        } catch (err) {
-            throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
+            return getSettingsRepository().findOne();
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     saveSettings: async (settingsData: Settings): Promise<number> => {
         try {
-            const repository = getRepository(Settings);
+            const repository = getSettingsRepository();
 
             const prevSettings = await repository.findOne();
 
             if (!prevSettings) {
                 await repository.save(settingsData);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             }
 
-            const newSettings = repository.create({
+            const newSettings = await repository.create({
                 ...settingsData,
                 id: prevSettings.id,
             });
@@ -34,12 +36,15 @@ export const settingsService = {
 
             if (!isEqual) {
                 await repository.update(prevSettings.id, newSettings);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
-        } catch (err) {
-            throw new AppError(`Cannot save settings - service: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS} ${error}`,
+                HttpCode.BAD_REQUEST,
+            );
         }
     },
 };

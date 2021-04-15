@@ -7,6 +7,7 @@ import { connectDb } from '@server/connectDb';
 import { typeOrmConfig } from '@server/typeorm.config';
 import { Settings as SettingsEntity } from '@server/components/settings/settingsEntity';
 import { Job as JobEntity } from '@server/components/jobs/jobEntity';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 type ProjectEntities = SettingsEntity | JobEntity;
 
@@ -27,11 +28,8 @@ const cleanFixtures = (entitiesList: string[]) => {
             const repo = await getRepository(entityName);
             repo.clear();
         });
-    } catch (err) {
-        throw new AppError(
-            `Cannot clean data from the test database: ${err}`,
-            HttpCode.BAD_REQUEST,
-        );
+    } catch (error) {
+        throw new AppError(`${ErrorMessage.FAILED_CLEAN_TEST_DATA} ${error}`, HttpCode.NOT_FOUND);
     }
 };
 
@@ -47,8 +45,8 @@ const loadFixtures = async (entitiesList: string[]) => {
 
             await repository.save(fakeData);
         });
-    } catch (err) {
-        throw new AppError(`Cannot load data to test database: ${err}`, HttpCode.BAD_REQUEST);
+    } catch (error) {
+        throw new AppError(`${ErrorMessage.FAILED_LOAD_TEST_DATA} ${error}`, HttpCode.BAD_REQUEST);
     }
 };
 
