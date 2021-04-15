@@ -5,6 +5,7 @@ import { EndPoints } from '@shared/enums';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { requestsSettings } from '../api/requestApi';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const initialValues = {
     id: '',
@@ -37,7 +38,10 @@ export class SettingsStore {
                 this.settings = response;
             });
         } catch (error) {
-            throw new AppError('Cannot get settings. Bug in store settings', HttpCode.NOT_FOUND);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_GET_SETTINGS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     }
 
@@ -48,7 +52,10 @@ export class SettingsStore {
                 this.settings = response;
             });
         } catch (error) {
-            throw new AppError('Cannot save settings', HttpCode.FORBIDDEN);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_SAVE_SETTINGS} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     }
 }

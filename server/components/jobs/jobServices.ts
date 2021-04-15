@@ -4,29 +4,39 @@ import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { getJobRepository, Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export const jobService = {
     getJobs: async (): Promise<Job[]> => {
         try {
             return getJobRepository().find();
-        } catch (err) {
-            throw new AppError('Cannot get jobs', HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOBS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     getJob: async (jobId: string): Promise<Job | undefined> => {
         try {
             return getJobRepository().findOne(jobId);
-        } catch (err) {
-            throw new AppError('Cannot get job', HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOB} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
     saveJob: async (job: IJobCommit): Promise<IJobCommit> => {
         try {
             return getJobRepository().save(job);
-        } catch (err) {
-            throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_SAVE_JOB} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     },
 
@@ -43,24 +53,33 @@ export const jobService = {
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
-        } catch (err) {
-            throw new AppError('Cannot update job', HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_UPDATE_JOB} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     },
 
     deleteJobs: async (): Promise<void> => {
         try {
             await getJobRepository().clear();
-        } catch (err) {
-            throw new AppError('Cannot delete jobs', HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_DELETE_JOBS} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     },
 
     getJobDetails: async (jobId: string): Promise<Job | undefined> => {
         try {
             return getJobRepository().findOne({ id: jobId });
-        } catch (err) {
-            throw new AppError('Cannot get job details', HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_JOB_DETAILS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 };

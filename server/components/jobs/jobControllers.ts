@@ -7,6 +7,7 @@ import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
 
@@ -14,8 +15,11 @@ export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> =
     try {
         const jobs = await jobService.getJobs();
         res.send(jobs);
-    } catch (err) {
-        throw new AppError('Cannot get jobs', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOBS} ${error}`,
+            HttpCode.NOT_FOUND,
+        );
     }
 };
 
@@ -34,8 +38,11 @@ export const saveJob = async (
     try {
         const result = await jobService.saveJob(jobInfo);
         res.send(result);
-    } catch (err) {
-        throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_SAVE_JOB} ${error}`,
+            HttpCode.FORBIDDEN,
+        );
     }
 };
 
@@ -46,8 +53,11 @@ export const getJobDetails = async (
     try {
         const response = await jobService.getJobDetails(req.params.id);
         res.send(response);
-    } catch (err) {
-        throw new AppError('Cannot get job details', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_DETAILS} ${error}`,
+            HttpCode.NOT_FOUND,
+        );
     }
 };
 
@@ -58,8 +68,11 @@ export const getJobLogs = async (
     try {
         const result = await jobService.getJobDetails(req.params.id);
         res.send(result?.jobLogs);
-    } catch (err) {
-        throw new AppError('Cannot get job logs', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_LOGS} ${error}`,
+            HttpCode.NOT_FOUND,
+        );
     }
 };
 
@@ -67,7 +80,10 @@ export const deleteJobs = async (_: unknown, res: Response<string>): Promise<voi
     try {
         await jobService.deleteJobs();
         res.send('success');
-    } catch (err) {
-        throw new AppError('Cannot delete jobs', HttpCode.FORBIDDEN);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_DELETE_JOBS} ${error}`,
+            HttpCode.FORBIDDEN,
+        );
     }
 };

@@ -3,13 +3,17 @@ import deepEqual from 'deep-equal';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { getSettingsRepository, Settings } from './settingsEntity';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
         try {
             return getSettingsRepository().findOne();
-        } catch (err) {
-            throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     },
 
@@ -36,8 +40,11 @@ export const settingsService = {
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
-        } catch (err) {
-            throw new AppError(`Cannot save settings - service: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     },
 };

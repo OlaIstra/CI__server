@@ -18,6 +18,7 @@ import RootStore from '@core/store/rootStore';
 import { StoreContext } from '@core/store/helpers/storeContext.ts';
 import App from './pages/App/App';
 import { getInitialStore } from '@server/getInitialStore';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const root = process.cwd();
 
@@ -71,7 +72,10 @@ export const ssrFunction = (app: {
                 return res.send(data);
             });
         } catch (error) {
-            throw new AppError('Cannot create application', HttpCode.FORBIDDEN);
+            throw new AppError(
+                `${ErrorMessage.FAILED_CREATE_APPLICATION} ${error}`,
+                HttpCode.FORBIDDEN,
+            );
         }
     });
 };

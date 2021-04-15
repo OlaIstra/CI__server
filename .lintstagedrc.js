@@ -3,6 +3,6 @@ module.exports = {
         'npm run eslint',
         'npm run prettier',
         () => 'npm run ts-check',
-        'npm run test',
+        //'npm run test',
     ],
 };
