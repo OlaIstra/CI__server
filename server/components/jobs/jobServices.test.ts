@@ -116,7 +116,7 @@ describe('jobService', () => {
         expect(result).toEqual(undefined);
     });
 
-    it('should throw error if error occures when get jobs', async () => {
+    it('should throw error when get jobs function get error', async () => {
         const error = new AppError(
             `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS}`,
             HttpCode.NOT_FOUND,
@@ -128,7 +128,7 @@ describe('jobService', () => {
         expect(resultJobsGet).toEqual(error);
     });
 
-    it('should throw error if error occures when save jobs', async () => {
+    it('should throw error when job could not be saved', async () => {
         const error = new AppError(
             `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS}`,
             HttpCode.BAD_REQUEST,

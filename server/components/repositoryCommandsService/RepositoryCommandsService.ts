@@ -27,7 +27,10 @@ export class RepositoryCommandsService {
             const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
             this.executeCommand(command);
         } catch (error) {
-            throw new AppError(`${ErrorMessage.FAILED_CLONE_REPO} ${error}`, HttpCode.NOT_FOUND);
+            throw new AppError(
+                `${ErrorMessage.FAILED_CLONE_REPO} ${error}`,
+                HttpCode.SERVICE_UNAVAILABLE,
+            );
         }
     }
 
@@ -44,7 +47,7 @@ export class RepositoryCommandsService {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_FIND_LOCAL_REPO} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     }
@@ -56,7 +59,7 @@ export class RepositoryCommandsService {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_DELETE_LOCAL_REPO} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     }
@@ -68,7 +71,7 @@ export class RepositoryCommandsService {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_CHECKOUT_BRANCH} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     }
@@ -90,7 +93,10 @@ export class RepositoryCommandsService {
 
             return { authorName, commitMessage, commitHash, branchName };
         } catch (error) {
-            throw new AppError(`${ErrorMessage.FAILED_GET_COMMIT} ${error}`, HttpCode.NOT_FOUND);
+            throw new AppError(
+                `${ErrorMessage.FAILED_GET_COMMIT} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 }
