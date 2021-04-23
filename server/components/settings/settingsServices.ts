@@ -12,7 +12,7 @@ export const settingsService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },

@@ -82,7 +82,7 @@ describe('settingsService', () => {
     it('should throw error if error occures while getting settings', async () => {
         const error = new AppError(
             `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
         mockFindOne.mockRejectedValue(error);
 

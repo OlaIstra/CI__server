@@ -13,7 +13,7 @@ export const jobService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_GET_JOBS} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },
@@ -24,7 +24,7 @@ export const jobService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_GET_JOB} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },
@@ -67,7 +67,7 @@ export const jobService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_DELETE_JOBS} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },
@@ -78,7 +78,7 @@ export const jobService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_GET_JOB_DETAILS} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },

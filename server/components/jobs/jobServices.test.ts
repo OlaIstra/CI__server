@@ -119,7 +119,7 @@ describe('jobService', () => {
     it('should throw error when get jobs function get error', async () => {
         const error = new AppError(
             `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
         mockFind.mockReturnValue(error);
 

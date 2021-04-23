@@ -14,11 +14,16 @@ const repositoryCommandsService = new RepositoryCommandsService();
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
         const jobs = await jobService.getJobs();
+
+        if (!jobs) {
+            throw new AppError(`${ErrorMessage.FAILED_CONTROLLER_GET_JOBS}`, HttpCode.NOT_FOUND);
+        }
+
         res.send(jobs);
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_GET_JOBS} ${error}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
     }
 };
@@ -52,11 +57,19 @@ export const getJobDetails = async (
 ): Promise<void> => {
     try {
         const response = await jobService.getJobDetails(req.params.id);
+
+        if (!response) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_DETAILS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(response);
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_DETAILS} ${error}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
     }
 };
@@ -67,11 +80,19 @@ export const getJobLogs = async (
 ): Promise<void> => {
     try {
         const result = await jobService.getJobDetails(req.params.id);
+
+        if (!result || !result.jobLogs) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_LOGS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(result?.jobLogs);
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_LOGS} ${error}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
     }
 };
@@ -83,7 +104,7 @@ export const deleteJobs = async (_: unknown, res: Response<string>): Promise<voi
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_DELETE_JOBS} ${error}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
     }
 };

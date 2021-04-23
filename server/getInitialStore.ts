@@ -25,6 +25,6 @@ export const getInitialStore = async (store: RootStore) => {
 
         return store;
     } catch (error) {
-        throw new AppError(ErrorMessage.FAILED_LOAD_DATA, HttpCode.NOT_FOUND);
+        throw new AppError(ErrorMessage.FAILED_LOAD_DATA, HttpCode.INTERNAL_SERVER_ERROR);
     }
 };
