@@ -7,15 +7,24 @@ import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
 
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
         const jobs = await jobService.getJobs();
+
+        if (!jobs) {
+            throw new AppError(`${ErrorMessage.FAILED_CONTROLLER_GET_JOBS}`, HttpCode.NOT_FOUND);
+        }
+
         res.send(jobs);
-    } catch (err) {
-        throw new AppError('Cannot get jobs', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOBS} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };
 
@@ -34,8 +43,11 @@ export const saveJob = async (
     try {
         const result = await jobService.saveJob(jobInfo);
         res.send(result);
-    } catch (err) {
-        throw new AppError(`Cannot save job - ${err}`, HttpCode.FORBIDDEN);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_SAVE_JOB} ${error}`,
+            HttpCode.BAD_REQUEST,
+        );
     }
 };
 
@@ -45,9 +57,20 @@ export const getJobDetails = async (
 ): Promise<void> => {
     try {
         const response = await jobService.getJobDetails(req.params.id);
+
+        if (!response) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_DETAILS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(response);
-    } catch (err) {
-        throw new AppError('Cannot get job details', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_DETAILS} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };
 
@@ -57,9 +80,20 @@ export const getJobLogs = async (
 ): Promise<void> => {
     try {
         const result = await jobService.getJobDetails(req.params.id);
+
+        if (!result || !result.jobLogs) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_LOGS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(result?.jobLogs);
-    } catch (err) {
-        throw new AppError('Cannot get job logs', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_JOB_LOGS} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };
 
@@ -67,7 +101,10 @@ export const deleteJobs = async (_: unknown, res: Response<string>): Promise<voi
     try {
         await jobService.deleteJobs();
         res.send('success');
-    } catch (err) {
-        throw new AppError('Cannot delete jobs', HttpCode.FORBIDDEN);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_DELETE_JOBS} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };

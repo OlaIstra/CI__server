@@ -5,15 +5,27 @@ import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
 import { RepositoryCommandsService } from '../repositoryCommandsService/RepositoryCommandsService';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
 
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
         const result = await settingsService.getSettings();
+
+        if (!result) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_SETTINGS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(result);
-    } catch (err) {
-        throw new AppError('Cannot get settings. Bug in settingsController', HttpCode.NOT_FOUND);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_GET_SETTINGS} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };
 
@@ -26,7 +38,10 @@ export const saveSettings = async (
         await repositoryCommandsService.cloneRepo(req.body.repoName);
 
         res.sendStatus(result);
-    } catch (err) {
-        throw new AppError(`Cannot save settings - controller: ${err}`, HttpCode.FORBIDDEN);
+    } catch (error) {
+        throw new AppError(
+            `${ErrorMessage.FAILED_CONTROLLER_SAVE_SETTINGS} ${error}`,
+            HttpCode.BAD_REQUEST,
+        );
     }
 };

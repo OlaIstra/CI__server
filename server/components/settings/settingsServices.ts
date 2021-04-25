@@ -3,13 +3,17 @@ import deepEqual from 'deep-equal';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { getSettingsRepository, Settings } from './settingsEntity';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export const settingsService = {
     getSettings: async (): Promise<Settings | undefined> => {
         try {
             return getSettingsRepository().findOne();
-        } catch (err) {
-            throw new AppError('Cannot get settings. Bug in settingsService', HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
         }
     },
 
@@ -21,7 +25,7 @@ export const settingsService = {
 
             if (!prevSettings) {
                 await repository.save(settingsData);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             }
 
             const newSettings = await repository.create({
@@ -32,12 +36,15 @@ export const settingsService = {
 
             if (!isEqual) {
                 await repository.update(prevSettings.id, newSettings);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
-        } catch (err) {
-            throw new AppError(`Cannot save settings - service: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS} ${error}`,
+                HttpCode.BAD_REQUEST,
+            );
         }
     },
 };

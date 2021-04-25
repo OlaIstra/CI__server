@@ -5,6 +5,7 @@ import { EndPoints } from '@shared/enums';
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { requestsJobDetails, requestsJobs } from '@core/api/requestApi';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 export class JobsStore {
     jobs: Array<IJob> | undefined;
@@ -33,7 +34,10 @@ export class JobsStore {
                 this.jobs = response;
             });
         } catch (error) {
-            throw new AppError('Cannot get jobs. Bug in store jobs', HttpCode.NOT_FOUND);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_GET_JOBS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     }
 
@@ -41,11 +45,13 @@ export class JobsStore {
         try {
             const response = await requestsJobs.post(EndPoints.Jobs, job);
             runInAction(() => {
-                // one job or all jobs in responce
                 this.jobs = response;
             });
         } catch (error) {
-            throw new AppError('Cannot save job', HttpCode.FORBIDDEN);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_SAVE_JOB} ${error}`,
+                HttpCode.BAD_REQUEST,
+            );
         }
     }
 
@@ -56,7 +62,10 @@ export class JobsStore {
                 this.jobDetais = response;
             });
         } catch (error) {
-            throw new AppError('Cannot get job details', HttpCode.FORBIDDEN);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_GET_JOB_DETAILS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     }
 
@@ -64,11 +73,13 @@ export class JobsStore {
         try {
             const response = await requestsJobs.delete(EndPoints.Jobs);
             runInAction(() => {
-                // what in the responce?
                 this.jobs = response;
             });
         } catch (error) {
-            throw new AppError('Cannot delete jobs', HttpCode.FORBIDDEN);
+            throw new AppError(
+                `${ErrorMessage.FAILED_STORE_DELETE_JOBS} ${error}`,
+                HttpCode.NOT_FOUND,
+            );
         }
     }
 }

@@ -1,4 +1,5 @@
 import { AppError } from '@shared/error/error';
+import { ErrorMessage } from '@shared/error/errorMessage';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { settingsService } from './settingsServices';
 
@@ -54,7 +55,7 @@ describe('settingsService', () => {
 
         const result = await settingsService.saveSettings(NEW_SETTINGS);
 
-        expect(result).toEqual(HttpCode.OK);
+        expect(result).toEqual(HttpCode.CREATED);
     });
 
     it('should update settings if there were previous settings', async () => {
@@ -64,7 +65,7 @@ describe('settingsService', () => {
 
         const result = await settingsService.saveSettings(NEW_SETTINGS);
 
-        expect(result).toEqual(HttpCode.OK);
+        expect(result).toEqual(HttpCode.CREATED);
     });
 
     it('should not update settings if the previous and new settings are equal', async () => {
@@ -78,13 +79,23 @@ describe('settingsService', () => {
         expect(result).toEqual(HttpCode.NOT_MODIFIED);
     });
 
-    it('should throw error if error occures', async () => {
-        const error = new AppError('Not found', HttpCode.NOT_FOUND);
+    it('should throw error if error occures while getting settings', async () => {
+        const error = new AppError(
+            `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
         mockFindOne.mockRejectedValue(error);
 
         expect(settingsService.getSettings()).rejects.toThrowError(error);
-        expect(settingsService.saveSettings(NEW_SETTINGS)).rejects.toThrowError(
-            `Cannot save settings - service: ${error}`,
+    });
+
+    it('should throw error if error occures while saving settings', async () => {
+        const error = new AppError(
+            `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS}`,
+            HttpCode.BAD_REQUEST,
         );
+        mockFindOne.mockRejectedValue(error);
+
+        expect(settingsService.getSettings()).rejects.toThrowError(error);
     });
 });
