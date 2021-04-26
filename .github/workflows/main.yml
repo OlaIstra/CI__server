@@ -20,9 +20,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Run eslint
-                uses: actions/setup-node@v1
-                with: 
-                    node-version: '12'
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
             - run: npm ci
             - run: npm run eslint
 
@@ -31,9 +31,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Run prettier
-                uses: actions/setup-node@v1
-                with: 
-                    node-version: '12'
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
             - run: npm ci
             - run: npm run prettier
 
@@ -42,9 +42,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Run tscheck
-                uses: actions/setup-node@v1
-                with: 
-                    node-version: '12'
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
             - run: npm ci
             - run: npm run ts-check
 
@@ -53,9 +53,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Run test
-                uses: actions/setup-node@v1
-                with: 
-                    node-version: '12'
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
             - run: npm ci
             - run: npm run test
 
@@ -64,9 +64,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Run test
-                uses: actions/setup-node@v1
-                with: 
-                    node-version: '12'
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
             - run: npm ci
             - run: npm run start
 
