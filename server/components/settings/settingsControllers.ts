@@ -9,6 +9,10 @@ import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
 
+/**
+ * @fileOverview functions could throw two types of errors - backend and frontend
+ */
+
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
         const result = await settingsService.getSettings();

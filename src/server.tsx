@@ -22,6 +22,10 @@ import { ErrorMessage } from '@shared/error/errorMessage';
 
 const root = process.cwd();
 
+/**
+ * @fileOverview function creates HTML-code with initial values in state
+ */
+
 export const ssrFunction = (app: {
     use: (arg0: import('express-serve-static-core').Handler) => void;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
