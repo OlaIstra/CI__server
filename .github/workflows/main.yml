@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  Install:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -28,20 +28,59 @@ jobs:
       - name: Install
         run: npm install
         
+  Eslint:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        
       - name: Run eslint
         run: npm run eslint
+        
+  Prettier:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2      
       
       - name: Run prettier
         run: npm run prettier
         
+  Ts-check:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2            
+        
       - name: Run ts-check
         run: npm run ts-check  
+        
+  Test:      
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
 
       - name: Run Test
         run: npm run test
+        
+  Build:      
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:      
 
       - name: Build
-        run: npm run build
+        run: npm run start:prod
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
