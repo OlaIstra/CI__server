@@ -41,7 +41,7 @@ jobs:
         run: npm run test
 
       - name: Build
-        run: npm run start:prod
+        run: npm run start
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
