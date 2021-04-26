@@ -54,7 +54,7 @@ export class SettingsStore {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_STORE_SAVE_SETTINGS} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.BAD_REQUEST,
             );
         }
     }

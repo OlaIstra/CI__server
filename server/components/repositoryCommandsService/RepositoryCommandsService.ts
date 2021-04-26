@@ -8,6 +8,7 @@ import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { envConfig } from '@shared/config';
 import { IJobCommit } from '@shared/interfaces/jobs';
+import { ErrorMessage } from '@shared/error/errorMessage';
 
 const localRepo = envConfig.LOCAL_REPO || '';
 const execAsync = promisify(exec);
@@ -25,8 +26,11 @@ export class RepositoryCommandsService {
 
             const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
             this.executeCommand(command);
-        } catch (err) {
-            throw new AppError(`Cannot clone repo: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CLONE_REPO} ${error}`,
+                HttpCode.SERVICE_UNAVAILABLE,
+            );
         }
     }
 
@@ -40,8 +44,11 @@ export class RepositoryCommandsService {
     private findLocalRepo(): boolean {
         try {
             return fs.existsSync(path.join(homeDir, localRepo));
-        } catch (err) {
-            throw new AppError(`Cannot find local repo: ${err}`, HttpCode.NOT_FOUND);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_FIND_LOCAL_REPO} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 
@@ -49,8 +56,11 @@ export class RepositoryCommandsService {
         try {
             const command = `rm -rf ${localRepoPath}`;
             this.executeCommand(command);
-        } catch (err) {
-            throw new AppError(`Cannot delete local repo: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_DELETE_LOCAL_REPO} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 
@@ -58,22 +68,35 @@ export class RepositoryCommandsService {
         try {
             const command = `cd ${localRepoPath} && git checkout ${branchName}`;
             this.executeCommand(command);
-        } catch (err) {
-            throw new AppError(`Cannot checkout branch: ${err}`, HttpCode.FORBIDDEN);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CHECKOUT_BRANCH} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 
     public async getCommitByHash(commitHash = '', branchName = 'master'): Promise<IJobCommit> {
-        await this.checkout(branchName);
+        try {
+            await this.checkout(branchName);
 
-        const { stdout } = await this.executeCommand(`git log -1 --format="%an|%B" ${commitHash}`, {
-            cwd: localRepoPath,
-        });
+            const { stdout } = await this.executeCommand(
+                `git log -1 --format="%an|%B" ${commitHash}`,
+                {
+                    cwd: localRepoPath,
+                },
+            );
 
-        const [authorName, commitMessage] = String(stdout)
-            .replace(/\n/g, '')
-            .split('|');
+            const [authorName, commitMessage] = String(stdout)
+                .replace(/\n/g, '')
+                .split('|');
 
-        return { authorName, commitMessage, commitHash, branchName };
+            return { authorName, commitMessage, commitHash, branchName };
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_GET_COMMIT} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
 }

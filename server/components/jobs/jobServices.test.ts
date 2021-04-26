@@ -1,4 +1,5 @@
 import { AppError } from '@shared/error/error';
+import { ErrorMessage } from '@shared/error/errorMessage';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Job } from './jobEntity';
 import { jobService } from './jobServices';
@@ -115,15 +116,27 @@ describe('jobService', () => {
         expect(result).toEqual(undefined);
     });
 
-    it('should throw error if error occures', async () => {
-        const error = new AppError('Not found', HttpCode.NOT_FOUND);
+    it('should throw error when get jobs function get error', async () => {
+        const error = new AppError(
+            `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
         mockFind.mockReturnValue(error);
-        mockSave.mockReturnValue(error);
 
         const resultJobsGet = await jobService.getJobs();
-        const resultJobSave = await jobService.saveJob(NEW_JOB);
 
         expect(resultJobsGet).toEqual(error);
+    });
+
+    it('should throw error when job could not be saved', async () => {
+        const error = new AppError(
+            `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS}`,
+            HttpCode.BAD_REQUEST,
+        );
+        mockSave.mockReturnValue(error);
+
+        const resultJobSave = await jobService.saveJob(NEW_JOB);
+
         expect(resultJobSave).toEqual(error);
     });
 });

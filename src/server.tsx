@@ -74,7 +74,7 @@ export const ssrFunction = (app: {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_CREATE_APPLICATION} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.NOT_FOUND,
             );
         }
     });

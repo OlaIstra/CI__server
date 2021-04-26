@@ -12,11 +12,19 @@ const repositoryCommandsService = new RepositoryCommandsService();
 export const getSettings = async (_: unknown, res: Response<Settings>): Promise<void> => {
     try {
         const result = await settingsService.getSettings();
+
+        if (!result) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CONTROLLER_GET_SETTINGS}`,
+                HttpCode.NOT_FOUND,
+            );
+        }
+
         res.send(result);
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_GET_SETTINGS} ${error}`,
-            HttpCode.NOT_FOUND,
+            HttpCode.INTERNAL_SERVER_ERROR,
         );
     }
 };
@@ -33,7 +41,7 @@ export const saveSettings = async (
     } catch (error) {
         throw new AppError(
             `${ErrorMessage.FAILED_CONTROLLER_SAVE_SETTINGS} ${error}`,
-            HttpCode.FORBIDDEN,
+            HttpCode.BAD_REQUEST,
         );
     }
 };

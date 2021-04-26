@@ -1,6 +1,6 @@
 export const ErrorMessage = {
     //gitCommandsService errors
-    FAILED_LOAD_DATA: 'Failed to load data. Error:',
+    FAILED_GET_COMMIT: 'Failed to get commit by hash. Error:',
     FAILED_CLONE_REPO: 'Failed to clone repository. Error:',
     FAILED_FIND_REPO: 'Failed to find repository. Error:',
     FAILED_FIND_LOCAL_REPO: 'Failed to find a local repository. Error:',
@@ -36,6 +36,9 @@ export const ErrorMessage = {
 
     //server errors
     FAILED_CREATE_APPLICATION: 'Failed create application. Error:',
+
+    //initial Store
+    FAILED_LOAD_DATA: 'Failed to load data. Error:',
 
     //storeJobs errors
     FAILED_STORE_GET_JOBS: 'JobStore - Failed to get jobs. Error:',

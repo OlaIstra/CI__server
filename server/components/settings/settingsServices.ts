@@ -12,7 +12,7 @@ export const settingsService = {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_GET_SETTINGS} ${error}`,
-                HttpCode.NOT_FOUND,
+                HttpCode.INTERNAL_SERVER_ERROR,
             );
         }
     },
@@ -25,7 +25,7 @@ export const settingsService = {
 
             if (!prevSettings) {
                 await repository.save(settingsData);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             }
 
             const newSettings = await repository.create({
@@ -36,14 +36,14 @@ export const settingsService = {
 
             if (!isEqual) {
                 await repository.update(prevSettings.id, newSettings);
-                return HttpCode.OK;
+                return HttpCode.CREATED;
             } else {
                 return HttpCode.NOT_MODIFIED;
             }
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_SERVICE_SAVE_SETTINGS} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.BAD_REQUEST,
             );
         }
     },

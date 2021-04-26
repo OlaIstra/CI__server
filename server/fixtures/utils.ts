@@ -29,7 +29,10 @@ const cleanFixtures = (entitiesList: string[]) => {
             repo.clear();
         });
     } catch (error) {
-        throw new AppError(`${ErrorMessage.FAILED_CLEAN_TEST_DATA} ${error}`, HttpCode.BAD_REQUEST);
+        throw new AppError(
+            `${ErrorMessage.FAILED_CLEAN_TEST_DATA} ${error}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
     }
 };
 

@@ -1,4 +1,5 @@
 import { AppError } from '@shared/error/error';
+import { ErrorMessage } from '@shared/error/errorMessage';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { RepositoryCommandsService } from './RepositoryCommandsService';
 
@@ -41,7 +42,10 @@ describe('RepositoryCommandsService', () => {
     });
 
     it('should return error if error occures during cloneRepo', async () => {
-        const error = new AppError('Not found', HttpCode.NOT_FOUND);
+        const error = new AppError(
+            `${ErrorMessage.FAILED_CLONE_REPO}`,
+            HttpCode.SERVICE_UNAVAILABLE,
+        );
         const repoName = 'test/test';
         const repositoryCommandsService = new RepositoryCommandsService();
         mockCloneRepo.mockResolvedValue(error);
@@ -52,7 +56,10 @@ describe('RepositoryCommandsService', () => {
     });
 
     it('should return error if error occures during getting commit info', async () => {
-        const error = new AppError('Not found', HttpCode.NOT_FOUND);
+        const error = new AppError(
+            `${ErrorMessage.FAILED_GET_COMMIT}`,
+            HttpCode.INTERNAL_SERVER_ERROR,
+        );
         const commitHash = '1234567';
         const repositoryCommandsService = new RepositoryCommandsService();
         mockGetCommitByHash.mockResolvedValue(error);

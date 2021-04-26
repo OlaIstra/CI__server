@@ -50,7 +50,7 @@ export class JobsStore {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_STORE_SAVE_JOB} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.BAD_REQUEST,
             );
         }
     }
@@ -64,7 +64,7 @@ export class JobsStore {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_STORE_GET_JOB_DETAILS} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.NOT_FOUND,
             );
         }
     }
@@ -78,7 +78,7 @@ export class JobsStore {
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_STORE_DELETE_JOBS} ${error}`,
-                HttpCode.FORBIDDEN,
+                HttpCode.NOT_FOUND,
             );
         }
     }
