@@ -23,49 +23,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
       - name: Install
-        uses: actions/checkout@v2
         run: npm install
-  eslint:
-    runs-on: ubuntu-latest   
-    steps:
-      - name: Run eslint
-        uses: actions/checkout@v2      
-        run: npm ci
-        run: npm run eslint
-
-  prettier:
-    runs-on: ubuntu-latest   
-    steps:
-      - name: Run prettier
-        uses: actions/checkout@v2
-        run: npm ci
-        run: npm run prettier    
-
-  ts-check:
-    runs-on: ubuntu-latest   
-    steps:
-      - name: Run ts-check
-        uses: actions/checkout@v2
-        run: npm ci
-        run: npm run ts-check    
-
-  test:
-    runs-on: ubuntu-latest   
-    steps:
-      - name: Run test
-        uses: actions/checkout@v2
-        run: npm ci
-        run: npm run test      
-
-  build:
-    runs-on: ubuntu-latest   
-    steps:
-      - name: Run build
-        uses: actions/checkout@v2
         
-        run: npm ci
-        run: npm run test   
+      - name: Run eslint
+        run: npm run eslint
+      
+      - name: Run prettier
+        run: npm run prettier
+        
+      - name: Run ts-check
+        run: npm run ts-check  
+
+      - name: Run Test
+        run: npm run test
+
+      - name: Build
+        run: npm run start
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
