@@ -6,7 +6,7 @@
         "server:dev": "cross-env TARGET=server webpack && node dist/server/server.js",        
         "client:dev": "cross-env webpack-dev-server --host 0.0.0.0 --open",
         "start:dev": "cross-env NODE_ENV=development PORT=8080 nodemon",
-        "start": "cross-env NODE_ENV=production PORT=9090 nodemon",
+        "start": "cross-env NODE_ENV=production webpack",
         "test": "jest",
         "ts-check": "tsc --noEmit --project ./tsconfig.json",
         "eslint": "eslint src/**/* server/**/* shared/**/* --fix --no-error-on-unmatched-pattern",
