@@ -24,24 +24,47 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       - name: Install
         run: npm install
-        
+  eslint:
+    runs-on: ubuntu-latest   
+    steps:
+      - uses: actions/checkout@v2
       - name: Run eslint
-        run: npm run eslint
-      
+      - run: npm ci
+      - run: npm run eslint
+
+  prettier:
+    runs-on: ubuntu-latest   
+    steps:
+      - uses: actions/checkout@v2
       - name: Run prettier
-        run: npm run prettier
-        
+      - run: npm ci
+      - run: npm run prettier    
+
+  ts-check:
+    runs-on: ubuntu-latest   
+    steps:
+      - uses: actions/checkout@v2
       - name: Run ts-check
-        run: npm run ts-check  
+      - run: npm ci
+      - run: npm run ts-check    
 
-      - name: Run Test
-        run: npm run test
+  test:
+    runs-on: ubuntu-latest   
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run test
+      - run: npm ci
+      - run: npm run test      
 
-      - name: Build
-        run: npm run start
+  build:
+    runs-on: ubuntu-latest   
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build
+      - run: npm ci
+      - run: npm run test   
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
