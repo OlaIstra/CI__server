@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  install:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -27,20 +27,50 @@ jobs:
 
       - name: Install
         run: npm install
-        
+
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Run eslint
+        run: npm ci
         run: npm run eslint
-      
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Run prettier
+        run: npm ci
         run: npm run prettier
         
-      - name: Run ts-check
-        run: npm run ts-check  
+  tscheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-      - name: Run Test
+      - name: Run tscheck
+        run: npm ci
+        run: npm run ts-check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run test
+        run: npm ci
         run: npm run test
 
-      - name: Build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run test
+        run: npm ci
         run: npm run start
 
       - name: Deploy
