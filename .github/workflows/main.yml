@@ -29,42 +29,43 @@ jobs:
   eslint:
     runs-on: ubuntu-latest   
     steps:
-      - uses: actions/checkout@v2
       - name: Run eslint
-      - run: npm ci
-      - run: npm run eslint
+        uses: actions/checkout@v2      
+        run: npm ci
+        run: npm run eslint
 
   prettier:
     runs-on: ubuntu-latest   
     steps:
-      - uses: actions/checkout@v2
       - name: Run prettier
-      - run: npm ci
-      - run: npm run prettier    
+        uses: actions/checkout@v2
+        run: npm ci
+        run: npm run prettier    
 
   ts-check:
     runs-on: ubuntu-latest   
     steps:
-      - uses: actions/checkout@v2
       - name: Run ts-check
-      - run: npm ci
-      - run: npm run ts-check    
+        uses: actions/checkout@v2
+        run: npm ci
+        run: npm run ts-check    
 
   test:
     runs-on: ubuntu-latest   
     steps:
-      - uses: actions/checkout@v2
       - name: Run test
-      - run: npm ci
-      - run: npm run test      
+        uses: actions/checkout@v2
+        run: npm ci
+        run: npm run test      
 
   build:
     runs-on: ubuntu-latest   
     steps:
-      - uses: actions/checkout@v2
       - name: Run build
-      - run: npm ci
-      - run: npm run test   
+        uses: actions/checkout@v2
+        
+        run: npm ci
+        run: npm run test   
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
