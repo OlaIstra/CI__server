@@ -9,18 +9,20 @@ import { ErrorMessage } from '@shared/error/errorMessage';
 
 export class JobsStore {
     jobs: Array<IJob> | undefined;
-    jobDetais: IJobDetails | undefined;
+    jobDetails: IJobDetails | undefined;
 
-    constructor(jobs?: Array<IJob>, jobDetais?: IJobDetails) {
+    constructor(jobs?: Array<IJob>, jobDetails?: IJobDetails) {
         makeObservable(this, {
             jobs: observable,
+            jobDetails: observable,
+            setJobs: action,
             getJobs: action,
             saveJob: action,
             getJobDetails: action,
             deleteJobs: action,
         });
-        this.jobs = jobs;
-        this.jobDetais = jobDetais;
+        this.setJobs(jobs);
+        this.jobDetails = jobDetails;
     }
 
     async setJobs(jobs: IJob[] | undefined) {
@@ -59,7 +61,7 @@ export class JobsStore {
         try {
             const response = await requestsJobDetails.get(EndPoints.Jobs, id);
             runInAction(() => {
-                this.jobDetais = response;
+                this.jobDetails = response;
             });
         } catch (error) {
             throw new AppError(

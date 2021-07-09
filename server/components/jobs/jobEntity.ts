@@ -32,7 +32,7 @@ export class Job {
     status: string;
 
     @Column('text', { nullable: true })
-    jobLogs?: number;
+    jobLogs?: string;
 
     @Column('text', { nullable: true })
     start?: string;

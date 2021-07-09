@@ -6,6 +6,7 @@ export interface IJob {
     branchName: string;
     authorName: string;
     status: string;
+    jobLogs?: string;
 }
 
 export interface IJobs {
@@ -35,8 +36,4 @@ export interface IJobCommit {
     commitMessage: string;
     commitHash: string;
     branchName: string;
-}
-
-export interface IJobLogs {
-    // TODO
 }

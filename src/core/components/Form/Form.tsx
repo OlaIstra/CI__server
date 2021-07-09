@@ -6,7 +6,7 @@ import { ISettings } from '@shared/interfaces/settings';
 import { EndPoints } from '@shared/enums';
 import { Title } from '@atoms/Title/Title';
 import { Button } from '@atoms/Button/Button';
-import { requestsSettings } from '@core/api/requestApi';
+import { requestsJobs, requestsSettings } from '@core/api/requestApi';
 import { validationSchema } from '@pages/SettingsPage/Settings.validation';
 
 import './Form.scss';
@@ -23,11 +23,12 @@ const initialValues = {
     timePeriod: 0,
 };
 
-export const CustomForm: React.FC<Props> = observer(({ initialSettings }) => {
-    const [settings, setSettings] = useState(initialSettings);
+export const CustomForm: React.FC<Props> = observer(srrSettings => {
+    const [settings, setSettings] = useState(srrSettings.initialSettings);
 
     const onSubmit = useCallback((settings: ISettings) => {
         requestsSettings.post(EndPoints.Settings, settings);
+        requestsJobs.get(EndPoints.Jobs);
     }, []);
 
     const clearAll = useCallback(() => {

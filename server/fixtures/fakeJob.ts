@@ -5,6 +5,7 @@ export default [
         branchName: 'master',
         authorName: 'OlaIstra',
         status: 'Waiting',
+        jobLogs: '1234567',
     },
     {
         commitMessage: 'added testing',
@@ -12,5 +13,6 @@ export default [
         branchName: 'master',
         authorName: 'OlaIstra',
         status: 'Waiting',
+        jobLogs: '1234567',
     },
 ];
