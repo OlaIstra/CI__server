@@ -7,6 +7,9 @@ export interface IJob {
     authorName: string;
     status: string;
     jobLogs?: string;
+    start?: string;
+    finish?: string;
+    duration?: string;
 }
 
 export interface IJobs {
@@ -21,7 +24,7 @@ export interface ICommit {
 
 export interface IJobDetails extends IJob {
     start: string;
-    duration: number;
+    duration: string;
 }
 
 export interface IJobPost {

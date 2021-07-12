@@ -8,6 +8,6 @@ export default class RootStore {
     constructor(store?: RootStore) {
         const { settingsStore, jobsStore } = store || {};
         this.settingsStore = new SettingsStore(settingsStore?.settings);
-        this.jobsStore = new JobsStore(jobsStore?.jobs);
+        this.jobsStore = new JobsStore(jobsStore?.jobs || []);
     }
 }

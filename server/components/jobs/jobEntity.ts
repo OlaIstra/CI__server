@@ -40,8 +40,8 @@ export class Job {
     @Column('text', { nullable: true })
     finish?: string;
 
-    @Column('int', { nullable: true })
-    duration?: number;
+    @Column('text', { nullable: true })
+    duration?: string;
 }
 
 export function getJobRepository() {

@@ -8,7 +8,7 @@ import { requestsJobDetails, requestsJobs } from '@core/api/requestApi';
 import { ErrorMessage } from '@shared/error/errorMessage';
 
 export class JobsStore {
-    jobs: Array<IJob> | undefined;
+    jobs: Array<IJob>;
     jobDetails: IJobDetails | undefined;
 
     constructor(jobs?: Array<IJob>, jobDetails?: IJobDetails) {
@@ -25,7 +25,7 @@ export class JobsStore {
         this.jobDetails = jobDetails;
     }
 
-    async setJobs(jobs: IJob[] | undefined) {
+    async setJobs(jobs: IJob[] = []) {
         this.jobs = jobs;
     }
 

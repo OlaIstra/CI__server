@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useHistory } from 'react-router-dom';
 
@@ -11,17 +11,18 @@ import './JobsPage.scss';
 
 const JobsPage: React.FC = () => {
     const history = useHistory();
-    const { jobsStore } = useStores();
+    const { settingsStore, jobsStore } = useStores();
 
-    const initialJobs = jobsStore.jobs || [];
+    const initialJobs = jobsStore.jobs;
+    const initiaReponame = settingsStore.settings.repoName;
 
-    const goToJob: (id: string) => void = (id: string) => {
-        history.push('/jobs/' + id);
-    };
+    const goToJob: (id: string) => void = useCallback((id: string) => {
+        history.push(`/jobs/${id}`);
+    }, []);
 
     return (
         <>
-            <Header title='philip1967/my-awesome-repo'>
+            <Header title={initiaReponame}>
                 <div className='btn__block'>
                     <Button icon='icon-play'>Run build</Button>
                     <Button icon='icon-settings' />
@@ -42,7 +43,7 @@ const JobsPage: React.FC = () => {
                                     <div className='repo__branch'>
                                         <span className='icon-code-commit' />
                                         {job.branchName}
-                                        <span className='repo__commit'>9c9f0b9</span>
+                                        <span className='repo__commit'>{job.commitHash}</span>
                                     </div>
                                     <div className='repo__fio'>
                                         <span className='icon-user' />
@@ -52,14 +53,14 @@ const JobsPage: React.FC = () => {
                             <div className='repo__data'>
                                 <div className='repo__data__date'>
                                     <span className='icon-calendar' />
-                                    21 янв, 03:06
+                                    {job.start}
                                 </div>
                                 <div className='repo__data__time'>
-                                    <span className='icon-timer' />1 ч 20 мин
+                                    <span className='icon-timer' />
+                                    {job.duration}
                                 </div>
                             </div>
                         </button>
-                        <div>LOGS</div>
                     </>
                 ))}
             </div>

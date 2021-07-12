@@ -9,14 +9,15 @@ import { useStores } from '@core/store/helpers/useStores';
 import './SingleJobPage.scss';
 
 const SingleJobPage: React.FC = () => {
-    const { jobsStore } = useStores();
+    const { settingsStore, jobsStore } = useStores();
 
     const { id } = useParams<{ id: string }>();
     const currentJob = jobsStore.jobs && jobsStore.jobs.find(job => job.id === id);
+    const initiaReponame = settingsStore.settings.repoName;
 
     return (
         <>
-            <Header title='philip1967/my-awesome-repo'>
+            <Header title={initiaReponame}>
                 <div className='btn__block'>
                     <Button icon='icon-play'>Run build</Button>
                     <Button icon='icon-settings' />
@@ -37,7 +38,9 @@ const SingleJobPage: React.FC = () => {
                                     <div className='repo__branch'>
                                         <span className='icon-code-commit' />
                                         {currentJob.branchName}
-                                        <span className='repo__commit'>9c9f0b9</span>
+                                        <span className='repo__commit'>
+                                            {currentJob.commitHash}
+                                        </span>
                                     </div>
                                     <div className='repo__fio'>
                                         <span className='icon-user' />
@@ -47,16 +50,17 @@ const SingleJobPage: React.FC = () => {
                             <div className='repo__data'>
                                 <div className='repo__data__date'>
                                     <span className='icon-calendar' />
-                                    21 янв, 03:06
+                                    {currentJob.start}
                                 </div>
                                 <div className='repo__data__time'>
-                                    <span className='icon-timer' />1 ч 20 мин
+                                    <span className='icon-timer' />
+                                    {currentJob.duration}
                                 </div>
                             </div>
-                            <div className='repo'>
-                                <h3>JOB LOGS</h3>
-                                {currentJob.jobLogs}
-                            </div>
+                        </div>
+                        <div className='repo'>
+                            <h3>JOB LOGS</h3>
+                            {currentJob.jobLogs}
                         </div>
                     </>
                 )}

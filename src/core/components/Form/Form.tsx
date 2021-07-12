@@ -23,8 +23,8 @@ const initialValues = {
     timePeriod: 0,
 };
 
-export const CustomForm: React.FC<Props> = observer(srrSettings => {
-    const [settings, setSettings] = useState(srrSettings.initialSettings);
+export const CustomForm: React.FC<Props> = observer(data => {
+    const [settings, setSettings] = useState(data.initialSettings);
 
     const onSubmit = useCallback((settings: ISettings) => {
         requestsSettings.post(EndPoints.Settings, settings);
