@@ -24,7 +24,7 @@ export class SettingsStore {
             getSettings: action,
             saveSettings: action,
         });
-        this.settings = settings || initialValues;
+        this.setSettings(settings || initialValues);
     }
 
     async setSettings(settings: ISettings) {

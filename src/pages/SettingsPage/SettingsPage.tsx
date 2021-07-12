@@ -12,6 +12,7 @@ import './SettingsPage.scss';
 
 const SettingsPage: React.FC = () => {
     const { settingsStore } = useStores();
+    const initialSettings = settingsStore.settings;
 
     return (
         <>
@@ -21,13 +22,13 @@ const SettingsPage: React.FC = () => {
                 <Title classes='title--light'>
                     Configure repository connection and synchronization settings.
                 </Title>
-                <CustomForm initialSettings={settingsStore.settings} />
+                <CustomForm initialSettings={initialSettings} />
                 <br />
-                temporary to show history page
+                temporary to show jobs page
                 <br />
-                <Link to='/history'>
+                <Link to='/jobs'>
                     <Button icon='icon-play' classes='btn--primary'>
-                        to history page
+                        to jobs page
                     </Button>
                 </Link>
             </div>

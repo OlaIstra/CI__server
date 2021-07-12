@@ -32,7 +32,7 @@ export class Job {
     status: string;
 
     @Column('text', { nullable: true })
-    jobLogs?: number;
+    jobLogs?: string;
 
     @Column('text', { nullable: true })
     start?: string;
@@ -40,8 +40,8 @@ export class Job {
     @Column('text', { nullable: true })
     finish?: string;
 
-    @Column('int', { nullable: true })
-    duration?: number;
+    @Column('text', { nullable: true })
+    duration?: string;
 }
 
 export function getJobRepository() {
