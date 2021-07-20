@@ -15,8 +15,10 @@ const NotFound: React.FC = () => (
             <h1>
                 KIRKL <span>CI</span>
             </h1>
-            <Link className='configPage__link' to='/'>
-                <Button classes='btn--base'>Go to main page</Button>
+            <Link className='configPage__link' to='/' data-testid='link'>
+                <Button classes='btn--base' data-testid='button'>
+                    Go to main page
+                </Button>
             </Link>
             <Title>404 - Page not found</Title>
         </div>

@@ -15,10 +15,14 @@ const ConfigurationPage: React.FC = () => (
             <h1>
                 KIRKL <span>CI</span>
             </h1>
-            <Link className='configPage__link' to='/settings'>
-                <Button classes='btn--base'>Open settings</Button>
+            <Link className='configPage__link' to='/settings' data-testid='link'>
+                <Button classes='btn--base' data-testid='button'>
+                    Open settings
+                </Button>
             </Link>
-            <Title>Configure repository connection and synchronization settings</Title>
+            <Title data-testid='title'>
+                Configure repository connection and synchronization settings
+            </Title>
         </div>
     </>
 );

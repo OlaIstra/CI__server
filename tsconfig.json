@@ -24,6 +24,6 @@
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },
-    "include": ["src/**/*", "server/**/*", "shared/**/*"],
+    "include": ["src/**/*", "server/**/*", "shared/**/*", "jest.config.js"],
     "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js"]
 }

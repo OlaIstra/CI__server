@@ -50,7 +50,7 @@ export const CustomForm: React.FC<Props> = observer(props => {
                         <Form className='form'>
                             <div className='form__block'>
                                 <Title>GitHub repository</Title>
-                                <div className='form__block__error'>
+                                <div className='form__block__error' data-testid='repoNameError'>
                                     <ErrorMessage name='repoName' />
                                 </div>
                                 <Field
@@ -60,11 +60,12 @@ export const CustomForm: React.FC<Props> = observer(props => {
                                     placeholder='repo-name'
                                     icon='icon-cross'
                                     className='input'
+                                    data-testid='repoName'
                                 />
                             </div>
                             <div className='form__block'>
                                 <Title>Main branch name</Title>
-                                <div className='form__block__error'>
+                                <div className='form__block__error' data-testid='mainBranchError'>
                                     <ErrorMessage name='mainBranch' />
                                 </div>
                                 <Field
@@ -74,11 +75,12 @@ export const CustomForm: React.FC<Props> = observer(props => {
                                     placeholder='branch name'
                                     icon='icon-cross'
                                     className='input'
+                                    data-testid='mainBranch'
                                 />
                             </div>
                             <div className='form__block'>
                                 <Title>Build command</Title>
-                                <div className='form__block__error'>
+                                <div className='form__block__error' data-testid='buildCommandError'>
                                     <ErrorMessage name='buildCommand' />
                                 </div>
                                 <Field
@@ -88,12 +90,16 @@ export const CustomForm: React.FC<Props> = observer(props => {
                                     placeholder='npm run start'
                                     icon='icon-cross'
                                     className='input'
+                                    data-testid='buildCommand'
                                 />
                             </div>
                             <div className='form__info'>
                                 Synchronize every
                                 <div>
-                                    <div className='form__block__error'>
+                                    <div
+                                        className='form__block__error'
+                                        data-testid='timePeriodError'
+                                    >
                                         <ErrorMessage name='timePeriod' />
                                     </div>
                                     <Field
@@ -102,6 +108,7 @@ export const CustomForm: React.FC<Props> = observer(props => {
                                         name='timePeriod'
                                         placeholder='enter'
                                         classes='input input__block'
+                                        data-testid='timePeriod'
                                     />
                                 </div>
                                 minutesSettingsPage

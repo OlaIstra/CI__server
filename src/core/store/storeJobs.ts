@@ -7,7 +7,7 @@ import { HttpCode } from '@shared/error/httpStatusCodes';
 import { requestsJobDetails, requestsJobs } from '@core/api/requestApi';
 import { ErrorMessage } from '@shared/error/errorMessage';
 
-export class JobsStore {
+export default class JobsStore {
     jobs: Array<IJob>;
     jobDetails: IJobDetails | undefined;
 
