@@ -6,6 +6,7 @@ import { Header } from '@core/components/Header/Header';
 import { Button } from '@atoms/Button/Button';
 import { useStores } from '@core/store/helpers/useStores';
 import { IJob } from '@shared/interfaces/jobs';
+import { Job } from '@core/components/Job/Job';
 
 import './JobsPage.scss';
 
@@ -30,38 +31,7 @@ const JobsPage: React.FC = () => {
             </Header>
             <div className='jobsPage'>
                 {initialJobs.map((job: IJob, index) => (
-                    <>
-                        <button className='repo' key={index} onClick={() => goToJob(job.id)}>
-                            <div className='repo__info'>
-                                <div className='repo__flex'>
-                                    <div className='repo__id'>
-                                        <span className='icon-tick' />
-                                    </div>
-                                    <div className='repo__title'>{job.commitMessage}</div>
-                                </div>
-                                <div className='repo__flex'>
-                                    <div className='repo__branch'>
-                                        <span className='icon-code-commit' />
-                                        {job.branchName}
-                                        <span className='repo__commit'>{job.commitHash}</span>
-                                    </div>
-                                    <div className='repo__fio'>
-                                        <span className='icon-user' />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='repo__data'>
-                                <div className='repo__data__date'>
-                                    <span className='icon-calendar' />
-                                    {job.start}
-                                </div>
-                                <div className='repo__data__time'>
-                                    <span className='icon-timer' />
-                                    {job.duration}
-                                </div>
-                            </div>
-                        </button>
-                    </>
+                    <Job job={job} key={index} handleClick={goToJob} data-testid='jobComponent' />
                 ))}
             </div>
         </>

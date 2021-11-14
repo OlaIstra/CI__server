@@ -1,5 +1,5 @@
-import { SettingsStore } from './storeSettings';
-import { JobsStore } from './storeJobs';
+import SettingsStore from './storeSettings';
+import JobsStore from './storeJobs';
 
 export default class RootStore {
     settingsStore: SettingsStore;

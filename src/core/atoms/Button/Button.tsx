@@ -14,8 +14,8 @@ export const Button: React.FC<IProps> = ({ classes, icon, children, handleClick,
     const btnClass = classNames('btn', classes);
 
     return (
-        <button type={type} className={btnClass} onClick={handleClick}>
-            {icon && <span className={icon} />}
+        <button type={type} className={btnClass} onClick={handleClick} data-testid='button'>
+            {icon && <span className={icon} data-testid='icon' />}
             {children}
         </button>
     );

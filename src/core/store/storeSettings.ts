@@ -15,7 +15,7 @@ const initialValues = {
     timePeriod: 0,
 };
 
-export class SettingsStore {
+export default class SettingsStore {
     settings: ISettings;
 
     constructor(settings?: ISettings) {

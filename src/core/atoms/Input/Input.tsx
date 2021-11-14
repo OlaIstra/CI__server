@@ -5,7 +5,7 @@ import { SettingsParameters } from '@shared/interfaces/settings';
 
 import './Input.scss';
 
-interface IProps {
+export interface IProps {
     placeholder: string;
     classes?: string;
     icon?: string;
@@ -41,8 +41,9 @@ export const Input: React.FC<IProps> = ({
                 className={inputClass}
                 value={inputValue}
                 onChange={handleInputValue}
+                data-testid='input'
             />
-            {icon && <span className={icon} onClick={handleDelete}></span>}
+            {icon && <span className={icon} onClick={handleDelete} data-testid='icon' />}
         </div>
     );
 };
