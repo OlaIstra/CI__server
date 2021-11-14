@@ -57,7 +57,7 @@ jobs:
               with:
                   node-version: '12'
             - run: npm ci
-            - run: npm run test:client
+            - run: npm run client:test
             
     test-server:
         runs-on: ubuntu-latest
@@ -68,7 +68,7 @@ jobs:
               with:
                   node-version: '12'
             - run: npm ci
-            - run: npm run test:server        
+            - run: npm run server:test
 
     build:
         runs-on: ubuntu-latest
