@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import * as useStoresHooks from '../../core/store/helpers/useStores';
 import SingleJobPage from './SingleJobPage';
 import { FAKE_STORE } from '@src/mocks/testData';
+import { setTestId } from '@src/utils';
 
 const mockUseStore = jest.spyOn(useStoresHooks, 'useStores');
 
@@ -17,7 +18,7 @@ describe('SingleJobPage', () => {
 
         const wrapper = shallow(<SingleJobPage />);
 
-        expect(wrapper.find('[data-testid="jobComponent"]')).toHaveLength(1);
-        expect(wrapper.find('[data-testid="jobLogs"]')).toHaveLength(1);
+        expect(wrapper.find(`${setTestId('jobComponent')}`)).toHaveLength(1);
+        expect(wrapper.find(`${setTestId('jobLogs')}`)).toHaveLength(1);
     });
 });

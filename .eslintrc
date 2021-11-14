@@ -44,7 +44,8 @@
                 ],
                 "newlines-between": "always"
             }
-        ]
+        ],
+        "react/boolean-prop-naming": ["error", { "validateNested": true }]
     },
     "settings": {
         "import/internal-regex": "^(@src|@core|@pages|@atoms|@server|@shared)/",

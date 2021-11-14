@@ -10,6 +10,7 @@ const mockUseStore = jest.spyOn(useStoresHooks, 'useStores');
 describe('SettingsPage', () => {
     it('should send data from store into child component', () => {
         mockUseStore.mockReturnValue(FAKE_STORE);
+
         const wrapper = shallow(<SettingsPage />);
 
         expect(wrapper.find('Memo(wrappedComponent)').props()).toEqual({

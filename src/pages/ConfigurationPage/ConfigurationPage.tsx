@@ -15,7 +15,7 @@ const ConfigurationPage: React.FC = () => (
             <h1>
                 KIRKL <span>CI</span>
             </h1>
-            <Link className='configPage__link' to='/settings' data-testid='link'>
+            <Link className='configPage__link' to='/settings' data-testid='settings-link'>
                 <Button classes='btn--base' data-testid='button'>
                     Open settings
                 </Button>

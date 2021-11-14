@@ -5,7 +5,7 @@ import { SettingsParameters } from '@shared/interfaces/settings';
 
 import './Input.scss';
 
-interface IProps {
+export interface IProps {
     placeholder: string;
     classes?: string;
     icon?: string;

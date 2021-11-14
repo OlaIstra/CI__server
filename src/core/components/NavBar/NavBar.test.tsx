@@ -5,7 +5,7 @@ import { NavBar } from './NavBar';
 
 describe('NavBar', () => {
     it('should render settings link, if user is authenticated', () => {
-        const wrapper = shallow(<NavBar isAuth={true} />);
+        const wrapper = shallow(<NavBar isAuth />);
 
         expect(wrapper.find('Navlink[link="/settings"]')).toHaveLength(1);
     });
@@ -17,7 +17,7 @@ describe('NavBar', () => {
     });
 
     it('should render logout link, if user is authenticated', () => {
-        const wrapper = shallow(<NavBar isAuth={true} />);
+        const wrapper = shallow(<NavBar isAuth />);
 
         expect(wrapper.find('Navlink[link="/logout"]')).toHaveLength(1);
     });
