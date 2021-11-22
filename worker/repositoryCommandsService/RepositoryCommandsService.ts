@@ -4,19 +4,26 @@ import { exec, ExecOptions } from 'child_process';
 import os from 'os';
 import fs from 'fs';
 
-import { AppError } from '@shared/error/error';
-import { HttpCode } from '@shared/error/httpStatusCodes';
-import { envConfig } from '@shared/config';
-import { IJobCommit } from '@shared/interfaces/jobs';
-import { ErrorMessage } from '@shared/error/errorMessage';
+import { AppError } from '../../shared/error/error';
+import { HttpCode } from '../../shared/error/httpStatusCodes';
+import { envConfig } from '../../shared/config';
+import { IJobCommit } from '../../shared/interfaces/jobs';
+import { ErrorMessage } from '../../shared/error/errorMessage';
 
 const localRepo = envConfig.LOCAL_REPO || '';
 const execAsync = promisify(exec);
 const homeDir = os.homedir();
-const localRepoPath = path.join(homeDir, localRepo);
+// ToDo - fix path
+//const localRepoPath = path.join(homeDir, localRepo);
+const localRepoPath = 'C:/SNProjects/CI__server/pig';
+
+export interface RepositoryCommandsService {
+    cloneRepo(repoName: string): Promise<void>;
+    getCommitByHash(commitHash: string, branchName?: string): Promise<IJobCommit>;
+}
 
 export class RepositoryCommandsService {
-    public async cloneRepo(repoName: string): Promise<void> {
+    public static async cloneRepo(repoName: string): Promise<void> {
         try {
             const isLocalRepo = await this.findLocalRepo();
 
@@ -25,7 +32,7 @@ export class RepositoryCommandsService {
             }
 
             const command = `git clone https://github.com/${repoName} ${localRepoPath}`;
-            this.executeCommand(command);
+            await this.executeCommand(command);
         } catch (error) {
             throw new AppError(
                 `${ErrorMessage.FAILED_CLONE_REPO} ${error}`,
@@ -34,14 +41,14 @@ export class RepositoryCommandsService {
         }
     }
 
-    private async executeCommand(
+    public static async executeCommand(
         command: string,
         options?: ExecOptions,
     ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }> {
         return execAsync(command, options);
     }
 
-    private findLocalRepo(): boolean {
+    private static findLocalRepo(): boolean {
         try {
             return fs.existsSync(path.join(homeDir, localRepo));
         } catch (error) {
@@ -52,9 +59,10 @@ export class RepositoryCommandsService {
         }
     }
 
-    private deleteLocalRepo(): void {
+    private static deleteLocalRepo(): void {
         try {
-            const command = `rm -rf ${localRepoPath}`;
+            // ToDo - fix script
+            const command = 'rmdir /S /Q "C:/SNProjects/CI__server/pig"';
             this.executeCommand(command);
         } catch (error) {
             throw new AppError(
@@ -64,9 +72,9 @@ export class RepositoryCommandsService {
         }
     }
 
-    private checkout(branchName: string): void {
+    public static checkout(branchName: string): void {
         try {
-            const command = `cd ${localRepoPath} && git checkout ${branchName}`;
+            const command = `git checkout ${branchName}`;
             this.executeCommand(command);
         } catch (error) {
             throw new AppError(
@@ -76,7 +84,23 @@ export class RepositoryCommandsService {
         }
     }
 
-    public async getCommitByHash(commitHash = '', branchName = 'master'): Promise<IJobCommit> {
+    public static async changeDirectory(): Promise<any> {
+        try {
+            const command = `cd C:/SNProjects/CI__server/pig`;
+            //const command = `dir`;
+            return await this.executeCommand(command);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_CHANGE_DIRECTORY} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+
+    public static async getCommitByHash(
+        commitHash = '',
+        branchName = 'master',
+    ): Promise<IJobCommit> {
         try {
             await this.checkout(branchName);
 

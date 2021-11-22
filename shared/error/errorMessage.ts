@@ -6,6 +6,7 @@ export const ErrorMessage = {
     FAILED_FIND_LOCAL_REPO: 'Failed to find a local repository. Error:',
     FAILED_DELETE_LOCAL_REPO: 'Failed to delete a local repository. Error:',
     FAILED_CHECKOUT_BRANCH: 'Failed to checkout branch. Error:',
+    FAILED_CHANGE_DIRECTORY: 'Failed to change directory. Error:',
 
     //jobControllers errors
     FAILED_CONTROLLER_GET_JOBS: 'JobController - Failed to get jobs. Error:',

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
+import { RepositoryCommandsService } from '@worker/repositoryCommandsService/RepositoryCommandsService';
 
 import { AppError } from '@shared/error/error';
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { Settings } from './settingsEntity';
 import { settingsService } from './settingsServices';
-import { RepositoryCommandsService } from '../repositoryCommandsService/RepositoryCommandsService';
 import { ErrorMessage } from '@shared/error/errorMessage';
 
 const repositoryCommandsService = new RepositoryCommandsService();
