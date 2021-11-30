@@ -3,7 +3,7 @@ import express from 'express';
 import workerRouter from './workerRouter';
 
 interface IConfig {
-    port?: number;
+    port?: string;
     router?: { prefix: string; getRouter: () => Promise<() => express.Router> };
 }
 

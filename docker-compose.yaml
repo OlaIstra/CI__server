@@ -17,3 +17,10 @@ services:
         ports:
             - '5432:5432'
         restart: unless-stopped
+    worker:
+        build:
+            context: .
+            dockerfile: ./worker/Dockerfile
+        ports:
+            - '8081:8081'
+        command: npm run worker:dev

@@ -1,38 +1,41 @@
 import { RepositoryCommandsService } from './repositoryCommandsService/RepositoryCommandsService';
 
 export interface IJobData {
-    id: string;
+    id?: string;
     repoName: string;
     commitHash: string;
     buildCommand: string;
     branchName: string;
 }
+export class WorkerService {
+    repositoryCommandsService: RepositoryCommandsService;
+    constructor(repositoryCommandsService: RepositoryCommandsService) {
+        this.repositoryCommandsService = repositoryCommandsService;
+    }
 
-export const workerService = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    runCommand: async (jobData: IJobData) => {
+    async runCommand(jobData: IJobData): Promise<void> {
         // workerService.backWork(jobData);
 
         // return `Job from ${jobData.repoName} is started!`;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, repoName, commitHash, buildCommand, branchName } = jobData;
         console.log('jobData!!!!!!!!!!!', jobData);
-        await RepositoryCommandsService.cloneRepo(repoName);
-        //await RepositoryCommandsService.changeDirectory();
-        //await RepositoryCommandsService.checkout(branchName);
-        await RepositoryCommandsService.changeDirectory();
-        return await RepositoryCommandsService.executeCommand('dir');
-    },
+        //await this.repositoryCommandsService.cloneRepo(repoName);
+        //await this.repositoryCommandsService.changeDirectory();
+        //await this.repositoryCommandsService.checkout(branchName);
+        //await this.repositoryCommandsService.changeDirectory();
+        await this.repositoryCommandsService.executeCommand('dir');
+    }
 
     // eslint-disable-next-line sonarjs/no-identical-functions
-    backWork: async (jobData: IJobData) => {
+    async backWork(jobData: IJobData) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, repoName, commitHash, buildCommand, branchName } = jobData;
-        //await RepositoryCommandsService.cloneRepo(repoName);
-        return await RepositoryCommandsService.executeCommand('dir');
-        // await RepositoryCommandsService.changeDirectory();
-        // await RepositoryCommandsService.checkout(branchName);
+        //await this.repositoryCommandsService.cloneRepo(repoName);
+        return await this.repositoryCommandsService.executeCommand('dir');
+        // await this.repositoryCommandsService.changeDirectory();
+        // await this.repositoryCommandsService.checkout(branchName);
         // await exec command (npm install) -> возвращает вывод процесса
-    },
+    }
     //return logs
-};
+}

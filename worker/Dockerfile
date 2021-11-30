@@ -3,8 +3,9 @@ FROM node:alpine
 RUN npm install -g npm
 RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 
-WORKDIR '/server'
-COPY package.json package-lock.json /server/
+WORKDIR '/main'
+COPY ./worker/package.json /main/
 
 RUN npm i
-COPY . /server
+COPY . /main/worker
+COPY ./shared /main/shared

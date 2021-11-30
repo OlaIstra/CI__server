@@ -20,6 +20,11 @@ const localRepoPath = 'C:/SNProjects/CI__server/pig';
 export interface RepositoryCommandsService {
     cloneRepo(repoName: string): Promise<void>;
     getCommitByHash(commitHash: string, branchName?: string): Promise<IJobCommit>;
+    changeDirectory(): Promise<void>;
+    executeCommand(
+        command: string,
+        options?: ExecOptions,
+    ): Promise<{ stdout: string | Buffer; stderr: string | Buffer }>;
 }
 
 export class RepositoryCommandsService {
