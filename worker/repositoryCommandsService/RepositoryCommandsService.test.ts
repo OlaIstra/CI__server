@@ -1,6 +1,6 @@
-import { AppError } from '@shared/error/error';
-import { ErrorMessage } from '@shared/error/errorMessage';
-import { HttpCode } from '@shared/error/httpStatusCodes';
+import { AppError } from '../../shared/error/error';
+import { ErrorMessage } from '../../shared/error/errorMessage';
+import { HttpCode } from '../../shared/error/httpStatusCodes';
 import { RepositoryCommandsService } from './RepositoryCommandsService';
 
 const mockCloneRepo = jest.fn();

@@ -20,10 +20,11 @@
             "@atoms/*": ["src/core/atoms/*"],
             "@server/*": ["server/*"],
             "@shared/*": ["shared/*"],
-            "@src/*": ["src/*"]
+            "@src/*": ["src/*"],
+            "@worker/*": ["worker/*"]
         },
         "plugins": [{ "transform": "typescript-transform-paths" }]
     },
-    "include": ["src/**/*", "server/**/*", "shared/**/*"],
+    "include": ["src/**/*", "server/**/*", "shared/**/*", "worker/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.js", "**/*.js"]
 }

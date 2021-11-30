@@ -6,6 +6,7 @@ export const ErrorMessage = {
     FAILED_FIND_LOCAL_REPO: 'Failed to find a local repository. Error:',
     FAILED_DELETE_LOCAL_REPO: 'Failed to delete a local repository. Error:',
     FAILED_CHECKOUT_BRANCH: 'Failed to checkout branch. Error:',
+    FAILED_CHANGE_DIRECTORY: 'Failed to change directory. Error:',
 
     //jobControllers errors
     FAILED_CONTROLLER_GET_JOBS: 'JobController - Failed to get jobs. Error:',
@@ -49,4 +50,8 @@ export const ErrorMessage = {
     //storeSettings errors
     FAILED_STORE_GET_SETTINGS: 'SettingsStore - Failed to get job. Error:',
     FAILED_STORE_SAVE_SETTINGS: 'SettingsStore - Failed to save job. Error:',
+
+    //worker errors
+    FAILED_WORKER_CONTROLLER_RUN_JOB: 'Worker - Failed to run job. Error:',
+    FAILED_WORKER_CONTROLLER_HEALTH: 'Worker - Unhealth. Error:',
 };

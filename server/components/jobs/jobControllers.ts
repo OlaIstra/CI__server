@@ -1,15 +1,15 @@
 import { Response, Request } from 'express';
+import { RepositoryCommandsService } from '@worker/repositoryCommandsService/RepositoryCommandsService';
 
 import { HttpCode } from '@shared/error/httpStatusCodes';
 import { AppError } from '@shared/error/error';
-import { RepositoryCommandsService } from '@server/components/repositoryCommandsService/RepositoryCommandsService';
 import { settingsService } from '@server/components/settings/settingsServices';
 import { jobService } from './jobServices';
 import { Job } from './jobEntity';
 import { IJobCommit } from '@shared/interfaces/jobs';
 import { ErrorMessage } from '@shared/error/errorMessage';
 
-const repositoryCommandsService = new RepositoryCommandsService();
+const repositoryCommandsService: RepositoryCommandsService = new RepositoryCommandsService();
 
 export const getJobs = async (_: unknown, res: Response<Job[]>): Promise<void> => {
     try {
