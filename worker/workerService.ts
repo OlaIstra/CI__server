@@ -11,6 +11,8 @@ export class WorkerService {
     repositoryCommandsService: RepositoryCommandsService;
     constructor(repositoryCommandsService: RepositoryCommandsService) {
         this.repositoryCommandsService = repositoryCommandsService;
+        this.runCommand = this.runCommand.bind(this);
+        this.backWork = this.backWork.bind(this);
     }
 
     async runCommand(jobData: IJobData): Promise<void> {

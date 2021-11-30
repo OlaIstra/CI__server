@@ -6,28 +6,34 @@ import { AppError } from '../shared/error/error';
 import { WorkerService } from './workerService';
 import { RepositoryCommandsService } from './repositoryCommandsService/RepositoryCommandsService';
 
-export const runJob = async (req: Request, res: Response<any>) => {
-    try {
-        const repositoryCommandsService: RepositoryCommandsService = new RepositoryCommandsService();
-        const workerService = new WorkerService(repositoryCommandsService);
-        const jobResult = await workerService.runCommand(req.body);
-
-        res.send(jobResult);
-    } catch (error) {
-        throw new AppError(
-            `${ErrorMessage.FAILED_WORKER_CONTROLLER_RUN_JOB} ${error}`,
-            HttpCode.INTERNAL_SERVER_ERROR,
-        );
+export class WorkerController {
+    constructor() {
+        this.runJob = this.runJob.bind(this);
+        this.checkHealth = this.checkHealth.bind(this);
     }
-};
+    async runJob(req: Request, res: Response<any>) {
+        try {
+            const repositoryCommandsService: RepositoryCommandsService = new RepositoryCommandsService();
+            const workerService = new WorkerService(repositoryCommandsService);
+            const jobResult = await workerService.runCommand(req.body);
 
-export const checkHealth = async (_: unknown, res: Response<string>) => {
-    try {
-        res.send('OK!');
-    } catch (error) {
-        throw new AppError(
-            `${ErrorMessage.FAILED_WORKER_CONTROLLER_HEALTH} ${error}`,
-            HttpCode.INTERNAL_SERVER_ERROR,
-        );
+            res.send(jobResult);
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_WORKER_CONTROLLER_RUN_JOB} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
-};
+
+    async checkHealth(_: unknown, res: Response<string>) {
+        try {
+            res.send('OK!');
+        } catch (error) {
+            throw new AppError(
+                `${ErrorMessage.FAILED_WORKER_CONTROLLER_HEALTH} ${error}`,
+                HttpCode.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+}

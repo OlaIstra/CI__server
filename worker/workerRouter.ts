@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
-import { checkHealth, runJob } from './workerController';
+import { WorkerController } from './workerController';
 
 const router = Router();
+const workerController = new WorkerController();
 
-router.get('/check', checkHealth);
-router.post('/start', runJob);
+router.get('/check', workerController.checkHealth);
+router.post('/start', workerController.runJob);
 
 export default router;

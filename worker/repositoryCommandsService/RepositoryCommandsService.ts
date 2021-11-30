@@ -28,6 +28,11 @@ export interface RepositoryCommandsService {
 }
 
 export class RepositoryCommandsService {
+    constructor() {
+        this.cloneRepo = this.cloneRepo.bind(this);
+        this.executeCommand = this.executeCommand.bind(this);
+    }
+
     public static async cloneRepo(repoName: string): Promise<void> {
         try {
             const isLocalRepo = await this.findLocalRepo();
